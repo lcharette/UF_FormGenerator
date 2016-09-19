@@ -1,0 +1,34 @@
+{% for name,value in fields %}
+	{% if not value.hidden %}
+    <div class="form-group">
+        <label>{% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}</label>
+        <div class="input-group">
+        	{% if value.icon %}<span class="input-group-addon"><i class="fa {{value.icon}}"></i></span>{% endif %}
+
+            {% if value.type == "textarea" %}
+            	<textarea class="{% if value.class %}{{value.class}}{% else %}form-control{% endif %}" name="{{name}}" autocomplete="off" rows="{{value.rows}}" placeholder="{{translate(value.placeholder)}}" {% if value.disabled %}disabled{% endif %}>{{value.data}}</textarea>
+
+			{% elseif value.type == "bool" %}
+
+                <span class="pull-right">
+                  <input type="checkbox" name="{{name}}" class="{% if value.class %}{{value.class}}{% else %}form-control bootstrapswitch{% endif %}" {% if value.data == 1 %}checked{% endif %} {% if value.disabled %}disabled{% endif %}>
+                </span>
+
+            {% elseif value.type == "number" %}
+
+            	<input type="number" class="{% if value.class %}{{value.class}}{% else %}form-control{% endif %}" name="{{name}}" autocomplete="off" value="{{value.data}}" {% if value.min %}min="{{value.min}}" {% endif %}{% if value.max %}max="{{value.max}}" {% endif %}{% if value.step %}step="{{value.step}}" {% endif %}placeholder="{{translate(value.placeholder)}}" {% if value.disabled %}disabled{% endif %} {% for cName, cValue in value.custom %}{{cName}}="{{cValue}}" {% endfor %}>
+
+            {% elseif value.type == "select" %}
+
+                <select class="{% if value.class %}{{value.class}}{% else %}form-control select2{% endif %}" name="{{name}}"{% if value.disabled %} disabled{% endif %} {% for cName, cValue in value.custom %} {{cName}}="{{cValue}}" {% endfor %}>
+                    {% for option, label in value.options %}<option value="{{option}}" {% if (option == value.data) %}selected{% endif %}>{{label}}</option>{% endfor %}
+                </select>
+
+            {% else %}
+            	<input type="{{value.type}}" class="{% if value.class %}{{value.class}}{% else %}form-control{% endif %}" name="{{name}}" autocomplete="off" value="{{value.data}}" placeholder="{{translate(value.placeholder)}}" {% if value.disabled %}disabled{% endif %} {% for cName, cValue in value.custom %}{{cName}}="{{cValue}}" {% endfor %}>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}

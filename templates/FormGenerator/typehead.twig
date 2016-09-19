@@ -1,0 +1,13 @@
+{% extends "FormGenerator/modal.twig" %}
+
+{% block page_scripts %}
+<script>
+    $("input[name='{{typeaheadInput}}']").typeahead({
+	    source: function(query, process) {
+	      return $.getJSON('{{typeaheadUrl}}', { name : query}, function(data) {
+		      return process(data);
+	      });
+	    }
+    });
+</script>
+{% endblock %}
