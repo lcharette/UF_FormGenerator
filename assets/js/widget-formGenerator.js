@@ -47,7 +47,7 @@ function formGeneratorDisplay(button) {
 		// Setup the loaded form with ufForm
 		$('#' + box_id).find("form").ufForm({
             validators: validators,
-            msgTarget: $("#"+box_id+"_alert > span")
+            msgTarget: $("#"+box_id+"_alert")
         }).on("submitSuccess.ufForm", function() {
             // Forward to settings page on success
             window.location.reload(true);
