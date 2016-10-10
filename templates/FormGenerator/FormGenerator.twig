@@ -9,15 +9,15 @@
     <div class="form-group">
         <label>{% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}</label>
         {% if value.type == "textarea" %}
-            {{ textarea.generate(value) }}
+            {{ textarea.generate(name, value) }}
 		{% elseif value.type == "bool" %}
-            {{ bool.generate(value) }}
+            {{ bool.generate(name, value) }}
         {% elseif value.type == "number" %}
-            {{ number.generate(value) }}
+            {{ number.generate(name, value) }}
         {% elseif value.type == "select" %}
-            {{ select.generate(value) }}
+            {{ select.generate(name, value) }}
         {% else %}
-            {{ text.generate(value) }}
+            {{ text.generate(name, value) }}
         {% endif %}
     </div>
     {% endif %}
