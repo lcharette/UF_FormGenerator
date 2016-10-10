@@ -1,33 +1,23 @@
+{% import "FormGenerator/macros/bool.twig" as bool %}
+{% import "FormGenerator/macros/textarea.twig" as textarea %}
+{% import "FormGenerator/macros/number.twig" as number %}
+{% import "FormGenerator/macros/select.twig" as select %}
+{% import "FormGenerator/macros/text.twig" as text %}
+
 {% for name,value in fields %}
 	{% if not value.hidden %}
     <div class="form-group">
         <label>{% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}</label>
         {% if value.type == "textarea" %}
-        	<div class="input-group">
-        	    {% if value.icon %}<span class="input-group-addon"><i class="fa {{value.icon}}"></i></span>{% endif %}
-        	    <textarea class="{% if value.class %}{{value.class}}{% else %}form-control{% endif %}" name="{{name}}" autocomplete="off" rows="{{value.rows}}" placeholder="{{translate(value.placeholder)}}" {% if value.disabled %}disabled{% endif %}>{{value.data}}</textarea>
-        	</div>
+            {{ textarea.generate(value) }}
 		{% elseif value.type == "bool" %}
-            <div class="checkbox">
-                {% if value.icon %}<span class="input-group-addon"><i class="fa {{value.icon}}"></i></span>{% endif %}
-                <input type="checkbox" name="{{name}}" class="{% if value.class %}{{value.class}}{% endif %}" {% if value.data == 1 %}checked{% endif %} {% if value.disabled %}disabled{% endif %}></input>
-            </div>
+            {{ bool.generate(value) }}
         {% elseif value.type == "number" %}
-            <div class="input-group">
-                {% if value.icon %}<span class="input-group-addon"><i class="fa {{value.icon}}"></i></span>{% endif %}
-        	    <input type="number" class="{% if value.class %}{{value.class}}{% else %}form-control{% endif %}" name="{{name}}" autocomplete="off" value="{{value.data}}" {% if value.min %}min="{{value.min}}" {% endif %}{% if value.max %}max="{{value.max}}" {% endif %}{% if value.step %}step="{{value.step}}" {% endif %}placeholder="{{translate(value.placeholder)}}" {% if value.disabled %}disabled{% endif %} {% for cName, cValue in value.custom %}{{cName}}="{{cValue}}" {% endfor %}></input>
-            </div>
+            {{ number.generate(value) }}
         {% elseif value.type == "select" %}
-
-            <select class="{% if value.class %}{{value.class}}{% else %}form-control select2{% endif %}" name="{{name}}"{% if value.disabled %} disabled{% endif %} {% for cName, cValue in value.custom %} {{cName}}="{{cValue}}" {% endfor %}>
-                {% for option, label in value.options %}<option value="{{option}}" {% if (option == value.data) %}selected{% endif %}>{{translate(label)}}</option>{% endfor %}
-            </select>
-
+            {{ select.generate(value) }}
         {% else %}
-        	<div class="input-group">
-        	    {% if value.icon %}<span class="input-group-addon"><i class="fa {{value.icon}}"></i></span>{% endif %}
-        	    <input type="{{value.type}}" class="{% if value.class %}{{value.class}}{% else %}form-control{% endif %}" name="{{name}}" autocomplete="off" value="{{value.data}}" placeholder="{{translate(value.placeholder)}}" {% if value.disabled %}disabled{% endif %} {% for cName, cValue in value.custom %}{{cName}}="{{cValue}}" {% endfor %}></input>
-        	</div>
+            {{ text.generate(value) }}
         {% endif %}
     </div>
     {% endif %}
