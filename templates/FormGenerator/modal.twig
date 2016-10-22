@@ -4,7 +4,7 @@
         <h4 class='modal-title'>{{translate(box_title)}}</h4>
     </div>
     <div class='modal-body'>
-        <form name="project" method="post" action="{{form_action}}">
+        <form name="ModalFormGenerator" method="post" action="{{form_action}}">
 		    {% include "components/csrf.html.twig" %}
 		    <div id="form-alerts">
 		    </div>
@@ -38,4 +38,4 @@
 		</script>
     </div>
 </div>
-{% block page_scripts %}{% endblock %}
+{% block scripts_page %}{% endblock %}
