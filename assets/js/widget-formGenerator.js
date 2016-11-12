@@ -35,8 +35,7 @@ function formGeneratorDisplay(button) {
 	.fail(function(result) {
         // Display errors on failure
         console.log("Error (" + result.status + "): " + result.responseText );
-        //base.options.msgTarget.ufAlerts().ufAlerts('fetch').ufAlerts('render');
-        //$('#userfrosting-alerts').flashAlerts().done(function() {});
+        $("#alerts-main").ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
 	})
 	.done(function(result) {
 
@@ -87,7 +86,7 @@ function formGeneratorConfirm(button){
 	.fail(function(result) {
         // Display errors on failure
         console.log("Error (" + result.status + "): " + result.responseText );
-        base.options.msgTarget.ufAlerts().ufAlerts('fetch').ufAlerts('render');
+        $("#alerts-main").ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
 	})
 	.done(function(result) {
 		// Append the form as a modal dialog to the body
