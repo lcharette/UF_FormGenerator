@@ -4,7 +4,7 @@
         <h4 class='modal-title'>{{translate(box_title)}}</h4>
     </div>
     <div class='modal-body'>
-        <form name="ModalFormGenerator" method="post" action="{{form_action}}">
+        <form name="ModalFormGenerator" method="{{ (form_method) ? form_method : 'post' }}" action="{{form_action}}">
 		    {% include "components/csrf.html.twig" %}
 		    <div id="form-alerts">
 		    </div>

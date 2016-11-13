@@ -154,6 +154,7 @@
     		$('#' + box_id + ' .js-confirm').click(function(){
 
                 var url = $(button).data('postUrl');
+                var method = ($(button).data('postMethod')) ? $(button).data('postMethod') : "POST";
                 var data = {
                     bData: $(button).data(),
                     csrf_name: $('#' + box_id).find("input[name='csrf_name']").val(),
@@ -161,7 +162,7 @@
                 };
 
                 $.ajax({
-                  type: "POST",
+                  type: method,
                   url: url,
                   data: data
                 }).done(function(result) {
