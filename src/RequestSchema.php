@@ -16,12 +16,32 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
     protected $_formData = array();
     protected $_formTypehead = array();
 
-    public function addValidatorFile($file){
-        $new_schema = json_decode(file_get_contents($file),true);
-        if ($new_schema === null) {
-            throw new \Exception("Either the schema '$file' could not be found, or it does not contain a valid JSON document: " . json_last_error());
+    /**
+     * __construct function.
+     * Overwrites the Fortress constructor so the file becomes optional
+     *
+     * @access public
+     * @param string $file (default: "")
+     * @return void
+     */
+    public function __construct($file = "")
+    {
+        if ($file !== "") {
+            $this->loadSchema($file);
         }
-        $this->_schema = array_merge($this->_schema, $new_schema);
+    }
+
+    /**
+     * setSchema function.
+     * Add a way to manually set the schema
+     *
+     * @access public
+     * @param mixed $schema
+     * @return void
+     */
+    public function setSchema($schema)
+    {
+        $this->schema = $schema;
     }
 
     /**
@@ -46,7 +66,13 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
                 // Send the values as `genereteForm` argument
                 if (isset($data->$name)) {
                     $value['form']['data'] = $data->$name;
+                } else if (isset($data[$name])) {
+                    $value['form']['data'] = $data[$name];
                 }
+
+                // The name of the field is usually the key, but we also add it to form
+                // in case we need to manipulate it
+                $value['form']['name'] = $name;
 
                 // Setup translation
                 // N.B.:     Nothing to do here for that. Will be handled by the
@@ -78,8 +104,8 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
      *
      * @access public
      * @param string $inputName The input name where the argument will be added
-     * @param string $property The argument name. Example "data-color"
-     * @param string $data The value of the argument
+     * @param string $property  The argument name. Example "data-color"
+     * @param string $data      The value of the argument
      * @return void
      */
     public function setInputArgument($inputName, $property, $data) {
@@ -95,14 +121,30 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
      *
      * @access public
      * @param string $inputName The input name where the argument will be added
-     * @param string $property The argument name. Example "data-color"
-     * @param string $data The value of the argument
+     * @param string $property  The argument name. Example "data-color"
+     * @param string $data      The value of the argument
      * @return void
      */
     public function setCustomInputArgument($inputName, $property, $data) {
         if (isset($this->_formData[$inputName])) {
             if (!isset($this->_formData[$inputName]['custom'])) $this->_formData[$inputName]['custom'] = array();
             $this->_formData[$inputName]['custom'][$property] = $data;
+        }
+    }
+
+    /**
+     * wrapNames function.
+     * Wrap the fields name in a top level array. Useful when using multiple
+     * schemas at once or if the names are using dot syntaxt.
+     * See : http://stackoverflow.com/a/20365198/445757
+     *
+     * @access public
+     * @param mixed $arrayValue
+     * @return void
+     */
+    public function wrapNames($arrayValue) {
+        foreach ($this->_formData as $key => $value) {
+            $this->_formData[$key]['name'] = $arrayValue."[".$value['name']."]";
         }
     }
 
