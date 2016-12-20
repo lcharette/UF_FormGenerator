@@ -43,6 +43,6 @@ class FormGeneratorController {
      * @return void
      */
     public function confirm($request, $response, $args) {
-		$this->ci->view->render($response, 'FormGenerator/confirm.twig', $request->getQueryParams());
+		$this->ci->view->render($response, 'FormGenerator/confirm.html.twig', $request->getQueryParams());
     }
 }

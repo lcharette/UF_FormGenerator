@@ -136,9 +136,11 @@
     	//Prepare the data
     	var data = {
     		box_id: box_id,
-    		box_title: $(button).data('confirmTitle') ? $(button).data('confirmTitle') : "Deleting",
-    		confirm_message: $(button).data('confirmMessage') ? $(button).data('confirmMessage') : "Are you sure you want to delete this?",
-    		confirm_button: $(button).data('confirmButton') ? $(button).data('confirmButton') : "Yes, delete",
+    		box_title: $(button).data('confirmTitle') ? $(button).data('confirmTitle') : null,
+    		confirm_message: $(button).data('confirmMessage') ? $(button).data('confirmMessage') : null,
+    		confirm_warning: $(button).data('confirmWarning') ? $(button).data('confirmWarning') : null,
+    		confirm_button: $(button).data('confirmButton') ? $(button).data('confirmButton') : null,
+    		cancel_button: $(button).data('cancelButton') ? $(button).data('cancelButton') : null,
     		bData: $(button).data()
     	};
 
