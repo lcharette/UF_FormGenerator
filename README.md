@@ -8,10 +8,11 @@ git submodule add git@github.com:lcharette/UF_FormGenerator.git FormGenerator
 ```
 
 ### Add to the sprinkle list
-Edit UserFrosting `app/sprinkles/sprinkles.json` file and add `ConfigManager` to the sprinkle list to enable it globally.
+Edit UserFrosting `app/sprinkles/sprinkles.json` file and add `FormGenerator` to the sprinkle list to enable it.
 
-### Update the assets build
+### Update the assets build & composer
 From the UserFrosting `/build` folder, run `npm run uf-assets-install`
+You may also need to run `composer update` from the `app/` folder.
 
 # Features and usage
 Before starting with UfFormGenerator, you should read the main UserFrosting guide to familiarise yourself with _validation schemas_: (https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
@@ -61,7 +62,7 @@ Here's a simple `schema` used to validate a form used to create a `project`. The
 
 At this point, with typical UserFrosting (or any framework) setup, you would be diving into your controller and twig files to manually create your html form. This can be easy if you have a handful of fields, but can be a pain with a dozen of fields and more.
 
-This is where FormGenerator steps in with the use of a new `form` attribute. Let's do add it to our `project` form first :
+This is where FormGenerator steps in with the use of a new `form` attribute. Let's add it to our `project` form :
 
 ```
 {
@@ -121,7 +122,7 @@ This is where FormGenerator steps in with the use of a new `form` attribute. Let
 }
 ```
 
-Let's look at the `name` field more closer:
+Let's look closer at the `name` field :
 
 ```
 "form" : {
@@ -232,7 +233,7 @@ As you can see, instead of rendering your own Twig template, you simply have to 
 6. `validators`: Client side validators
 
 ## Call the modal from your template
-So at this point you have a controller that display the modal at a `/path/to/controller` route. Timem to show that modal. Again, two steps:
+So at this point you have a controller that display the modal at a `/path/to/controller` route. Time to show that modal. Again, two steps:
 
 First, define a link or a button that will call the modal when clicked:
 ```
@@ -282,6 +283,9 @@ Now simply add the javascript function and add it to your button, using the `js-
     </script>
 {% endblock %}
 ```
+
+# Working example
+See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorExample) repo for an example of the FormGenerator full code.
 
 # Overwriting template/style
 !TODO
