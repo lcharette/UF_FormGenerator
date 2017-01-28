@@ -51,7 +51,7 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
      * @param array $data To populate the values of a form element.
      * @return array Returns the array of form element
      */
-    public function initForm($data) {
+    public function initForm($data = []) {
 
         //Reset the thing
         $this->_formData = array();
