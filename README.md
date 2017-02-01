@@ -34,16 +34,10 @@ Here's a simple `schema` used to validate a form used to create a `project`. The
             "required" : {
                 "message" : "PROJECT.VALIDATE.REQUIRED_NAME"
             }
-        },
-        "sanitizers" : {
-            "raw" : ""
         }
     },
     "description" : {
-        "validators" : {},
-        "sanitizers" : {
-            "raw" : ""
-        }
+        "validators" : {}
     },
     "status" : {
         "validators" : {
@@ -76,9 +70,6 @@ This is where FormGenerator steps in with the use of a new `form` attribute. Let
                 "message" : "VALIDATE.REQUIRED_NAME"
             }
         },
-        "sanitizers" : {
-            "raw" : ""
-        },
         "form" : {
             "type" : "text",
             "label" : "NAME",
@@ -88,9 +79,6 @@ This is where FormGenerator steps in with the use of a new `form` attribute. Let
     },
     "description" : {
         "validators" : {},
-        "sanitizers" : {
-            "raw" : ""
-        },
         "form" : {
             "type" : "textarea",
             "label" : "DESCRIPTION",
