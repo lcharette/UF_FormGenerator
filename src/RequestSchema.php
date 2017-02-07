@@ -63,7 +63,7 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
                 $value['form']['label'] = isset($value['form']['label']) ? $value['form']['label'] : "";
 
                 // Add the value inside the form elements
-                // Send the values as `genereteForm` argument
+                // Send the values as `generateForm` argument
                 if (isset($data->$name)) {
                     $value['form']['data'] = $data->$name;
                 } else if (isset($data[$name])) {
@@ -149,13 +149,13 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
     }
 
     /**
-     * genereteForm function.
+     * generateForm function.
      * Return the form data array
      *
      * @access public
      * @return array
      */
-    public function genereteForm() {
+    public function generateForm() {
         return $this->_formData;
     }
 }

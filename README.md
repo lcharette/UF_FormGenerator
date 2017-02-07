@@ -165,7 +165,7 @@ In this example, `$project` can contain the default (or current value) of the fi
 Last thing to do is send the fields to Twig. In the retuend var to the template, add this:
 ```
 $this->ci->view->render($response, "pages/myPage.html.twig", [
-    "fields" => $schema->genereteForm(),
+    "fields" => $schema->generateForm(),
     "validators" => $validator->rules()
 ]);
 
@@ -207,7 +207,7 @@ $this->ci->view->render($response, "FormGenerator/modal.html.twig", [
     "box_title" => "PROJECT.CREATE",
     "submit_button" => "CREATE",
     "form_action" => '/project/create',
-    "fields" => $schema->genereteForm(),
+    "fields" => $schema->generateForm(),
     "validators" => $validator->rules()
 ]);
 ```
@@ -217,7 +217,7 @@ As you can see, instead of rendering your own Twig template, you simply have to 
 2. `box_title`: The title of the modal.
 3. `submit_button`: The label of the submit button. Optional. Default to `SUBMIT` (localized).
 4. `form_action`: The route where the form will be sent
-5. `fields`: The fields. Should always be `$schema->genereteForm()`
+5. `fields`: The fields. Should always be `$schema->generateForm()`
 6. `validators`: Client side validators
 
 ## Call the modal from your template
