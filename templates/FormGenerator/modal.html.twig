@@ -11,7 +11,7 @@
     		    <div id="form-alerts">
     		    </div>
     		    <div class="row">
-    		    	<div class="col-sm-8">
+    		    	<div class="col-sm-12">
     				    {% include 'FormGenerator/FormGenerator.html.twig' %}
     		    	</div>
     		    </div><br>
@@ -54,7 +54,7 @@
               radioClass: 'iradio_square-blue',
               increaseArea: '20%' // optional
             });
-            $('select').select2({ minimumResultsForSearch: Infinity });
+            $('select').select2({ minimumResultsForSearch: Infinity, width: '100%' });
         });
     </script>
 {% endblock %}
