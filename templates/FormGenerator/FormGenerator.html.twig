@@ -7,18 +7,22 @@
 {% for name,value in fields %}
 	{% if not value.hidden %}
     <div class="form-group">
-        <label>{% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}</label>
-        {% if value.type == "textarea" %}
-            {{ textarea.generate(name, value) }}
-		{% elseif value.type == "bool" %}
-            {{ bool.generate(name, value) }}
-        {% elseif value.type == "number" %}
-            {{ number.generate(name, value) }}
-        {% elseif value.type == "select" %}
-            {{ select.generate(name, value) }}
-        {% else %}
-            {{ text.generate(name, value) }}
-        {% endif %}
+        {% if formLayout == 'horizontal' %}<label class="col-sm-2 control-label">{% else %}<label>{% endif %}
+            {% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}
+        </label>
+        {% if formLayout == 'horizontal' %}<div class="col-sm-10">{% endif %}
+            {% if value.type == "textarea" %}
+                {{ textarea.generate(name, value) }}
+    		{% elseif value.type == "bool" %}
+                {{ bool.generate(name, value) }}
+            {% elseif value.type == "number" %}
+                {{ number.generate(name, value) }}
+            {% elseif value.type == "select" %}
+                {{ select.generate(name, value) }}
+            {% else %}
+                {{ text.generate(name, value) }}
+            {% endif %}
+        {% if formLayout == 'horizontal' %}</div>{% endif %}
     </div>
     {% endif %}
 {% endfor %}
