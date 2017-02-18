@@ -1,6 +1,5 @@
-{% macro generate(value) %}
+{% macro generate(name, value) %}
     <div class="checkbox icheck">
-        {% if value.icon %}<span class="input-group-addon"><i class="fa {{value.icon}}"></i></span>{% endif %}
-        <input type="checkbox" name="{{name}}" class="{% if value.class %}{{value.class}}{% endif %}" {% if value.data == 1 %}checked{% endif %} {% if value.disabled %}disabled{% endif %}></input>
+        <input type="checkbox" name="{{value.name}}" id="{{value.id}}" class="{% if value.class %}{{value.class}}{% endif %}" {% if value.data == 1 %}checked{% endif %} {% if value.disabled %}disabled{% endif %}></input>
     </div>
 {% endmacro %}

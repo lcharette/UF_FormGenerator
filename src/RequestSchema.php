@@ -74,6 +74,9 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
                 // in case we need to manipulate it
                 $value['form']['name'] = $name;
 
+                // Also need an id for that field
+                $value['form']['id'] = isset($value['form']['id']) ? $value['form']['id'] : "field_" . $value['form']['name'];
+
                 // Setup translation
                 // N.B.:     Nothing to do here for that. Will be handled by the
                 //            Twig template when displayed

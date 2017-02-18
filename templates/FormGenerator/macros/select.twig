@@ -1,5 +1,5 @@
 {% macro generate(name, value) %}
-    <select class="{% if value.class %}{{value.class}}{% else %}form-control select2{% endif %}" name="{{value.name}}"{% if value.disabled %} disabled{% endif %} {% for cName, cValue in value.custom %} {{cName}}="{{cValue}}" {% endfor %}>
+    <select class="{% if value.class %}{{value.class}}{% else %}form-control select2{% endif %}" name="{{value.name}}" id="{{value.id}}"{% if value.disabled %} disabled{% endif %} {% for cName, cValue in value.custom %} {{cName}}="{{cValue}}" {% endfor %}>
         {% for option, label in value.options %}<option value="{{option}}" {% if (option == value.data) %}selected{% endif %}>{{translate(label)}}</option>{% endfor %}
     </select>
 {% endmacro %}
