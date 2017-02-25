@@ -1,0 +1,3 @@
+{% macro generate(name, value) %}
+    <input type="hidden" name="{{value.name}}" id="{{value.id}}" value="{{value.data}}" {% for cName, cValue in value.custom %}{{cName}}="{{cValue}}" {% endfor %}></input>
+{% endmacro %}

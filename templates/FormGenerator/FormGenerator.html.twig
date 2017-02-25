@@ -3,26 +3,31 @@
 {% import "FormGenerator/macros/number.twig" as number %}
 {% import "FormGenerator/macros/select.twig" as select %}
 {% import "FormGenerator/macros/text.twig" as text %}
+{% import "FormGenerator/macros/hidden.twig" as hidden %}
 
 {% for name,value in fields %}
-	{% if not value.hidden %}
-    <div class="form-group">
-        {% if formLayout == 'horizontal' %}<label for="{{value.id}}" class="col-sm-2 control-label">{% else %}<label for="{{value.id}}">{% endif %}
-            {% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}
-        </label>
-        {% if formLayout == 'horizontal' %}<div class="col-sm-10">{% endif %}
-            {% if value.type == "textarea" %}
-                {{ textarea.generate(name, value) }}
-    		{% elseif value.type == "bool" %}
-                {{ bool.generate(name, value) }}
-            {% elseif value.type == "number" %}
-                {{ number.generate(name, value) }}
-            {% elseif value.type == "select" %}
-                {{ select.generate(name, value) }}
-            {% else %}
-                {{ text.generate(name, value) }}
-            {% endif %}
-        {% if formLayout == 'horizontal' %}</div>{% endif %}
-    </div>
+	{% if value.type == "hidden" %}
+	    {{ hidden.generate(name, value) }}
+	{% else %}
+    	{% if not value.hidden %}
+        <div class="form-group">
+            {% if formLayout == 'horizontal' %}<label for="{{value.id}}" class="col-sm-2 control-label">{% else %}<label for="{{value.id}}">{% endif %}
+                {% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}
+            </label>
+            {% if formLayout == 'horizontal' %}<div class="col-sm-10">{% endif %}
+                {% if value.type == "textarea" %}
+                    {{ textarea.generate(name, value) }}
+        		{% elseif value.type == "bool" %}
+                    {{ bool.generate(name, value) }}
+                {% elseif value.type == "number" %}
+                    {{ number.generate(name, value) }}
+                {% elseif value.type == "select" %}
+                    {{ select.generate(name, value) }}
+                {% else %}
+                    {{ text.generate(name, value) }}
+                {% endif %}
+            {% if formLayout == 'horizontal' %}</div>{% endif %}
+        </div>
+        {% endif %}
     {% endif %}
 {% endfor %}
