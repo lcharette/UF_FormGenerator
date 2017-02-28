@@ -98,12 +98,12 @@
     		// Setup the loaded form with ufForm
     		$('#' + box_id).find("form").ufForm({
                 validators: validators,
-                msgTarget: $("#"+box_id+"_alert")
+                msgTarget: $("#"+box_id+" #form-alerts")
             }).on("submitSuccess.ufForm", function() {
                 // Forward to settings page on success
                 window.location.reload(true);
-            }).on("submitError.ufForm", function() {
-                $("#"+box_id+"_alert").show();
+            }).on("submitError.ufForm", function(error) {
+                $("#"+box_id+" #form-alerts").show();
             });
     	});
     }
