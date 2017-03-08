@@ -45,6 +45,30 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
     }
 
     /**
+     * prependSchema function.
+     *
+     * @access public
+     * @param mixed $schema
+     * @return void
+     */
+    public function prependSchema($schema)
+    {
+        $this->schema = array_merge_recursive($schema, $this->schema);
+    }
+
+    /**
+     * appendSchema function.
+     *
+     * @access public
+     * @param mixed $schema
+     * @return void
+     */
+    public function appendSchema($schema)
+    {
+        $this->schema = array_merge_recursive($this->schema, $schema);
+    }
+
+    /**
      * Generate an array contining all nececerry value to generate a form
      * with Twig.
      *
