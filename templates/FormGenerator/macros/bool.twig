@@ -1,5 +1,5 @@
 {% macro generate(name, value) %}
     <div class="checkbox icheck">
-        <input type="checkbox" name="{{value.name}}" id="{{value.id}}" class="{% if value.class %}{{value.class}}{% endif %}" {% if value.data == 1 %}checked{% endif %} {% if value.disabled %}disabled{% endif %}></input>
+        <input type="checkbox" name="{{value.name}}" id="{{value.id}}" class="js-icheck{% if value.class %} {{value.class}}{% endif %}" {% if value.data == 1 %}checked{% endif %} {% if value.disabled %}disabled{% endif %}></input>
     </div>
 {% endmacro %}
