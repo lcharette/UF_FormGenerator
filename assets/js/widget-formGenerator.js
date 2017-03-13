@@ -218,7 +218,7 @@
      * Default plugin options
      */
     $.fn.formGenerator.defaultOptions = {
-        mainAlertElement: $('#alerts-main')
+        mainAlertElement: $('#alerts-page')
     };
 
 })( jQuery );
