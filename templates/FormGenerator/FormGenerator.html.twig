@@ -10,7 +10,7 @@
 	    {{ hidden.generate(name, value) }}
 	{% else %}
     	{% if not value.hidden %}
-        <div class="form-group">
+        <div class="form-group has-feedback">
             {% if formLayout == 'horizontal' %}<label for="{{value.id}}" class="col-sm-2 control-label">{% else %}<label for="{{value.id}}">{% endif %}
                 {% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}
             </label>
