@@ -179,9 +179,14 @@
                   type: method,
                   url: url,
                   data: data
-                }).done(function(result) {
-                  // Reload the page
-                  window.location.reload();
+                }).done(function(result)
+                {
+                    if (result.redirect) {
+                        window.location.replace(result.redirect);
+                    } else {
+                        // Reload the page
+                        window.location.reload(true);
+                    }
                 }).fail(function(jqXHR) {
                     if ((typeof site !== "undefined") && site.debug.ajax && jqXHR.responseText) {
                         document.write(jqXHR.responseText);
