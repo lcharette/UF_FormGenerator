@@ -2,44 +2,26 @@
 
 namespace UserFrosting\Sprinkle\FormGenerator\Controller;
 
-use Interop\Container\ContainerInterface;
+use UserFrosting\Sprinkle\Core\Controller\SimpleController;
 
 /**
- * CompagnieController Class
+ * FormGeneratorController Class
  *
- * Controller class for /compagnie/* URLs.  Handles compagnie-related activities, including listing compagnies, CRUD for compagnies, etc.
+ * Controller class for /forms/confirm/* URLs.  Handles rendering the confirm dialog
  *
- * @package Gaston
+ * @package FormGenerator
  * @author Louis Charette
- * @link https://github.com/lcharette/GASTON
+ * @link https://github.com/lcharette/UF_FormGenerator
  */
-class FormGeneratorController {
-
-    protected $_types = [];
+class FormGeneratorController extends SimpleController {
 
     /**
-     * @var ContainerInterface The global container object, which holds all your services.
-     */
-    protected $ci;
-
-    /**
-     * __construct function.
-     * Create a new CompagnieController object.
+     * confirm function.
      *
      * @access public
-     * @param UserFrosting $app The main UserFrosting app.
-     * @return void
-     */
-    public function __construct(ContainerInterface $ci){
-        $this->ci = $ci;
-    }
-
-    /**
-     * bordereau function.
-     *
-     * @access public
-     * @param mixed $project_id
-     * @param mixed $view_name
+     * @param mixed $request
+     * @param mixed $response
+     * @param mixed $args
      * @return void
      */
     public function confirm($request, $response, $args) {
