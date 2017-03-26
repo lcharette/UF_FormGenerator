@@ -4,10 +4,13 @@
 {% import "FormGenerator/macros/select.twig" as select %}
 {% import "FormGenerator/macros/text.twig" as text %}
 {% import "FormGenerator/macros/hidden.twig" as hidden %}
+{% import "FormGenerator/macros/alert.twig" as alert %}
 
 {% for name,value in fields %}
 	{% if value.type == "hidden" %}
 	    {{ hidden.generate(name, value) }}
+    {% elseif value.type == "alert" %}
+        {{ alert.generate(name, value) }}
 	{% else %}
     	{% if not value.hidden %}
         <div class="form-group has-feedback">
