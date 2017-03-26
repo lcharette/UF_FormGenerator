@@ -95,6 +95,14 @@
     		$( "body" ).append(result);
     		$('#' + box_id).modal('show');
 
+    		var boxMsgTarget = $("#"+box_id+" #form-alerts");
+
+    		// Show the alert. We could have info alert coming in
+    		if (!boxMsgTarget.data('ufAlerts')) {
+                boxMsgTarget.ufAlerts();
+            }
+            boxMsgTarget.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
+
     		// Setup the loaded form with ufForm
     		$('#' + box_id).find("form").ufForm({
                 validators: validators,
