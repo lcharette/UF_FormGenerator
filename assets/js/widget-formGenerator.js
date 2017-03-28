@@ -230,4 +230,7 @@
         mainAlertElement: $('#alerts-page')
     };
 
+    $(".js-displayForm").formGenerator();
+    $(".js-displayConfirm").formGenerator('confirm');
+
 })( jQuery );
