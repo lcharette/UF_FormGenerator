@@ -1,6 +1,6 @@
 {
-    "name": "UF FormGenerator",
-    "type": "sprinkle",
+    "name": "lcharette/UF_FormGenerator",
+    "type": "userfrosting-sprinkle",
     "description": "Form generator for UserFrosting V4",
     "keywords": ["Form", "generator", "userfrosting"],
     "homepage": "https://github.com/lcharette/UF_FormGenerator",
@@ -13,11 +13,14 @@
     ],
     "version": "0.0.2",
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.6"
     },
     "autoload": {
         "psr-4": {
             "UserFrosting\\Sprinkle\\FormGenerator\\": "src/"
         }
+    },
+    "extra": {
+        "installer-name": "FormGenerator"
     }
 }
