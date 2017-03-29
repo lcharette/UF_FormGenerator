@@ -1,5 +1,5 @@
 {
-    "name": "lcharette/UF_FormGenerator",
+    "name": "lcharette/uf_formgenerator",
     "type": "userfrosting-sprinkle",
     "description": "Form generator for UserFrosting V4",
     "keywords": ["Form", "generator", "userfrosting"],
