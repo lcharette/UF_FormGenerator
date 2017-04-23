@@ -1,3 +1,4 @@
+{% block modal %}
 <div id='{{box_id}}' class='modal fade'>
   <div class="modal-dialog {% block modal_size %}{% endblock %}" role="document">
     <div class="modal-content">
@@ -39,6 +40,7 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+{% endblock %}
 
 {% block scripts_page %}
     <!-- Need to reload and reaply those since we're in modal -->
