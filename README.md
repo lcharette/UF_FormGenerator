@@ -1,6 +1,8 @@
 # Form Generator Sprinkle for UserFrosting 4
 This Sprinkle provides helper classes, Twig template and javascript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting/[validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
+> This version only work with UserFrosting 4.0.x !!
+
 ## Install
 `cd` into the sprinkle directory of UserFrosting and clone as submodule:
 ```
