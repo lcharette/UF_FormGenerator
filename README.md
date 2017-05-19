@@ -1,20 +1,15 @@
 # Form Generator Sprinkle for UserFrosting 4
 This Sprinkle provides helper classes, Twig template and javascript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting/[validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
-> This version only work with UserFrosting 4.0.x !!
+*This version only work with UserFrosting 4.1.x !!*
 
 ## Install
-`cd` into the sprinkle directory of UserFrosting and clone as submodule:
+Edit UserFrosting `app/sprinkles/sprinkles.json` file and add the following to the `require` list :
 ```
-git submodule add git@github.com:lcharette/UF_FormGenerator.git FormGenerator
+"lcharette/uf_formgenerator": "dev-develop"
 ```
 
-### Add to the sprinkle list
-Edit UserFrosting `app/sprinkles/sprinkles.json` file and add `FormGenerator` to the sprinkle list to enable it.
-
-### Update the assets build & composer
-From the UserFrosting `/build` folder, run `npm run uf-assets-install`
-You may also need to run `composer update` from the `app/` folder.
+Run `composer update` then `composer run-script bake` to install the sprinkle.
 
 # Features and usage
 Before starting with UfFormGenerator, you should read the main UserFrosting guide to familiarise yourself with _validation schemas_: (https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
