@@ -17,7 +17,7 @@
           </h4>
           <br>
           <div class='btn-group-action'>
-            {% include "components/csrf.html.twig" %}
+            {% include "forms/csrf.html.twig" %}
             <button type='button' class='btn btn-danger btn-lg btn-block js-confirm'>{% if confirm_button %}{{ translate(confirm_button) }}{% else %}{{translate("CONFIRM.YES")}}{% endif %}</button>
             <button type='button' class='btn btn-default btn-lg btn-block' data-dismiss='modal'>{% if cancel_button %}{{ translate(cancel_button) }}{% else %}{{translate("CANCEL")}}{% endif %}</button>
           </div>

@@ -174,7 +174,7 @@ Now it's time to display the form in `myPage.html.twig` !
 
 ```
 <form name="ModalFormGenerator" method="post" action="/Path/to/Controller/Handling/Form">
-    {% include "components/csrf.html.twig" %}
+    {% include "forms/csrf.html.twig" %}
     <div id="form-alerts"></div>
     <div class="row">
     	<div class="col-sm-8">
