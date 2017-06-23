@@ -17,55 +17,40 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
     protected $_formTypehead = array();
 
     /**
-     * __construct function.
-     * Overwrites the Fortress constructor so the file becomes optional
-     *
-     * @access public
-     * @param string $file (default: "")
-     * @return void
-     */
-    public function __construct($file = "")
-    {
-        if ($file !== "") {
-            $this->loadSchema($file);
-        }
-    }
-
-    /**
      * setSchema function.
      * Add a way to manually set the schema
      *
      * @access public
-     * @param mixed $schema
+     * @param mixed $items
      * @return void
      */
-    public function setSchema($schema)
+    public function setSchema($items)
     {
-        $this->schema = $schema;
+        $this->items = $items;
     }
 
     /**
      * prependSchema function.
      *
      * @access public
-     * @param mixed $schema
+     * @param mixed $items
      * @return void
      */
-    public function prependSchema($schema)
+    public function prependSchema($items)
     {
-        $this->schema = array_merge_recursive($schema, $this->schema);
+        $this->items = array_merge_recursive($items, $this->items);
     }
 
     /**
      * appendSchema function.
      *
      * @access public
-     * @param mixed $schema
+     * @param mixed $items
      * @return void
      */
-    public function appendSchema($schema)
+    public function appendSchema($items)
     {
-        $this->schema = array_merge_recursive($this->schema, $schema);
+        $this->items = array_merge_recursive($this->items, $items);
     }
 
     /**
@@ -77,9 +62,9 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
      */
     public function prependSchemaFile($file)
     {
-        $originalSchema = $this->schema;
+        $originalSchema = $this->items;
         $this->loadSchema($file);
-        $this->schema = array_merge_recursive($this->schema, $originalSchema);
+        $this->items = array_merge_recursive($this->items, $originalSchema);
     }
 
     /**
@@ -91,9 +76,9 @@ class RequestSchema extends \UserFrosting\Fortress\RequestSchema {
      */
     public function appendSchemaFile($file)
     {
-        $originalSchema = $this->schema;
+        $originalSchema = $this->items;
         $this->loadSchema($file);
-        $this->schema = array_merge_recursive($originalSchema, $this->schema);
+        $this->items = array_merge_recursive($originalSchema, $this->items);
     }
 
     /**
