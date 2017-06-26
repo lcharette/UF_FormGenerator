@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * UF Form Generator
+ *
+ * @link      https://github.com/lcharette/UF_FormGenerator
+ * @copyright Copyright (c) 2017 Louis Charette
+ * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
+ */
 namespace UserFrosting\Sprinkle\FormGenerator\Controller;
 
 use UserFrosting\Sprinkle\Core\Controller\SimpleController;
@@ -8,21 +14,11 @@ use UserFrosting\Sprinkle\Core\Controller\SimpleController;
  * FormGeneratorController Class
  *
  * Controller class for /forms/confirm/* URLs.  Handles rendering the confirm dialog
- *
- * @package FormGenerator
- * @author Louis Charette
- * @link https://github.com/lcharette/UF_FormGenerator
  */
 class FormGeneratorController extends SimpleController {
 
     /**
-     * confirm function.
-     *
-     * @access public
-     * @param mixed $request
-     * @param mixed $response
-     * @param mixed $args
-     * @return void
+     * Display the confirmation dialog
      */
     public function confirm($request, $response, $args) {
 		$this->ci->view->render($response, 'FormGenerator/confirm.html.twig', $request->getQueryParams());
