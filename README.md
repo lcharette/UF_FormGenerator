@@ -20,7 +20,7 @@ Edit UserFrosting `app/sprinkles.json` file and add the following to the `requir
 }
 ```
 
-Run `composer update` then `composer run-script bake` to install the sprinkle.
+Run `composer update` then `php bakery bake` to install the sprinkle.
 
 # Features and usage
 Before starting with UfFormGenerator, you should read the main UserFrosting guide to familiarise yourself with _validation schemas_: (https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
