@@ -97,8 +97,6 @@ class Form {
             $element = $this->schema->get($inputName);
             $element['form'][$property] = $data;
 
-            Debug::debug(print_r($element, true));
-
             // Push back the modifyed element in the schema
             $this->schema->set($inputName, $element);
         }
