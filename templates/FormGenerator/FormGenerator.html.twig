@@ -1,6 +1,5 @@
-{% import "FormGenerator/macros/bool.twig" as bool %}
+{% import "FormGenerator/macros/checkbox.twig" as checkbox %}
 {% import "FormGenerator/macros/textarea.twig" as textarea %}
-{% import "FormGenerator/macros/number.twig" as number %}
 {% import "FormGenerator/macros/select.twig" as select %}
 {% import "FormGenerator/macros/text.twig" as text %}
 {% import "FormGenerator/macros/hidden.twig" as hidden %}
@@ -8,9 +7,9 @@
 
 {% for name,input in fields %}
 	{% if input.type == "hidden" %}
-	    {{ hidden.generate(name, input) }}
+	    {{ hidden.generate(input) }}
     {% elseif input.type == "alert" %}
-        {{ alert.generate(name, input) }}
+        {{ alert.generate(input) }}
 	{% else %}
     	{% if not input.hidden %}
         <div class="form-group has-feedback">
@@ -19,13 +18,11 @@
             </label>
             {% if formLayout == 'horizontal' %}<div class="col-sm-10">{% endif %}
                 {% if input.type == "textarea" %}
-                    {{ textarea.generate(name, input) }}
-        		{% elseif input.type == "bool" %}
-                    {{ bool.generate(name, input) }}
-                {% elseif input.type == "number" %}
-                    {{ number.generate(name, input) }}
+                    {{ textarea.generate(input) }}
+        		{% elseif input.type == "checkbox" %}
+                    {{ checkbox.generate(input) }}
                 {% elseif input.type == "select" %}
-                    {{ select.generate(name, input) }}
+                    {{ select.generate(input) }}
                 {% else %}
                     {{ text.generate(input) }}
                 {% endif %}

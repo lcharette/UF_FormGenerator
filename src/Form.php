@@ -8,6 +8,7 @@
  */
 namespace UserFrosting\Sprinkle\FormGenerator;
 
+use Illuminate\Support\Str;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaInterface;
 use UserFrosting\Sprinkle\Core\Facades\Debug;
 
@@ -55,7 +56,7 @@ class Form {
      */
     public function setData($data)
     {
-        $this->data = $data;
+        $this->data = collect($data);
     }
 
     /**
@@ -77,7 +78,7 @@ class Form {
      * @return void
      */
     public function setValue($inputName, $value) {
-        $this->data[$inputName] = $value;
+        $this->data->put($inputName, $value);
     }
 
     /**
@@ -126,38 +127,36 @@ class Form {
      */
     public function generate() {
 
-        $form = [];
+        $form = collect([]);
 
+        // Loop all the the fields in the schema
         foreach ($this->schema->all() as $name => $input) {
+
+            // Skip the one that don't have a `form` definition
             if (isset($input['form'])) {
 
-	            /*foreach ($input['form'] as $argument => $value) {
-	            	Debug::debug("$argument => $value");
-	            	$input['form'][$argument] = $this->transformInput($argument, $value);
-				}*/
+                // Get the value from the data
+                $value = $this->data->get($name, null);
 
-                // Perfom data check and set default
-                $input['form']['label'] = isset($input['form']['label']) ? $input['form']['label'] : "";
+                // Add the namespace to the name if it's defined
+                $name = ($this->formNamespace != "") ? $this->formNamespace."[".$name."]" : $name;
 
-                // Add the value inside the form elements
-                if (isset($this->data->$name)) {
-                    $input['form']['value'] = $this->data->$name;
-                } else if (isset($this->data[$name])) {
-                    $input['form']['value'] = $this->data[$name];
+                // Get the element class and make sure it exist
+                $type = (isset($input['form']['type'])) ? $input['form']['type'] : "text";
+                $type = "UserFrosting\\Sprinkle\\FormGenerator\\Element\\" . Str::studly($type);
+                if (!class_exists($type)) {
+                    // Default to Text element
+                    $type = "UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text";
                 }
 
-                // The name of the field is usually the key, but we also add it to form
-                // in case we need to manipulate it
-                $input['form']['name'] = ($this->formNamespace != "") ? $this->formNamespace."[".$name."]" : $name;
+                // Create a new instance
+                $element = new $type($name, $input['form'], $value);
 
-                // Also need an id for that field
-                $input['form']['id'] = isset($input['form']['id']) ? $input['form']['id'] : "field_" . $input['form']['name'];
-
-                //Add the data
-                $form[$name] = $input['form'];
+                // Push data to `$form`
+                $form->put($name, $element->parse());
             }
         }
 
-        return $form;
+        return $form->toArray();
     }
 }
