@@ -128,28 +128,33 @@ class Form {
 
         $form = [];
 
-        foreach ($this->schema->all() as $name => $value) {
-            if (isset($value['form'])) {
+        foreach ($this->schema->all() as $name => $input) {
+            if (isset($input['form'])) {
+
+	            /*foreach ($input['form'] as $argument => $value) {
+	            	Debug::debug("$argument => $value");
+	            	$input['form'][$argument] = $this->transformInput($argument, $value);
+				}*/
 
                 // Perfom data check and set default
-                $value['form']['label'] = isset($value['form']['label']) ? $value['form']['label'] : "";
+                $input['form']['label'] = isset($input['form']['label']) ? $input['form']['label'] : "";
 
                 // Add the value inside the form elements
                 if (isset($this->data->$name)) {
-                    $value['form']['data'] = $this->data->$name;
+                    $input['form']['value'] = $this->data->$name;
                 } else if (isset($this->data[$name])) {
-                    $value['form']['data'] = $this->data[$name];
+                    $input['form']['value'] = $this->data[$name];
                 }
 
                 // The name of the field is usually the key, but we also add it to form
                 // in case we need to manipulate it
-                $value['form']['name'] = ($this->formNamespace != "") ? $this->formNamespace."[".$name."]" : $name;
+                $input['form']['name'] = ($this->formNamespace != "") ? $this->formNamespace."[".$name."]" : $name;
 
                 // Also need an id for that field
-                $value['form']['id'] = isset($value['form']['id']) ? $value['form']['id'] : "field_" . $value['form']['name'];
+                $input['form']['id'] = isset($input['form']['id']) ? $input['form']['id'] : "field_" . $input['form']['name'];
 
                 //Add the data
-                $form[$name] = $value['form'];
+                $form[$name] = $input['form'];
             }
         }
 
