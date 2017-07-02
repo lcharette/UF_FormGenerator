@@ -176,9 +176,9 @@ Now it's time to display the form in `myPage.html.twig` !
     {% include "forms/csrf.html.twig" %}
     <div id="form-alerts"></div>
     <div class="row">
-    	<div class="col-sm-8">
-		    {% include 'FormGenerator/FormGenerator.html.twig' %}
-    	</div>
+        <div class="col-sm-8">
+            {% include 'FormGenerator/FormGenerator.html.twig' %}
+        </div>
     </div>
     <div class="row">
       <button type="submit" class="btn btn-block btn-lg btn-success">Submit</button>
