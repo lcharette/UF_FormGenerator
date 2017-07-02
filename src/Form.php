@@ -56,7 +56,7 @@ class Form {
      */
     public function setData($data)
     {
-        $this->data = collect($data);
+        $this->data = $data;
     }
 
     /**
@@ -78,7 +78,7 @@ class Form {
      * @return void
      */
     public function setValue($inputName, $value) {
-        $this->data->put($inputName, $value);
+        $this->data[$inputName] = $value;
     }
 
     /**
@@ -136,7 +136,7 @@ class Form {
             if (isset($input['form'])) {
 
                 // Get the value from the data
-                $value = $this->data->get($name, null);
+                $value = isset($this->data[$name]) ? $this->data[$name] : null;
 
                 // Add the namespace to the name if it's defined
                 $name = ($this->formNamespace != "") ? $this->formNamespace."[".$name."]" : $name;
