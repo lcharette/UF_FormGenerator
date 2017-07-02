@@ -9,19 +9,21 @@
 namespace UserFrosting\Sprinkle\FormGenerator\Element;
 
 use UserFrosting\Sprinkle\FormGenerator\Element\BaseInput;
-use UserFrosting\Sprinkle\FormGenerator\Element\Text;
 
 /**
- * InputInterface
+ * Select input type class.
+ * Manage the default attributes required to display a select input type
  *
- * Interface for Form elements classes
+ * @extends BaseInput
  */
-class Select extends Text {
+class Select extends BaseInput {
 
+    /**
+     * {@inheritDoc}
+     */
     protected function applyTransformations()
     {
         $this->element = array_merge([
-            "label" => "",
             "class" => "form-control js-select2",
             "value" => $this->getValue(),
             "name" => $this->name,

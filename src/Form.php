@@ -144,8 +144,9 @@ class Form {
                 // Get the element class and make sure it exist
                 $type = (isset($input['form']['type'])) ? $input['form']['type'] : "text";
                 $type = "UserFrosting\\Sprinkle\\FormGenerator\\Element\\" . Str::studly($type);
+
+                // If class doesn't esist, default to Text element
                 if (!class_exists($type)) {
-                    // Default to Text element
                     $type = "UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text";
                 }
 

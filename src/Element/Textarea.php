@@ -9,19 +9,21 @@
 namespace UserFrosting\Sprinkle\FormGenerator\Element;
 
 use UserFrosting\Sprinkle\FormGenerator\Element\BaseInput;
-use UserFrosting\Sprinkle\FormGenerator\Element\Text;
 
 /**
- * InputInterface
+ * Textarea input type class.
+ * Manage the default attributes required to display a textarea input
  *
- * Interface for Form elements classes
+ * @extends BaseInput
  */
-class Textarea extends Text {
+class Textarea extends BaseInput {
 
+    /**
+     * {@inheritDoc}
+     */
     protected function applyTransformations()
     {
         $this->element = array_merge([
-            "label" => "",
             "autocomplete" => "off",
             "class" => "form-control",
             "value" => $this->getValue(),

@@ -9,19 +9,21 @@
 namespace UserFrosting\Sprinkle\FormGenerator\Element;
 
 use UserFrosting\Sprinkle\FormGenerator\Element\BaseInput;
-use UserFrosting\Sprinkle\FormGenerator\Element\Text;
 
 /**
- * InputInterface
+ * Checkbox input type class.
+ * Manage the default attributes required to display a checkbox input
  *
- * Interface for Form elements classes
+ * @extends BaseInput
  */
-class Checkbox extends Text {
+class Checkbox extends BaseInput {
 
+    /**
+     * {@inheritDoc}
+     */
     protected function applyTransformations()
     {
         $this->element = array_merge([
-            "label" => "",
             "class" => "js-icheck",
             "name" => $this->name,
             "id" => "field_" . $this->name

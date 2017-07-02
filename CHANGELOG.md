@@ -1,11 +1,12 @@
 # Change Log
 
 ## 2.1.0
-- Completely refactored how form fields are parsed, including how default value are defined.
+- Completely refactored how form fields are parsed, including how default value are defined. Each input type now defines it's own class for defining default values and transforming some input.
 - Twig templates updated to reflect the new parser. 
-- Twig macros changed from `*.generate(name, value)` to `*.generate(input)`
-- **`Bool` type changed to `checkbox`**
-- Removed the `number` Twig template (Will use the text input one)
+- Twig macros changed from `*.generate(name, value)` to `*.generate(input)`.
+- **`Bool` type changed to `checkbox`**.
+- Removed the `number` Twig template (Will use the text input one).
+- Added unit tests.
 - Support for any attributes in the schema. For example, if you need to add a data attribute to a field, your schema would be:
 ```
 "myField" : {

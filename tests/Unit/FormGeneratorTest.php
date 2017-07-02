@@ -393,7 +393,6 @@ class FormGeneratorTest extends TestCase
         // Test one of the form input
         $expected = [
             "type" => "foo",
-            "label" => "",
             "autocomplete" => "off",
             "class" => "form-control",
             'name' => 'myField',

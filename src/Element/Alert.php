@@ -9,15 +9,18 @@
 namespace UserFrosting\Sprinkle\FormGenerator\Element;
 
 use UserFrosting\Sprinkle\FormGenerator\Element\BaseInput;
-use UserFrosting\Sprinkle\FormGenerator\Element\Text;
 
 /**
- * InputInterface
+ * Alert input type class.
+ * Manage the default attributes required to display an alert
  *
- * Interface for Form elements classes
+ * @extends BaseInput
  */
-class Alert extends Text {
+class Alert extends BaseInput {
 
+    /**
+     * {@inheritDoc}
+     */
     protected function applyTransformations()
     {
         $this->element = array_merge([
@@ -27,6 +30,4 @@ class Alert extends Text {
             "name" => $this->name
         ], $this->element);
     }
-
-    //data-placeholder="{{translate(value.placeholder)}}"
 }
