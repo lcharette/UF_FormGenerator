@@ -21,6 +21,6 @@ class FormGeneratorController extends SimpleController {
      * Display the confirmation dialog
      */
     public function confirm($request, $response, $args) {
-		$this->ci->view->render($response, 'FormGenerator/confirm.html.twig', $request->getQueryParams());
+        $this->ci->view->render($response, 'FormGenerator/confirm.html.twig', $request->getQueryParams());
     }
 }

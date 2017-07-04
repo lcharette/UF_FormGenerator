@@ -1,5 +1,0 @@
-{% macro generate(name, value) %}
-    {% if value.icon %}<div class="input-group"><span class="input-group-addon"><i class="fa {{value.icon}}"></i></span>{% endif %}
-    <textarea class="{% if value.class %}{{value.class}}{% else %}form-control{% endif %}" name="{{value.name}}" id="{{value.id}}" autocomplete="off" rows="{{value.rows}}" placeholder="{{translate(value.placeholder)}}" {% if value.disabled %}disabled{% endif %}>{{value.data}}</textarea>
-	{% if value.icon %}</div>{% endif %}
-{% endmacro %}

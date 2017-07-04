@@ -1,5 +1,0 @@
-{% macro generate(name, value) %}
-    <div class="alert {% if value.class %}{{value.class}}{% else %}alert-danger{% endif %}">
-    {% if value.icon %}<i class="icon fa {{value.icon}}"></i> {% endif %}{{ translate(value.message) }}
-    </div>
-{% endmacro %}

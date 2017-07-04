@@ -1,0 +1,6 @@
+{% macro generate(input) %}
+    <div class="input-group">
+        {% if input.icon %}<span class="input-group-addon"><i class="fa {{input.icon}} fa-fw"></i></span>{% endif %}
+        <input{% for type,value in input %} {{type}}="{{value}}"{% endfor %}></input>
+    </div>
+{% endmacro %}

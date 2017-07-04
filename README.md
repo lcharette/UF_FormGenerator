@@ -4,12 +4,12 @@ This Sprinkle provides helper classes, Twig template and JavaScript plugins to g
 > This version only works with UserFrosting 4.1.x !
 
 ## Install
-Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "~2.0.0"`. Also add `FormGenerator` to the `base` list. For example:
+Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^2.0.0"`. Also add `FormGenerator` to the `base` list. For example:
 
 ```
 {
     "require": {
-        "lcharette/uf_formgenerator": "~2.0.0"
+        "lcharette/uf_formgenerator": "^2.0.0"
     },
     "base": [
         "core",
@@ -20,16 +20,16 @@ Edit UserFrosting `app/sprinkles.json` file and add the following to the `requir
 }
 ```
 
-Run `composer update` then `composer run-script bake` to install the sprinkle.
+Run `composer update` then `php bakery bake` to install the sprinkle.
 
 # Features and usage
-Before starting with UfFormGenerator, you should read the main UserFrosting guide to familiarise yourself with _validation schemas_: (https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
+Before starting with _FormGenerator_, you should read the main UserFrosting guide to familiarize yourself with _validation schemas_: (https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
 ## Form generation
 ### Defining the fields in the schema
-This sprinkle uses the `schemas` used by UserFrosting to validate form data to actually build form. To achieve this, a new `form` key is simply added to the fields found in a `schema` file. Let's skip the boring text and dive into an example.
+This sprinkle uses the `schemas` used by UserFrosting to validate form data to build form. To achieve this, a new `form` key is simply added to the fields found in a `schema` file. 
 
-Here's a simple `schema` used to validate a form used to create a `project`. The form will contain a `name`, `description` and `status` fields.
+For example, here's a simple `schema` used to validate a form used to create a `project`. The form will contain a `name`, `description` and `status` fields.
 
 ```
 {
@@ -61,11 +61,9 @@ Here's a simple `schema` used to validate a form used to create a `project`. The
     }
 }
 ```
-> Note: FormGenerator works with json and Yaml schemas.
+> Note: FormGenerator works with json and YAML schemas.
 
-At this point, with typical UserFrosting (or any framework) setup, you would be diving into your controller and twig files to manually create your HTML form. This can be easy if you have a handful of fields, but can be a pain with a dozen fields and more.
-
-This is where FormGenerator steps in with the use of a new `form` attribute. Let's add it to our `project` form :
+At this point, with typical UserFrosting setup, you would be going into your controller and Twig files to manually create your HTML form. This can be easy if you have a two or three fields, but can be a pain with a dozen fields and more. This is where FormGenerator steps in with the use of a new `form` attribute. Let's add it to our `project` form :
 
 ```
 {
@@ -130,24 +128,22 @@ Let's look closer at the `name` field :
 }
 ```
 
-Here you can see that we define the `type`, `label`, `icon` and `placeholder` value for this `name` field. You can define any standard [form attributes](http://www.w3schools.com/html/html_form_attributes.asp) plus the `icon` and `label`.
+Here you can see that we define the `type`, `label`, `icon` and `placeholder` value for this `name` field. You can define any standard [form attributes](http://www.w3schools.com/html/html_form_attributes.asp), plus the `icon`, `label` and `default` attributes. `data-*` attributes can also be defined in your schema if you need them. For the `select` element, a special `options` attribute containing an array of `key : value` can be used to define the dropdown options. The select options (as any other attributes) can also be set in PHP (see futher below).
 
-Currently, the following form elements are available:
-- input
+And of course, the values of the `label` and `placeholder` attributes can be defined using _translation keys_.
+
+Currently, FormGenerator supports the following form elements :
+- text (and any input supported by the HTML5 standard : number, tel, password, etc.)
 - textarea
 - select
-- bool (checkbox)
-- number
+- checkbox
 - hidden
-
-For the `select` element, a special `options` attribute containing an array of `key : value` can be used to define the
-
-Of course, all strings can be defined using _translation keys_.
+- alert (Display a static alert box in the form)
 
 ### The controller part
-Once your fields defined in the `schema` json file, you need to load that schema in your controller.
+Once your fields defined in the `schema` json or yaml file, you need to load that schema in your controller.
 
-First thing to do is add FormGenerator's `Form` class name space to your "use" list :
+First thing to do is add FormGenerator's `Form` class to your "use" list :
 `use UserFrosting\Sprinkle\FormGenerator\Form;`
 
 Next, where you load the schema and setup the `validator`, you simply add the new Form creation:
@@ -180,9 +176,9 @@ Now it's time to display the form in `myPage.html.twig` !
     {% include "forms/csrf.html.twig" %}
     <div id="form-alerts"></div>
     <div class="row">
-    	<div class="col-sm-8">
-		    {% include 'FormGenerator/FormGenerator.html.twig' %}
-    	</div>
+        <div class="col-sm-8">
+            {% include 'FormGenerator/FormGenerator.html.twig' %}
+        </div>
     </div>
     <div class="row">
       <button type="submit" class="btn btn-block btn-lg btn-success">Submit</button>
@@ -192,14 +188,54 @@ Now it's time to display the form in `myPage.html.twig` !
 
 That's it! No need to list all the field manually. The ones defined in the `fields` variable will be displayed by `FormGenerator/FormGenerator.html.twig`. Note that this will only load the fields, not the form itself. The `<form>` tag and `submit` button needs to be added manually.
 
+### Defining attributes in PHP
+
+#### setInputArgument
+
+Form field input attributes can also be added or edited from PHP. This can be usefull when dynamically defining a Select input options. To do this, simply use the `setInputArgument($inputName, $property, $data)` method. For example, to add a list to a `clients` select :
+
+```
+// Get clients from the db model
+$clients = Clients::all();
+
+$form = new Form($schema);
+$form->setInputArgument('clients', 'options', $clients);
+```
+
+#### setData
+
+If you want to set the form values once the form instance is created, you can use the `setData($data)` method:
+
+```
+$form = new Form($schema);
+$form->setData($clients, $project);
+```
+
+#### setValue
+
+Similar to the `setData` method, you can set a specific input value using the `setValue($inputName, $value)` method :
+
+```
+$currentClient = ...
+
+$form = new Form($schema, $project);
+$form->setValue('clients', $currentClient);
+```
+
+#### setFormNamespace
+
+When dealing with multiple form on the same page or a dynamic number of input (you can use the new `Loader` system in 4.1 to build dynamic schemas!), it can be useful to wrap form elements in an array using the `setFormNamespace($namespace)` method. This can also your the input names [to contains dot syntaxt](http://stackoverflow.com/a/20365198/445757). 
+
+For example, `$form->setFormNamespace("data");` will transform all the input names from `<input name="foo" [...] />` to `<input name="data[foo]" [...] />`.
+
 ## Modal form
-What if you want to show a form in a modal window? Well, it's even easier! It's basically three steps:
+What if you want to show a form in a modal window? Well, FormGenerator makes it even easier! It's basically three steps:
 1. Setup your form schema (described above)
 2. Setup the form in your controller
 3. Call the modal from your template
 
 ## Setup the form in your controller
-With your schema in hand, it's time to create a controller and route to load your modal. The controller code will be like the above with one exception: the `render` part. Example time!
+With your schema in hand, it's time to create a controller and route to load your modal. The controller code will be like any basic UserFrosting modal, plus the `$form` part above and one changes in the `render` part. For example :
 
 ```
 $this->ci->view->render($response, "FormGenerator/modal.html.twig", [
@@ -223,30 +259,24 @@ As you can see, instead of rendering your own Twig template, you simply have to 
 ## Call the modal from your template
 So at this point you have a controller that displays the modal at a `/path/to/controller` route. Time to show that modal. Again, two steps:
 
-First, define a link or a button that will call the modal when clicked:
+First, define a link or a button that will call the modal when clicked. For example :
 ```
 <button class="btn btn-success js-displayForm" data-toggle="modal" data-formUrl="/path/to/controller">Create</button>
 ```
 
 The important part here is the `data-formUrl` attribute. This is the route that will load your form. `js-displayForm` is used here to bind the button to the action.
 
-Second, load the JavaScript. Add this to your Twig file:
+Second, load the FormGenerator JavaScript widget. Add this to your Twig file:
 ```
 {% block scripts_page %}
-
-    <!-- Include page-specific JS -->
     {{ assets.js('js/FormGenerator') | raw }}
-
-    <script>
-        $(".js-displayForm").formGenerator();
-    </script>
 {% endblock %}
 ```
 
-The `js-displayForm` class is used to apply the `formGenerator` plugin to all button containing the `js-displayForm` class.
+By default, the `formGenerator` plugin will bind a modal to every element with the `js-displayForm` class.
 
 ## Modal confirmation
-One side features of FormGenerator is the ability to add a confirmation modal to your pages with simple HTML5 attributes.
+One side features of FormGenerator is the ability to add a confirmation modal to your pages with simple HTML5 attributes. The process is similar to adding a modal form, without the need to create any controller or route. 
 
 Let's look at a delete button / confirmation for our `project` :
 ```
@@ -259,21 +289,21 @@ data-toggle="modal"><i class="fa fa-trash-o"></i> Delete</a>
 ```
 (Note that content of data attributes can be translation keys)
 
-Now simply add the JavaScript function and add it to your button, using the `js-displayConfirm` class:
+If not aready done, make sure the FormGenerator assets are included in your template.
 ```
 {% block scripts_page %}
-
-    <!-- Include page-specific JS -->
     {{ assets.js('js/FormGenerator') | raw }}
-
-    <script>
-        $(".js-displayConfirm").formGenerator('confirm');
-    </script>
 {% endblock %}
 ```
 
+By default, the `formGenerator` plugin will bind a confirmation modal to every element with the `js-displayConfirm` class.
+
 # Working example
 See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorExample) repo for an example of the FormGenerator full code.
+
+# Running tests
+
+FormGenerator comes with some unit tests. Before submitting a new Pull Request, you need to make sure all tests are a go. With the sprinkle added to your UserFrosting installation, simply execute the `php bakery test` command to run the tests.
 
 # Licence
 By [Louis Charette](https://github.com/lcharette). Copyright (c) 2017, free to use in personal and commercial software as per the MIT license.

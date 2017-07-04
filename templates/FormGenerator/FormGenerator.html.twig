@@ -1,33 +1,30 @@
-{% import "FormGenerator/macros/bool.twig" as bool %}
-{% import "FormGenerator/macros/textarea.twig" as textarea %}
-{% import "FormGenerator/macros/number.twig" as number %}
-{% import "FormGenerator/macros/select.twig" as select %}
-{% import "FormGenerator/macros/text.twig" as text %}
-{% import "FormGenerator/macros/hidden.twig" as hidden %}
-{% import "FormGenerator/macros/alert.twig" as alert %}
+{% import "FormGenerator/macros/checkbox.html.twig" as checkbox %}
+{% import "FormGenerator/macros/textarea.html.twig" as textarea %}
+{% import "FormGenerator/macros/select.html.twig" as select %}
+{% import "FormGenerator/macros/text.html.twig" as text %}
+{% import "FormGenerator/macros/hidden.html.twig" as hidden %}
+{% import "FormGenerator/macros/alert.html.twig" as alert %}
 
-{% for name,value in fields %}
-	{% if value.type == "hidden" %}
-	    {{ hidden.generate(name, value) }}
-    {% elseif value.type == "alert" %}
-        {{ alert.generate(name, value) }}
-	{% else %}
-    	{% if not value.hidden %}
+{% for name,input in fields %}
+    {% if input.type == "hidden" %}
+        {{ hidden.generate(input) }}
+    {% elseif input.type == "alert" %}
+        {{ alert.generate(input) }}
+    {% else %}
+        {% if not input.hidden %}
         <div class="form-group has-feedback">
-            {% if formLayout == 'horizontal' %}<label for="{{value.id}}" class="col-sm-2 control-label">{% else %}<label for="{{value.id}}">{% endif %}
-                {% if value.label %}{{translate(value.label)}}{% else %}&nbsp;{% endif %}
+            {% if formLayout == 'horizontal' %}<label for="{{input.id}}" class="col-sm-2 control-label">{% else %}<label for="{{input.id}}">{% endif %}
+                {% if input.label %}{{translate(input.label)}}{% else %}&nbsp;{% endif %}
             </label>
             {% if formLayout == 'horizontal' %}<div class="col-sm-10">{% endif %}
-                {% if value.type == "textarea" %}
-                    {{ textarea.generate(name, value) }}
-        		{% elseif value.type == "bool" %}
-                    {{ bool.generate(name, value) }}
-                {% elseif value.type == "number" %}
-                    {{ number.generate(name, value) }}
-                {% elseif value.type == "select" %}
-                    {{ select.generate(name, value) }}
+                {% if input.type == "textarea" %}
+                    {{ textarea.generate(input) }}
+                {% elseif input.type == "checkbox" %}
+                    {{ checkbox.generate(input) }}
+                {% elseif input.type == "select" %}
+                    {{ select.generate(input) }}
                 {% else %}
-                    {{ text.generate(name, value) }}
+                    {{ text.generate(input) }}
                 {% endif %}
             {% if formLayout == 'horizontal' %}</div>{% endif %}
         </div>

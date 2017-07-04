@@ -58,24 +58,24 @@
 
         var button = this;
 
-    	var box_id = $(button).data('target');
-    	if (box_id == undefined) {
-    		box_id = "formGeneratorModal";
-    	}
+        var box_id = $(button).data('target');
+        if (box_id == undefined) {
+            box_id = "formGeneratorModal";
+        }
 
-    	// Delete any existing instance of the form with the same name
-    	if($('#' + box_id).length ) {
-    		$('#' + box_id).remove();
-    	}
+        // Delete any existing instance of the form with the same name
+        if($('#' + box_id).length ) {
+            $('#' + box_id).remove();
+        }
 
-    	// Fetch and render the form
-    	$.ajax({
-    	  type: "GET",
-    	  url: $(button).data('formurl'),
-    	  data: $.extend({box_id: box_id}, $(button).data()),
-    	  cache: false
-    	})
-    	.fail(function(result) {
+        // Fetch and render the form
+        $.ajax({
+          type: "GET",
+          url: $(button).data('formurl'),
+          data: $.extend({box_id: box_id}, $(button).data()),
+          cache: false
+        })
+        .fail(function(result) {
             // Display errors on failure
             if ((typeof site !== "undefined") && site.debug.ajax && result.responseText) {
                 document.write(result.responseText);
@@ -85,23 +85,23 @@
             // Display UF Alert system
             console.log("Error (" + result.status + "): " + result.responseText );
             options.mainAlertElement.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
-    	})
-    	.done(function(result) {
+        })
+        .done(function(result) {
 
             // Append the form as a modal dialog to the body
-    		$( "body" ).append(result);
-    		$('#' + box_id).modal('show');
+            $( "body" ).append(result);
+            $('#' + box_id).modal('show');
 
-    		var boxMsgTarget = $("#"+box_id+" #form-alerts");
+            var boxMsgTarget = $("#"+box_id+" #form-alerts");
 
-    		// Show the alert. We could have info alert coming in
-    		if (!boxMsgTarget.data('ufAlerts')) {
+            // Show the alert. We could have info alert coming in
+            if (!boxMsgTarget.data('ufAlerts')) {
                 boxMsgTarget.ufAlerts();
             }
             boxMsgTarget.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
 
-    		// Setup the loaded form with ufForm
-    		$('#' + box_id).find("form").ufForm({
+            // Setup the loaded form with ufForm
+            $('#' + box_id).find("form").ufForm({
                 validators: validators,
                 msgTarget: $("#"+box_id+" #form-alerts")
             }).on("submitSuccess.ufForm", function() {
@@ -110,7 +110,7 @@
             }).on("submitError.ufForm", function(error) {
                 $("#"+box_id+" #form-alerts").show();
             });
-    	});
+        });
     }
 
     /**
@@ -128,33 +128,33 @@
 
         var button = this;
 
-    	var box_id = $(button).data('target');
-    	if (box_id == undefined) {
-    		box_id = "formGeneratorModal";
-    	}
+        var box_id = $(button).data('target');
+        if (box_id == undefined) {
+            box_id = "formGeneratorModal";
+        }
 
-    	// Delete any existing instance of the form with the same name
-    	if($('#' + box_id).length ) {
-    		$('#' + box_id).remove();
-    	}
+        // Delete any existing instance of the form with the same name
+        if($('#' + box_id).length ) {
+            $('#' + box_id).remove();
+        }
 
-    	//Prepare the data
-    	var data = $.extend({
-    		box_id: box_id,
-    		box_title: $(button).data('confirmTitle') ? $(button).data('confirmTitle') : null,
-    		confirm_message: $(button).data('confirmMessage') ? $(button).data('confirmMessage') : null,
-    		confirm_warning: $(button).data('confirmWarning') ? $(button).data('confirmWarning') : null,
-    		confirm_button: $(button).data('confirmButton') ? $(button).data('confirmButton') : null,
-    		cancel_button: $(button).data('cancelButton') ? $(button).data('cancelButton') : null
-    	}, $(button).data());
+        //Prepare the data
+        var data = $.extend({
+            box_id: box_id,
+            box_title: $(button).data('confirmTitle') ? $(button).data('confirmTitle') : null,
+            confirm_message: $(button).data('confirmMessage') ? $(button).data('confirmMessage') : null,
+            confirm_warning: $(button).data('confirmWarning') ? $(button).data('confirmWarning') : null,
+            confirm_button: $(button).data('confirmButton') ? $(button).data('confirmButton') : null,
+            cancel_button: $(button).data('cancelButton') ? $(button).data('cancelButton') : null
+        }, $(button).data());
 
-    	// Generate the form
-    	$.ajax({
-    	  type: "GET",
-    	  url: $(button).data('formurl') ? $(button).data('formurl') : site['uri']['public'] + "/forms/confirm",
-    	  data: data
-    	})
-    	.fail(function(result) {
+        // Generate the form
+        $.ajax({
+          type: "GET",
+          url: $(button).data('formurl') ? $(button).data('formurl') : site['uri']['public'] + "/forms/confirm",
+          data: data
+        })
+        .fail(function(result) {
             // Display errors on failure
             if ((typeof site !== "undefined") && site.debug.ajax && result.responseText) {
                 document.write(result.responseText);
@@ -164,12 +164,12 @@
             // Display UF Alert system
             console.log("Error (" + result.status + "): " + result.responseText );
             options.mainAlertElement.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
-    	})
-    	.done(function(result) {
-    		// Append the form as a modal dialog to the body
-    		$( "body" ).append(result);
-    		$('#' + box_id).modal('show');
-    		$('#' + box_id + ' .js-confirm').click(function(){
+        })
+        .done(function(result) {
+            // Append the form as a modal dialog to the body
+            $( "body" ).append(result);
+            $('#' + box_id).modal('show');
+            $('#' + box_id + ' .js-confirm').click(function(){
 
                 var url = $(button).data('postUrl');
                 var method = ($(button).data('postMethod')) ? $(button).data('postMethod') : "POST";
@@ -206,7 +206,7 @@
                     $('#' + box_id).modal('hide');
                 });
             });
-    	});
+        });
     }
 
     /*
