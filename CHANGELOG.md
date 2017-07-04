@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.1.1
+- Fix issue with the select macro
+
 ## 2.1.0
 - Completely refactored how form fields are parsed, including how default value are defined. Each input type now defines it's own class for defining default values and transforming some input.
 - Twig templates updated to reflect the new parser. 
