@@ -1,9 +1,9 @@
-{% import "FormGenerator/macros/checkbox.twig" as checkbox %}
-{% import "FormGenerator/macros/textarea.twig" as textarea %}
-{% import "FormGenerator/macros/select.twig" as select %}
-{% import "FormGenerator/macros/text.twig" as text %}
-{% import "FormGenerator/macros/hidden.twig" as hidden %}
-{% import "FormGenerator/macros/alert.twig" as alert %}
+{% import "FormGenerator/macros/checkbox.html.twig" as checkbox %}
+{% import "FormGenerator/macros/textarea.html.twig" as textarea %}
+{% import "FormGenerator/macros/select.html.twig" as select %}
+{% import "FormGenerator/macros/text.html.twig" as text %}
+{% import "FormGenerator/macros/hidden.html.twig" as hidden %}
+{% import "FormGenerator/macros/alert.html.twig" as alert %}
 
 {% for name,input in fields %}
     {% if input.type == "hidden" %}
