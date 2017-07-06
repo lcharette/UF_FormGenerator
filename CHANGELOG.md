@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.1.2
+- Fix warning with select macro
+
 ## 2.1.1
 - Fix issue with the select macro
 - Renamed macro templates with the `*.html.twig` extension 
