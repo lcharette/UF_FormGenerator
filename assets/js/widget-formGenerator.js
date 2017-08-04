@@ -105,8 +105,16 @@
                 validators: validators,
                 msgTarget: $("#"+box_id+" #form-alerts")
             }).on("submitSuccess.ufForm", function() {
+
+                $(button).trigger("success.FormGenerator");
+
                 // Forward to settings page on success
-                window.location.reload(true);
+                if (options.redirectAfterSuccess) {
+                    window.location.reload(true);
+                } else {
+                    $('#' + box_id).modal('hide');
+                    options.mainAlertElement.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
+                }
             }).on("submitError.ufForm", function(error) {
                 $("#"+box_id+" #form-alerts").show();
             });
@@ -128,6 +136,7 @@
 
         var button = this;
 
+        // Use a default box_id if none is setup
         var box_id = $(button).data('target');
         if (box_id == undefined) {
             box_id = "formGeneratorModal";
@@ -155,6 +164,7 @@
           data: data
         })
         .fail(function(result) {
+
             // Display errors on failure
             if ((typeof site !== "undefined") && site.debug.ajax && result.responseText) {
                 document.write(result.responseText);
@@ -185,12 +195,19 @@
                   data: data
                 }).done(function(result)
                 {
-                    if (result.redirect) {
-                        window.location.replace(result.redirect);
+                    if (options.redirectAfterSuccess) {
+                        if (result.redirect) {
+                            window.location.replace(result.redirect);
+                        } else {
+                            // Reload the page
+                            window.location.reload(true);
+                        }
                     } else {
-                        // Reload the page
-                        window.location.reload(true);
+                        $('#' + box_id).modal('hide');
+                        options.mainAlertElement.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
                     }
+                    $(button).trigger("success.FormGenerator");
+
                 }).fail(function(jqXHR) {
                     if ((typeof site !== "undefined") && site.debug.ajax && jqXHR.responseText) {
                         document.write(jqXHR.responseText);
@@ -227,7 +244,8 @@
      * Default plugin options
      */
     $.fn.formGenerator.defaultOptions = {
-        mainAlertElement: $('#alerts-page')
+        mainAlertElement: $('#alerts-page'),
+        redirectAfterSuccess: true
     };
 
     $(".js-displayForm").formGenerator();
