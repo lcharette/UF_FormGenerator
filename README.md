@@ -1,9 +1,15 @@
-# Form Generator Sprinkle for UserFrosting 4
+# Form Generator Sprinkle for [UserFrosting 4](https://www.userfrosting.com)
 This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting/[validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
 > This version only works with UserFrosting 4.1.x !
 
-## Install
+# Help and Contributing
+
+If you need help using this sprinkle or found any bug, feels free to open an issue or submit a pull request. You can also find me on the [UserFrosting Chat](https://chat.userfrosting.com/) most of the time for direct support. 
+
+<a href='https://ko-fi.com/A7052ICP' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+# Installation
 Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^2.0.0"`. Also add `FormGenerator` to the `base` list. For example:
 
 ```
@@ -299,6 +305,7 @@ If not aready done, make sure the FormGenerator assets are included in your temp
 By default, the `formGenerator` plugin will bind a confirmation modal to every element with the `js-displayConfirm` class.
 
 # Working example
+
 See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorExample) repo for an example of the FormGenerator full code.
 
 # Running tests
@@ -306,4 +313,5 @@ See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorE
 FormGenerator comes with some unit tests. Before submitting a new Pull Request, you need to make sure all tests are a go. With the sprinkle added to your UserFrosting installation, simply execute the `php bakery test` command to run the tests.
 
 # Licence
+
 By [Louis Charette](https://github.com/lcharette). Copyright (c) 2017, free to use in personal and commercial software as per the MIT license.
