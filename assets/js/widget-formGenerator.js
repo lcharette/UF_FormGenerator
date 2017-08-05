@@ -51,7 +51,7 @@
          * Bind the confirm action to the button
          */
         confirm: function() {
-            this.$elements.on('click', $.proxy(this._fetchConfirmForm, this));
+            this.$elements.on('click', $.proxy(this._fetchConfirmModal, this));
             return this.$elements;
         },
         /**
@@ -117,7 +117,6 @@
             .on("submitSuccess.ufForm", $.proxy(this._formPostSuccess, this, box_id, button))
             .on("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id));
         },
-
         /**
          * Action done when a form is successful
          */
@@ -134,11 +133,10 @@
                 this.settings.mainAlertElement.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
             }
         },
-
         /**
-         *
+         * Fetch confirmation modal
          */
-        _fetchConfirmForm: function(event) {
+        _fetchConfirmModal: function(event) {
 
             // Get the button element
             var button = event.currentTarget;
@@ -174,7 +172,9 @@
             .fail($.proxy(this._displayFailure, this, button))
             .done($.proxy(this._displayConfirmation, this, box_id, button));
         },
-
+        /**
+         * Display confirmation modal
+         */
         _displayConfirmation: function(box_id, button, data) {
 
             // Trigger pre-display event
@@ -186,8 +186,9 @@
 
             $('#' + box_id + ' .js-confirm').on('click', $.proxy(this._sendConfirmation, this, box_id, button));
         },
-
-
+        /**
+         * Send confirmation  query
+         */
         _sendConfirmation: function(box_id, button) {
 
             // Prepare payload
@@ -208,9 +209,8 @@
             .done("submitSuccess.ufForm", $.proxy(this._confirmationSuccess, this, box_id, button))
             .fail("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id));
         },
-
          /**
-         * Action done when a form is successful
+         * Action done when a confirmation request is successful
          */
         _confirmationSuccess: function(box_id, button, result) {
 
@@ -231,9 +231,8 @@
                 this.settings.mainAlertElement.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
             }
         },
-
         /**
-         * Failure callback for fetch. Displays the error in the main alertElement
+         * Failure callback for ajax requests. Displays the error in the main alertElement
          */
         _displayFailure: function(button, response) {
             $(button).trigger("error." + this._name);
@@ -247,14 +246,12 @@
                 this.settings.mainAlertElement.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
             }
         },
-
         /**
-         *
+         * Faillure callback for ajax requests to be displayed in a modal form
          */
         _displayFormFaillure: function(box_id) {
             $("#"+box_id+" #form-alerts").show();
         },
-
         /**
          * Completely destroy the ufAlerts plugin on the element.
          */
@@ -274,6 +271,11 @@
 
     // Handles instantiation and access to non-private methods.
     $.fn[pluginName] = function(methodOrOptions) {
+
+        // If the plugin is called on a non existing element, return nothing
+        if (this.length == 0) {
+            return this;
+        }
 
         // Grab plugin instance
         var instance = $(this).data(pluginName);
@@ -312,4 +314,9 @@
             $.error( 'Method ' +  method + ' does not exist.' );
         }
     };
+
+    // Apply on default selector
+    $(".js-displayForm").formGenerator();
+    $(".js-displayConfirm").formGenerator('confirm');
+
 })(jQuery, window, document);
