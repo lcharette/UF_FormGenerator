@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.2.0
+- Refactored the javascript plugin
+- Added new events
+- Added new `redirectAfterSuccess` boolean option
+
 ## 2.1.2
 - Fix warning with select macro
 
