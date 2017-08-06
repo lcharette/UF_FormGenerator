@@ -32,9 +32,6 @@
         // Detect changes to element attributes
         this.$elements.attrchange({ callback: function (event) { this.elements = event.target; }.bind(this) });
 
-        // Plugin variables
-        this._newDataPromise = $.Deferred().resolve();
-
         return this;
     }
 
@@ -115,7 +112,7 @@
                 msgTarget: $("#"+box_id+" #form-alerts")
             })
             .on("submitSuccess.ufForm", $.proxy(this._formPostSuccess, this, box_id, button))
-            .on("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id));
+            .on("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id, button));
         },
         /**
          * Action done when a form is successful
@@ -207,7 +204,7 @@
               data: data
             })
             .done("submitSuccess.ufForm", $.proxy(this._confirmationSuccess, this, box_id, button))
-            .fail("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id));
+            .fail("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id, button));
         },
          /**
          * Action done when a confirmation request is successful
@@ -249,7 +246,8 @@
         /**
          * Faillure callback for ajax requests to be displayed in a modal form
          */
-        _displayFormFaillure: function(box_id) {
+        _displayFormFaillure: function(box_id, button) {
+            $(button).trigger("error." + this._name);
             $("#"+box_id+" #form-alerts").show();
         },
         /**

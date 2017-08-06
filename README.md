@@ -134,7 +134,7 @@ Let's look closer at the `name` field :
 }
 ```
 
-Here you can see that we define the `type`, `label`, `icon` and `placeholder` value for this `name` field. You can define any standard [form attributes](http://www.w3schools.com/html/html_form_attributes.asp), plus the `icon`, `label` and `default` attributes. `data-*` attributes can also be defined in your schema if you need them. For the `select` element, a special `options` attribute containing an array of `key : value` can be used to define the dropdown options. The select options (as any other attributes) can also be set in PHP (see futher below).
+Here you can see that we define the `type`, `label`, `icon` and `placeholder` value for this `name` field. You can define any standard [form attributes](http://www.w3schools.com/html/html_form_attributes.asp), plus the `icon`, `label` and `default` attributes. `data-*` attributes can also be defined in your schema if you need them. For the `select` element, a special `options` attribute containing an array of `key : value` can be used to define the dropdown options. The select options (as any other attributes) can also be set in PHP (see further below).
 
 And of course, the values of the `label` and `placeholder` attributes can be defined using _translation keys_.
 
@@ -194,6 +194,79 @@ Now it's time to display the form in `myPage.html.twig` !
 
 That's it! No need to list all the field manually. The ones defined in the `fields` variable will be displayed by `FormGenerator/FormGenerator.html.twig`. Note that this will only load the fields, not the form itself. The `<form>` tag and `submit` button needs to be added manually.
 
+## Modal form
+What if you want to show a form in a modal window? Well, FormGenerator makes it even easier! It's basically three steps:
+1. Setup your form schema (described above)
+2. Setup the form in your controller
+3. Call the modal from your template
+
+### Setup the form in your controller
+With your schema in hand, it's time to create a controller and route to load your modal. The controller code will be like any basic UserFrosting modal, plus the `$form` part above and one changes in the `render` part. For example :
+
+```
+$this->ci->view->render($response, "FormGenerator/modal.html.twig", [
+    "box_id" => $get['box_id'],
+    "box_title" => "PROJECT.CREATE",
+    "submit_button" => "CREATE",
+    "form_action" => '/project/create',
+    "fields" => $form->generate(),
+    "validators" => $validator->rules('json', true)
+]);
+```
+
+As you can see, instead of rendering your own Twig template, you simply have to specify FormGenerator's modal template. This template requires the following variables:
+1. `box_id`: This should always be `$get['box_id']`. This is used by the JavaScript code to actually display the modal.
+2. `box_title`: The title of the modal.
+3. `submit_button`: The label of the submit button. Optional. Default to `SUBMIT` (localized).
+4. `form_action`: The route where the form will be sent
+5. `fields`: The fields. Should always be `$form->generate()`
+6. `validators`: Client side validators
+
+### Call the modal from your template
+So at this point you have a controller that displays the modal at a `/path/to/controller` route. Time to show that modal. Again, two steps:
+
+First, define a link or a button that will call the modal when clicked. For example :
+```
+<button class="btn btn-success js-displayForm" data-toggle="modal" data-formUrl="/path/to/controller">Create</button>
+```
+
+The important part here is the `data-formUrl` attribute. This is the route that will load your form. `js-displayForm` is used here to bind the button to the action.
+
+Second, load the FormGenerator JavaScript widget. Add this to your Twig file:
+```
+{% block scripts_page %}
+    {{ assets.js('js/FormGenerator') | raw }}
+{% endblock %}
+```
+
+By default, the `formGenerator` plugin will bind a **form modal** to every element with the `js-displayForm` class.
+
+## Modal confirmation
+
+One side features of FormGenerator is the ability to add a confirmation modal to your pages with simple HTML5 attributes. The process is similar to adding a modal form, without the need to create any controller or route. 
+
+Let's look at a delete button / confirmation for our `project` :
+```
+<a href="#" class="btn btn-danger js-displayConfirm"
+  data-confirm-title="Delete project ?"
+  data-confirm-message="Are you sure you want to delete this project?"
+  data-confirm-button="Yes, delete project"
+  data-post-url="/porject/delete"
+data-toggle="modal"><i class="fa fa-trash-o"></i> Delete</a>
+```
+(Note that content of data attributes can be translation keys)
+
+If not aready done, make sure the FormGenerator assets are included in your template.
+```
+{% block scripts_page %}
+    {{ assets.js('js/FormGenerator') | raw }}
+{% endblock %}
+```
+
+By default, the `formGenerator` plugin will bind a **confirmation modal** to every element with the `js-displayConfirm` class.
+
+## Advance usage
+
 ### Defining attributes in PHP
 
 #### setInputArgument
@@ -234,75 +307,37 @@ When dealing with multiple form on the same page or a dynamic number of input (y
 
 For example, `$form->setFormNamespace("data");` will transform all the input names from `<input name="foo" [...] />` to `<input name="data[foo]" [...] />`.
 
-## Modal form
-What if you want to show a form in a modal window? Well, FormGenerator makes it even easier! It's basically three steps:
-1. Setup your form schema (described above)
-2. Setup the form in your controller
-3. Call the modal from your template
+### Javascript Plugin
 
-## Setup the form in your controller
-With your schema in hand, it's time to create a controller and route to load your modal. The controller code will be like any basic UserFrosting modal, plus the `$form` part above and one changes in the `render` part. For example :
+By default, the `formGenerator` plugin will bind a **form modal** to every element with the `js-displayForm` class and will bind a **confirmation modal** to every element with the `js-displayConfirm` class. You can 
 
+#### Options
+The following options are available:
+
+Just pass an object with those 
+ - `mainAlertElement` (jQuery element). The element on the main page where the main alerts will be displayed. Default to `$('#alerts-page')`.
+ - `redirectAfterSuccess` (bool). If set to true, the page will reload when the form submission or confirmation is succesful. Default to `true`.
+
+Example:
 ```
-$this->ci->view->render($response, "FormGenerator/modal.html.twig", [
-    "box_id" => $get['box_id'],
-    "box_title" => "PROJECT.CREATE",
-    "submit_button" => "CREATE",
-    "form_action" => '/project/create',
-    "fields" => $form->generate(),
-    "validators" => $validator->rules('json', true)
-]);
+$(".project-edit-button").formGenerator({redirectAfterSuccess: false});
 ```
 
-As you can see, instead of rendering your own Twig template, you simply have to specify FormGenerator's modal template. This template requires the following variables:
-1. `box_id`: This should always be `$get['box_id']`. This is used by the JavaScript code to actually display the modal.
-2. `box_title`: The title of the modal.
-3. `submit_button`: The label of the submit button. Optional. Default to `SUBMIT` (localized).
-4. `form_action`: The route where the form will be sent
-5. `fields`: The fields. Should always be `$form->generate()`
-6. `validators`: Client side validators
+#### Events
+You can listen for some events returned by FormGenerator. Those events can be used to apply some actions when the modal is displayed or the form is successfully sent. For example, this is can be used with `redirectAfterSuccess` on `false` to refresh the data on the page when the form is submitted successfully. 
 
-## Call the modal from your template
-So at this point you have a controller that displays the modal at a `/path/to/controller` route. Time to show that modal. Again, two steps:
+- `formSuccess.formGenerator`
+- `displayForm.formGenerator`
+- `displayConfirmation.formGenerator`
+- `confirmSuccess.formGenerator`
+- `error.formGenerator`
 
-First, define a link or a button that will call the modal when clicked. For example :
+Example:
 ```
-<button class="btn btn-success js-displayForm" data-toggle="modal" data-formUrl="/path/to/controller">Create</button>
+$(".project-edit-button").on("formSuccess.formGenerator", function () {
+    // Refresh data
+});
 ```
-
-The important part here is the `data-formUrl` attribute. This is the route that will load your form. `js-displayForm` is used here to bind the button to the action.
-
-Second, load the FormGenerator JavaScript widget. Add this to your Twig file:
-```
-{% block scripts_page %}
-    {{ assets.js('js/FormGenerator') | raw }}
-{% endblock %}
-```
-
-By default, the `formGenerator` plugin will bind a modal to every element with the `js-displayForm` class.
-
-## Modal confirmation
-One side features of FormGenerator is the ability to add a confirmation modal to your pages with simple HTML5 attributes. The process is similar to adding a modal form, without the need to create any controller or route. 
-
-Let's look at a delete button / confirmation for our `project` :
-```
-<a href="#" class="btn btn-danger js-displayConfirm"
-  data-confirm-title="Delete project ?"
-  data-confirm-message="Are you sure you want to delete this project?"
-  data-confirm-button="Yes, delete project"
-  data-post-url="/porject/delete"
-data-toggle="modal"><i class="fa fa-trash-o"></i> Delete</a>
-```
-(Note that content of data attributes can be translation keys)
-
-If not aready done, make sure the FormGenerator assets are included in your template.
-```
-{% block scripts_page %}
-    {{ assets.js('js/FormGenerator') | raw }}
-{% endblock %}
-```
-
-By default, the `formGenerator` plugin will bind a confirmation modal to every element with the `js-displayConfirm` class.
 
 # Working example
 
