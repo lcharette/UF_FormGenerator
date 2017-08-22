@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.2.1
+- Initialize ufAlert if not already done
+
 ## 2.2.0
 - Refactored the javascript plugin
 - Added new events

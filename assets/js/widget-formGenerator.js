@@ -32,6 +32,11 @@
         // Detect changes to element attributes
         this.$elements.attrchange({ callback: function (event) { this.elements = event.target; }.bind(this) });
 
+        // Initialise ufAlerts
+        if (!this.settings.mainAlertElement.data('ufAlerts')) {
+            this.settings.mainAlertElement.ufAlerts();
+        }
+
         return this;
     }
 
