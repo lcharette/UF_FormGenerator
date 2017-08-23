@@ -2,6 +2,7 @@
 
 ## 2.2.1
 - Initialize ufAlert if not already done
+- Autofocus first form field when modal is displayed
 
 ## 2.2.0
 - Refactored the javascript plugin

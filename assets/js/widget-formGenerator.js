@@ -18,7 +18,8 @@
         defaults = {
             DEBUG                   : false,
             mainAlertElement        : $('#alerts-page'),
-            redirectAfterSuccess    : true
+            redirectAfterSuccess    : true,
+            autofocusModalElement   : true
         };
 
     // Constructor
@@ -101,6 +102,13 @@
             // Append the form as a modal dialog to the body
             $( "body" ).append(data);
             $('#' + box_id).modal('show');
+
+            // Set focus on first element
+            if (this.settings.autofocusModalElement) {
+                $('#' + box_id).on('shown.bs.modal', function () {
+                    $(this).find(".modal-body").find(':input:enabled:visible:first').focus();
+                });
+            }
 
             // Setup ufAlerts
             var boxMsgTarget = $("#"+box_id+" #form-alerts");
