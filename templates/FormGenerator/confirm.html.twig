@@ -8,8 +8,7 @@
           <h4 class='modal-title'>{% if box_title %}{{ translate(box_title) }}{% else %}{{translate("CONFIRM")}}{% endif %}</h4>
         </div>
         <div class='modal-body'>
-          <div class='dialog-alert'>
-          </div>
+          <div id="confirmation-alerts"></div>
           <h4>
             {% if confirm_message %}{{ translate(confirm_message) }}{% else %}{{translate("CONFIRM.MESSAGE")}}{% endif %}
             <br />

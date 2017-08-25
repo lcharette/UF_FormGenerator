@@ -88,8 +88,8 @@
                 data: payload,
                 cache: false
             })
-            .fail($.proxy(this._displayFailure, this, button))
-            .done($.proxy(this._displayForm, this, box_id, button));
+            .done($.proxy(this._displayForm, this, box_id, button))
+            .fail($.proxy(this._displayFailure, this, button));
         },
         /**
          * Displays the form modal and set up ufForm
@@ -179,8 +179,8 @@
                 data: payload,
                 cache: false
             })
-            .fail($.proxy(this._displayFailure, this, button))
-            .done($.proxy(this._displayConfirmation, this, box_id, button));
+            .done($.proxy(this._displayConfirmation, this, box_id, button))
+            .fail($.proxy(this._displayFailure, this, button));
         },
         /**
          * Display confirmation modal
@@ -216,8 +216,8 @@
               url: url,
               data: data
             })
-            .done("submitSuccess.ufForm", $.proxy(this._confirmationSuccess, this, box_id, button))
-            .fail("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id, button));
+            .done($.proxy(this._confirmationSuccess, this, box_id, button))
+            .fail($.proxy(this._displayConfirmationFaillure, this, box_id, button));
         },
          /**
          * Action done when a confirmation request is successful
@@ -262,6 +262,21 @@
         _displayFormFaillure: function(box_id, button) {
             $(button).trigger("error." + this._name);
             $("#"+box_id+" #form-alerts").show();
+        },
+        /**
+         * Faillure callback for ajax requests to be displayed in a confirmation form
+         */
+        _displayConfirmationFaillure: function(box_id, button) {
+            $(button).trigger("error." + this._name);
+
+            // Setup ufAlerts
+            var boxMsgTarget = $("#"+box_id+" #confirmation-alerts");
+
+            // Show the alert. We could have info alert coming in
+            if (!boxMsgTarget.data('ufAlerts')) {
+                boxMsgTarget.ufAlerts();
+            }
+            boxMsgTarget.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
         },
         /**
          * Completely destroy the ufAlerts plugin on the element.

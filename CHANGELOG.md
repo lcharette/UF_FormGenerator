@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.2.2
+- Fix issue with error alert no displaying on confirmation dialog
+
 ## 2.2.1
 - Initialize ufAlert if not already done
 - Autofocus first form field when modal is displayed
