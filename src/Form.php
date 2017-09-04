@@ -111,17 +111,19 @@ class Form {
      *
      * @access public
      * @param string $inputName The select name to add options to
-     * @param array $data       An array of `value => label` options
+     * @param array  $data      An array of `value => label` options
      * @param string $selected  The selected key
      * @return void
      */
-    public function setOptions($inputName, $data, $selected)
+    public function setOptions($inputName, $data = [], $selected = null)
     {
         // Set opdations
         $this->setInputArgument($inputName, 'options', $data);
 
         // Set the value
-        $this->setValue($inputName, $selected);
+        if (!is_null($selected)) {
+            $this->setValue($inputName, $selected);
+        }
     }
 
     /**
