@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.2.3
+- New `$form->setOptions` function to set options of a select element. Shortcut for using `setInputArgument` and `setValue`.
+
 ## 2.2.2
 - Fix issue with error alert no displaying on confirmation dialog
 
