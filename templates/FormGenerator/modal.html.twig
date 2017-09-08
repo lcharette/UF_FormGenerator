@@ -19,7 +19,7 @@
                     {% if "submit" not in buttons.hidden %}
                     <div class="col-xs-8 col-sm-4">
                         <div class="vert-pad">
-                            <button type="submit" class="btn btn-block btn-lg btn-success js-submit">
+                            <button type="submit" class="btn btn-block btn-lg btn-success js-submit"{% if 'submit' in buttons.disabled %} disabled{% endif %}>
                                 {% if submit_button %}{{ translate(submit_button) }}{% else %}{{translate("SUBMIT")}}{% endif %}
                             </button>
                         </div>
@@ -28,7 +28,9 @@
                     {% if "cancel" not in buttons.hidden %}
                     <div class="col-xs-4 col-sm-3 pull-right">
                         <div class="vert-pad">
-                            <button type="button" class="btn btn-block btn-lg btn-link" data-dismiss="modal">{{translate("CANCEL")}}</button>
+                            <button type="button" class="btn btn-block btn-lg btn-link" data-dismiss="modal"{% if 'cancel' in buttons.disabled %} disabled{% endif %}>
+                                {{ translate("CANCEL") }}
+                            </button>
                         </div>
                     </div>
                     {% endif %}

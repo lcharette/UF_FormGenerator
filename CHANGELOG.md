@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.2.4
+- Add necessary HTML to disable submit and cancel button in modal form.
+
 ## 2.2.3
 - New `$form->setOptions` function to set options of a select element. Shortcut for using `setInputArgument` and `setValue`.
 
