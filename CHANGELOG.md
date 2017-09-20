@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.2.5
+- Added `binary` option for checkbox to disable UF binary checkbox system (bool; default true).
+
 ## 2.2.4
 - Add necessary HTML to disable submit and cancel button in modal form.
 
@@ -23,11 +26,11 @@
 
 ## 2.1.1
 - Fix issue with the select macro
-- Renamed macro templates with the `*.html.twig` extension 
+- Renamed macro templates with the `*.html.twig` extension
 
 ## 2.1.0
 - Completely refactored how form fields are parsed, including how default value are defined. Each input type now defines it's own class for defining default values and transforming some input.
-- Twig templates updated to reflect the new parser. 
+- Twig templates updated to reflect the new parser.
 - Twig macros changed from `*.generate(name, value)` to `*.generate(input)`.
 - **`Bool` type changed to `checkbox`**.
 - Removed the `number` Twig template (Will use the text input one).

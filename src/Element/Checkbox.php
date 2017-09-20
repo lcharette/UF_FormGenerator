@@ -30,7 +30,7 @@ class Checkbox extends BaseInput {
         ], $this->element);
 
         // We add the check status instead of the value
-        if ($this->getValue() == 1) {
+        if ($this->element["binary"] !== false && $this->getValue() == 1) {
             $this->element["checked"] = "checked";
         }
     }
