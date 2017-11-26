@@ -2,6 +2,7 @@
 
 ## 2.2.6
 - Fix issue with `binary` checkbox tests.
+- Fix Text input style when no icon is added
 
 ## 2.2.5
 - Added `binary` option for checkbox to disable UF binary checkbox system (bool; default true).
