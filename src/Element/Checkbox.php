@@ -26,7 +26,8 @@ class Checkbox extends BaseInput {
         $this->element = array_merge([
             "class" => "js-icheck",
             "name" => $this->name,
-            "id" => "field_" . $this->name
+            "id" => "field_" . $this->name,
+            "binary" => true
         ], $this->element);
 
         // We add the check status instead of the value

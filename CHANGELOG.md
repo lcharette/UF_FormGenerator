@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.2.6
+- Fix issue with `binary` checkbox tests.
+
 ## 2.2.5
 - Added `binary` option for checkbox to disable UF binary checkbox system (bool; default true).
 
