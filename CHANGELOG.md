@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.2.7
+- Added `modal-large` template file.
+
 ## 2.2.6
 - Fix issue with `binary` checkbox tests.
 - Fix Text input style when no icon is added
