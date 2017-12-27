@@ -1,5 +1,8 @@
 # Change Log
 
+##2.2.8
+- Fix icon in textarea macro
+
 ## 2.2.7
 - Added `modal-large` template file.
 
