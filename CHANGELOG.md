@@ -1,6 +1,9 @@
 # Change Log
 
-##2.2.8
+## 2.2.9
+- Fix issue when setting data that is a collection 
+
+## 2.2.8
 - Fix icon in textarea macro
 
 ## 2.2.7

@@ -56,7 +56,11 @@ class Form {
      */
     public function setData($data)
     {
-        $this->data = $data;
+        if (is_array($data)) {
+            $this->data = $data;
+        } else {
+            $this->data = $data->toArray();
+        }
     }
 
     /**
