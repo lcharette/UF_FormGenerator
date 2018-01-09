@@ -130,10 +130,10 @@
         /**
          * Action done when a form is successful
          */
-        _formPostSuccess: function(box_id, button) {
+        _formPostSuccess: function(box_id, button, event, data) {
 
             // Trigger success event
-            $(button).trigger("formSuccess." + this._name);
+            $(button).trigger("formSuccess." + this._name, data);
 
             // Refresh page or close modal
             if (this.settings.redirectAfterSuccess) {
@@ -222,17 +222,17 @@
          /**
          * Action done when a confirmation request is successful
          */
-        _confirmationSuccess: function(box_id, button, result) {
+        _confirmationSuccess: function(box_id, button, data) {
 
             // Trigger success event
-            $(button).trigger("confirmSuccess." + this._name);
+            $(button).trigger("confirmSuccess." + this._name, data);
 
             // Refresh page or close modal
             if (this.settings.redirectAfterSuccess) {
 
                 // Redirect if result contains intrusctions to
-                if (result.redirect) {
-                    window.location.replace(result.redirect);
+                if (data.redirect) {
+                    window.location.replace(data.redirect);
                 } else {
                     window.location.reload(true);
                 }

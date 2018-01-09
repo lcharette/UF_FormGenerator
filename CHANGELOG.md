@@ -1,7 +1,8 @@
 # Change Log
 
 ## 2.2.9
-- Fix issue when setting data that is a collection 
+- Fix issue when setting data that is a collection
+- `formSuccess` and `confirmSuccess` events now include the request data as a second argument
 
 ## 2.2.8
 - Fix icon in textarea macro
