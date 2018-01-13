@@ -2,7 +2,7 @@
     "bundle": {
         "js/FormGenerator": {
             "scripts": [
-                "vendor/bootstrap3-typeahead/bootstrap3-typeahead.js",
+                "vendor/bootstrap-3-typeahead/bootstrap3-typeahead.js",
                 "js/widget-formGenerator.js"
             ],
             "options": {
