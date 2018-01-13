@@ -56,7 +56,11 @@ class Form {
      */
     public function setData($data)
     {
-        $this->data = $data;
+        if (is_array($data)) {
+            $this->data = $data;
+        } else {
+            $this->data = $data->toArray();
+        }
     }
 
     /**
@@ -77,7 +81,8 @@ class Form {
      * @param mixed $value
      * @return void
      */
-    public function setValue($inputName, $value) {
+    public function setValue($inputName, $value)
+    {
         $this->data[$inputName] = $value;
     }
 
@@ -92,7 +97,8 @@ class Form {
      * @param string $data      The value of the argument
      * @return void
      */
-    public function setInputArgument($inputName, $property, $data) {
+    public function setInputArgument($inputName, $property, $data)
+    {
         if ($this->schema->has($inputName)) {
             // Get the element and force set the property
             $element = $this->schema->get($inputName);
@@ -100,6 +106,27 @@ class Form {
 
             // Push back the modifyed element in the schema
             $this->schema->set($inputName, $element);
+        }
+    }
+
+    /**
+     * Function used to set options of a select element. Shortcut for using
+     * `setInputArgument` and `setValue`.
+     *
+     * @access public
+     * @param string $inputName The select name to add options to
+     * @param array  $data      An array of `value => label` options
+     * @param string $selected  The selected key
+     * @return void
+     */
+    public function setOptions($inputName, $data = [], $selected = null)
+    {
+        // Set opdations
+        $this->setInputArgument($inputName, 'options', $data);
+
+        // Set the value
+        if (!is_null($selected)) {
+            $this->setValue($inputName, $selected);
         }
     }
 
@@ -125,8 +152,8 @@ class Form {
      * @access public
      * @return array The form fields data
      */
-    public function generate() {
-
+    public function generate()
+    {
         $form = collect([]);
 
         // Loop all the the fields in the schema

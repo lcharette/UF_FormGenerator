@@ -18,7 +18,8 @@
         defaults = {
             DEBUG                   : false,
             mainAlertElement        : $('#alerts-page'),
-            redirectAfterSuccess    : true
+            redirectAfterSuccess    : true,
+            autofocusModalElement   : true
         };
 
     // Constructor
@@ -31,6 +32,11 @@
 
         // Detect changes to element attributes
         this.$elements.attrchange({ callback: function (event) { this.elements = event.target; }.bind(this) });
+
+        // Initialise ufAlerts
+        if (!this.settings.mainAlertElement.data('ufAlerts')) {
+            this.settings.mainAlertElement.ufAlerts();
+        }
 
         return this;
     }
@@ -82,8 +88,8 @@
                 data: payload,
                 cache: false
             })
-            .fail($.proxy(this._displayFailure, this, button))
-            .done($.proxy(this._displayForm, this, box_id, button));
+            .done($.proxy(this._displayForm, this, box_id, button))
+            .fail($.proxy(this._displayFailure, this, button));
         },
         /**
          * Displays the form modal and set up ufForm
@@ -96,6 +102,13 @@
             // Append the form as a modal dialog to the body
             $( "body" ).append(data);
             $('#' + box_id).modal('show');
+
+            // Set focus on first element
+            if (this.settings.autofocusModalElement) {
+                $('#' + box_id).on('shown.bs.modal', function () {
+                    $(this).find(".modal-body").find(':input:enabled:visible:first').focus();
+                });
+            }
 
             // Setup ufAlerts
             var boxMsgTarget = $("#"+box_id+" #form-alerts");
@@ -117,10 +130,10 @@
         /**
          * Action done when a form is successful
          */
-        _formPostSuccess: function(box_id, button) {
+        _formPostSuccess: function(box_id, button, event, data) {
 
             // Trigger success event
-            $(button).trigger("formSuccess." + this._name);
+            $(button).trigger("formSuccess." + this._name, data);
 
             // Refresh page or close modal
             if (this.settings.redirectAfterSuccess) {
@@ -166,8 +179,8 @@
                 data: payload,
                 cache: false
             })
-            .fail($.proxy(this._displayFailure, this, button))
-            .done($.proxy(this._displayConfirmation, this, box_id, button));
+            .done($.proxy(this._displayConfirmation, this, box_id, button))
+            .fail($.proxy(this._displayFailure, this, button));
         },
         /**
          * Display confirmation modal
@@ -203,23 +216,23 @@
               url: url,
               data: data
             })
-            .done("submitSuccess.ufForm", $.proxy(this._confirmationSuccess, this, box_id, button))
-            .fail("submitError.ufForm", $.proxy(this._displayFormFaillure, this, box_id, button));
+            .done($.proxy(this._confirmationSuccess, this, box_id, button))
+            .fail($.proxy(this._displayConfirmationFaillure, this, box_id, button));
         },
          /**
          * Action done when a confirmation request is successful
          */
-        _confirmationSuccess: function(box_id, button, result) {
+        _confirmationSuccess: function(box_id, button, data) {
 
             // Trigger success event
-            $(button).trigger("confirmSuccess." + this._name);
+            $(button).trigger("confirmSuccess." + this._name, data);
 
             // Refresh page or close modal
             if (this.settings.redirectAfterSuccess) {
 
                 // Redirect if result contains intrusctions to
-                if (result.redirect) {
-                    window.location.replace(result.redirect);
+                if (data.redirect) {
+                    window.location.replace(data.redirect);
                 } else {
                     window.location.reload(true);
                 }
@@ -249,6 +262,21 @@
         _displayFormFaillure: function(box_id, button) {
             $(button).trigger("error." + this._name);
             $("#"+box_id+" #form-alerts").show();
+        },
+        /**
+         * Faillure callback for ajax requests to be displayed in a confirmation form
+         */
+        _displayConfirmationFaillure: function(box_id, button) {
+            $(button).trigger("error." + this._name);
+
+            // Setup ufAlerts
+            var boxMsgTarget = $("#"+box_id+" #confirmation-alerts");
+
+            // Show the alert. We could have info alert coming in
+            if (!boxMsgTarget.data('ufAlerts')) {
+                boxMsgTarget.ufAlerts();
+            }
+            boxMsgTarget.ufAlerts('clear').ufAlerts('fetch').ufAlerts('render');
         },
         /**
          * Completely destroy the ufAlerts plugin on the element.

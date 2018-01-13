@@ -232,7 +232,8 @@ class FormGeneratorTest extends TestCase
                 'class' => 'js-icheck',
                 'name' => 'active',
                 'id' => 'field_active',
-                'type' => 'checkbox'
+                'type' => 'checkbox',
+                'binary' => true
             ],
             'hidden' => [
                 'value' => 'Something',
@@ -349,7 +350,8 @@ class FormGeneratorTest extends TestCase
                 'name' => 'active',
                 'id' => 'field_active',
                 'type' => 'checkbox',
-                'checked' => 'checked' //Value here !
+                'checked' => 'checked', //Value here !
+                'binary' => true
             ],
             'hidden' => [
                 'value' => 'Something',
