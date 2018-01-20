@@ -8,9 +8,10 @@
  */
 namespace UserFrosting\Sprinkle\FormGenerator;
 
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaInterface;
-use UserFrosting\Sprinkle\Core\Facades\Debug;
 
 /**
  * Form Class
@@ -38,7 +39,6 @@ class Form {
     /**
      * Constructor
      *
-     * @access public
      * @param RequestSchemaInterface $schema
      * @param array|object $data (default: [])
      * @return void
@@ -56,10 +56,12 @@ class Form {
      */
     public function setData($data)
     {
-        if (is_array($data)) {
+        if ($data instanceof Collection || $data instanceof Model) {
+            $this->data = $data->toArray();
+        } else if (is_array($data)) {
             $this->data = $data;
         } else {
-            $this->data = $data->toArray();
+            throw new \InvalidArgumentException("Data must be an array or a Collection");
         }
     }
 
@@ -76,7 +78,6 @@ class Form {
     /**
      * Use to define the value of a form input when `setData` is already set
      *
-     * @access public
      * @param mixed $inputName
      * @param mixed $value
      * @return void
@@ -91,7 +92,6 @@ class Form {
      * Can also be used to overwrite an argument hardcoded in the Twig file.
      * Use `setCustomFormData` to set any other tag.
      *
-     * @access public
      * @param string $inputName The input name where the argument will be added
      * @param string $property  The argument name. Example "data-color"
      * @param string $data      The value of the argument
@@ -113,7 +113,6 @@ class Form {
      * Function used to set options of a select element. Shortcut for using
      * `setInputArgument` and `setValue`.
      *
-     * @access public
      * @param string $inputName The select name to add options to
      * @param array  $data      An array of `value => label` options
      * @param string $selected  The selected key
@@ -136,7 +135,6 @@ class Form {
      * Useful when using multiple schemas at once or if the names are using dot syntaxt.
      * See : http://stackoverflow.com/a/20365198/445757
      *
-     * @access public
      * @param string $namespace
      * @return void
      */
@@ -149,7 +147,6 @@ class Form {
      * Generate an array contining all nececerry value to generate a form
      * with Twig.
      *
-     * @access public
      * @return array The form fields data
      */
     public function generate()
