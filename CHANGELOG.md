@@ -1,8 +1,11 @@
 # Change Log
 
-## 3.0.0
-- Support for UserFrosting 4.2
+## 3.0.0-beta2
 - Added `successCallback` option
+- Fix typo in README
+
+## 3.0.0-beta1
+- Support for UserFrosting 4.2
 
 ## 2.2.9
 - Fix issue when setting data that is a collection
