@@ -20,7 +20,7 @@
             mainAlertElement        : $('#alerts-page'),
             redirectAfterSuccess    : true,
             autofocusModalElement   : true,
-            successCallback         : function() {}
+            successCallback         : function(data) {}
         };
 
     // Constructor
@@ -137,7 +137,7 @@
             $(button).trigger("formSuccess." + this._name, data);
 
             // Use the callback
-            this.settings.successCallback();
+            this.settings.successCallback(data);
 
             // Refresh page or close modal
             if (this.settings.redirectAfterSuccess) {
@@ -232,7 +232,7 @@
             $(button).trigger("confirmSuccess." + this._name, data);
 
             // Use the callback
-            this.settings.successCallback();
+            this.settings.successCallback(data);
 
             // Refresh page or close modal
             if (this.settings.redirectAfterSuccess) {
