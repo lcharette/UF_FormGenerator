@@ -346,6 +346,16 @@ See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorE
 
 FormGenerator comes with some unit tests. Before submitting a new Pull Request, you need to make sure all tests are a go. With the sprinkle added to your UserFrosting installation, simply execute the `php bakery test` command to run the tests.
 
+# Versions and UserFrosting support
+
+FormGenerator version goes up one major version (2.x.x -> 3.x.x) when moving to a new minor or major version (4.1.x -> 4.2.x) of UserFrosting is released. Breaking changes inside FormGenerator itself trigger a new minor version (FG 2.0.x -> 2.1.x) while normal path makes FormGenerator to go up one revision number (2.1.2 -> 2.1.3).
+
+| UserFrosting Version | FormGenerator Version |
+|----------------------|-----------------------|
+|         4.2.x        |         3.x.x         |
+|         4.1.x        |         2.x.x         |
+|        < 4.0.x       |       No Support      |
+
 # Licence
 
 By [Louis Charette](https://github.com/lcharette). Copyright (c) 2017, free to use in personal and commercial software as per the MIT license.
