@@ -1,5 +1,9 @@
 # Change Log
 
+## 3.0.0
+- Support for UserFrosting 4.2
+- Added `successCallback` option
+
 ## 2.2.9
 - Fix issue when setting data that is a collection
 - `formSuccess` and `confirmSuccess` events now include the request data as a second argument
