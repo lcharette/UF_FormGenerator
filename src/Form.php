@@ -8,8 +8,9 @@
  */
 namespace UserFrosting\Sprinkle\FormGenerator;
 
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaInterface;
 
@@ -58,10 +59,10 @@ class Form {
     {
         if ($data instanceof Collection || $data instanceof Model) {
             $this->data = $data->toArray();
-        } else if (is_array($data)) {
+        } else if (is_array($data) || $data instanceof Repository) {
             $this->data = $data;
         } else {
-            throw new \InvalidArgumentException("Data must be an array or a Collection");
+            throw new \InvalidArgumentException("Data must be an array, a Collection, a Model or a Repository");
         }
     }
 

@@ -7,6 +7,9 @@
 ## 3.0.0-beta1
 - Support for UserFrosting 4.2
 
+## 2.2.10
+- Added support for Repository
+
 ## 2.2.9
 - Fix issue when setting data that is a collection
 - `formSuccess` and `confirmSuccess` events now include the request data as a second argument
