@@ -1,13 +1,14 @@
 # Form Generator Sprinkle for [UserFrosting 4](https://www.userfrosting.com)
+
+[![Build Status](https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master)](https://travis-ci.org/lcharette/UF_FormGenerator) [![UserFrosting Version](https://img.shields.io/badge/UserFrosting->=%204.1-brightgreen.svg)](https://github.com/userfrosting/UserFrosting) [![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-brightgreen.svg)](https://ko-fi.com/A7052ICP)
+
 This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting/[validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
 > This version only works with UserFrosting 4.1.x !
 
 # Help and Contributing
 
-If you need help using this sprinkle or found any bug, feels free to open an issue or submit a pull request. You can also find me on the [UserFrosting Chat](https://chat.userfrosting.com/) most of the time for direct support. 
-
-<a href='https://ko-fi.com/A7052ICP' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+If you need help using this sprinkle or found any bug, feels free to open an issue or submit a pull request. You can also find me on the [UserFrosting Chat](https://chat.userfrosting.com/) most of the time for direct support.
 
 # Installation
 Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^2.0.0"`. Also add `FormGenerator` to the `base` list. For example:
@@ -33,7 +34,7 @@ Before starting with _FormGenerator_, you should read the main UserFrosting guid
 
 ## Form generation
 ### Defining the fields in the schema
-This sprinkle uses the `schemas` used by UserFrosting to validate form data to build form. To achieve this, a new `form` key is simply added to the fields found in a `schema` file. 
+This sprinkle uses the `schemas` used by UserFrosting to validate form data to build form. To achieve this, a new `form` key is simply added to the fields found in a `schema` file.
 
 For example, here's a simple `schema` used to validate a form used to create a `project`. The form will contain a `name`, `description` and `status` fields.
 
@@ -243,7 +244,7 @@ By default, the `formGenerator` plugin will bind a **form modal** to every eleme
 
 ## Modal confirmation
 
-One side features of FormGenerator is the ability to add a confirmation modal to your pages with simple HTML5 attributes. The process is similar to adding a modal form, without the need to create any controller or route. 
+One side features of FormGenerator is the ability to add a confirmation modal to your pages with simple HTML5 attributes. The process is similar to adding a modal form, without the need to create any controller or route.
 
 Let's look at a delete button / confirmation for our `project` :
 ```
@@ -303,18 +304,18 @@ $form->setValue('clients', $currentClient);
 
 #### setFormNamespace
 
-When dealing with multiple form on the same page or a dynamic number of input (you can use the new `Loader` system in 4.1 to build dynamic schemas!), it can be useful to wrap form elements in an array using the `setFormNamespace($namespace)` method. This can also your the input names [to contains dot syntaxt](http://stackoverflow.com/a/20365198/445757). 
+When dealing with multiple form on the same page or a dynamic number of input (you can use the new `Loader` system in 4.1 to build dynamic schemas!), it can be useful to wrap form elements in an array using the `setFormNamespace($namespace)` method. This can also your the input names [to contains dot syntaxt](http://stackoverflow.com/a/20365198/445757).
 
 For example, `$form->setFormNamespace("data");` will transform all the input names from `<input name="foo" [...] />` to `<input name="data[foo]" [...] />`.
 
 ### Javascript Plugin
 
-By default, the `formGenerator` plugin will bind a **form modal** to every element with the `js-displayForm` class and will bind a **confirmation modal** to every element with the `js-displayConfirm` class. You can 
+By default, the `formGenerator` plugin will bind a **form modal** to every element with the `js-displayForm` class and will bind a **confirmation modal** to every element with the `js-displayConfirm` class. You can
 
 #### Options
 The following options are available:
 
-Just pass an object with those 
+Just pass an object with those
  - `mainAlertElement` (jQuery element). The element on the main page where the main alerts will be displayed. Default to `$('#alerts-page')`.
  - `redirectAfterSuccess` (bool). If set to true, the page will reload when the form submission or confirmation is succesful. Default to `true`.
 
@@ -324,7 +325,7 @@ $(".project-edit-button").formGenerator({redirectAfterSuccess: false});
 ```
 
 #### Events
-You can listen for some events returned by FormGenerator. Those events can be used to apply some actions when the modal is displayed or the form is successfully sent. For example, this is can be used with `redirectAfterSuccess` on `false` to refresh the data on the page when the form is submitted successfully. 
+You can listen for some events returned by FormGenerator. Those events can be used to apply some actions when the modal is displayed or the form is successfully sent. For example, this is can be used with `redirectAfterSuccess` on `false` to refresh the data on the page when the form is submitted successfully.
 
 - `formSuccess.formGenerator`
 - `displayForm.formGenerator`

@@ -1,0 +1,46 @@
+sudo: false
+dist: trusty
+language: php
+
+services:
+  - mysql
+  - postgresql
+
+php:
+  - 5.6
+  - 7
+  - 7.1
+  - 7.2
+
+env:
+  matrix:
+    - DB=mysql
+    - DB=sqlite
+    - DB=pgsql
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  # clone UserFrosting
+  - cd ../
+  - git clone https://github.com/userfrosting/UserFrosting.git
+  - cd UserFrosting
+  # move and add sprinkle
+  - mv ../UF_FormGenerator app/sprinkles/FormGenerator/
+  - echo "{\"base\":[\"core\",\"account\",\"admin\",\"FormGenerator\"]}" > app/sprinkles.json
+  # set up db
+  - bash ./app/sprinkles/FormGenerator/.travis/before_install.sh $DB
+
+before_script:
+  # install deps and UF
+  - composer install
+  - php bakery migrate
+
+script:
+  # run unit tests
+  - composer test
+
+after_failure:
+  - cat app/log/userfrosting.log
