@@ -1,6 +1,6 @@
 # Form Generator Sprinkle for [UserFrosting 4](https://www.userfrosting.com)
 
-[![Build Status](https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master)](https://travis-ci.org/lcharette/UF_FormGenerator) [![UserFrosting Version](https://img.shields.io/badge/UserFrosting->=%204.1-brightgreen.svg)](https://github.com/userfrosting/UserFrosting) [![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-brightgreen.svg)](https://ko-fi.com/A7052ICP)
+[![Build Status](https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master)](https://travis-ci.org/lcharette/UF_FormGenerator) [![StyleCI](https://github.styleci.io/repos/68563337/shield?branch=master)](https://github.styleci.io/repos/68563337) [![UserFrosting Version](https://img.shields.io/badge/UserFrosting->=%204.1-brightgreen.svg)](https://github.com/userfrosting/UserFrosting) [![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-brightgreen.svg)](https://ko-fi.com/A7052ICP)
 
 This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting/[validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
