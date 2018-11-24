@@ -31,7 +31,7 @@ before_script:
 
 script:
   # run unit tests
-  - app/vendor/bin/phpunit -c app/sprinkles/FormGenerator/phpunit.xml --coverage-clover=coverage.xml
+  - app/vendor/bin/phpunit -c app/sprinkles/FormGenerator/phpunit.xml --coverage-clover=app/sprinkles/FormGenerator/coverage.xml
 
 after_failure:
   - cat app/log/userfrosting.log
