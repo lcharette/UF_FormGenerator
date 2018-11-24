@@ -37,4 +37,5 @@ after_failure:
   - cat app/log/userfrosting.log
 
 after_success:
+    - cd app/sprinkles/FormGenerator/
     - bash <(curl -s https://codecov.io/bash)
