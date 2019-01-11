@@ -2,7 +2,7 @@
 
 [![UserFrosting Version](https://img.shields.io/badge/UserFrosting->=%204.2-brightgreen.svg)](https://github.com/userfrosting/UserFrosting)
 [![Build Status](https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master)](https://travis-ci.org/lcharette/UF_FormGenerator)
-[![StyleCI](https://github.styleci.io/repos/68563337/shield?branch=master)](https://github.styleci.io/repos/68563337)
+[![StyleCI](https://github.styleci.io/repos/68563337/shield?branch=master&style=flat)](https://github.styleci.io/repos/68563337)
 [![codecov](https://codecov.io/gh/lcharette/UF_FormGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/lcharette/UF_FormGenerator)
 [![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue.svg)](https://ko-fi.com/A7052ICP)
 
