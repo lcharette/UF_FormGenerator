@@ -1,11 +1,14 @@
 <?php
-/**
- * UF Form Generator
+
+/*
+ * UF Form Generator.
  *
- * @link      https://github.com/lcharette/UF_FormGenerator
+ * @link https://github.com/lcharette/UF_FormGenerator
+ *
  * @copyright Copyright (c) 2017 Louis Charette
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
+
 namespace UserFrosting\Sprinkle\FormGenerator;
 
 use Illuminate\Contracts\Config\Repository;
@@ -15,13 +18,13 @@ use Illuminate\Support\Str;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaInterface;
 
 /**
- * Form Class
+ * Form Class.
  *
  * The FormGenerator class, which is used to return the `form` part from a Fortress
  * schema for html form generator in Twig.
  */
-class Form {
-
+class Form
+{
     /**
      * @var RequestSchemaInterface The form fields definition
      */
@@ -35,13 +38,14 @@ class Form {
     /**
      * @var string Use this to wrap form fields in top-level array
      */
-    protected $formNamespace = "";
+    protected $formNamespace = '';
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param RequestSchemaInterface $schema
-     * @param array|object $data (default: [])
+     * @param array|object           $data   (default: [])
+     *
      * @return void
      */
     public function __construct(RequestSchemaInterface $schema, $data = [])
@@ -51,7 +55,7 @@ class Form {
     }
 
     /**
-     * Set the form current values
+     * Set the form current values.
      *
      * @param array|object $data The form values
      */
@@ -59,10 +63,10 @@ class Form {
     {
         if ($data instanceof Collection || $data instanceof Model) {
             $this->data = $data->toArray();
-        } else if (is_array($data) || $data instanceof Repository) {
+        } elseif (is_array($data) || $data instanceof Repository) {
             $this->data = $data;
         } else {
-            throw new \InvalidArgumentException("Data must be an array, a Collection, a Model or a Repository");
+            throw new \InvalidArgumentException('Data must be an array, a Collection, a Model or a Repository');
         }
     }
 
@@ -77,10 +81,11 @@ class Form {
     }
 
     /**
-     * Use to define the value of a form input when `setData` is already set
+     * Use to define the value of a form input when `setData` is already set.
      *
      * @param mixed $inputName
      * @param mixed $value
+     *
      * @return void
      */
     public function setValue($inputName, $value)
@@ -96,6 +101,7 @@ class Form {
      * @param string $inputName The input name where the argument will be added
      * @param string $property  The argument name. Example "data-color"
      * @param string $data      The value of the argument
+     *
      * @return void
      */
     public function setInputArgument($inputName, $property, $data)
@@ -117,6 +123,7 @@ class Form {
      * @param string $inputName The select name to add options to
      * @param array  $data      An array of `value => label` options
      * @param string $selected  The selected key
+     *
      * @return void
      */
     public function setOptions($inputName, $data = [], $selected = null)
@@ -134,9 +141,10 @@ class Form {
      * Function to set the form namespace.
      * Use the form namespace to wrap the fields name in a top level array.
      * Useful when using multiple schemas at once or if the names are using dot syntaxt.
-     * See : http://stackoverflow.com/a/20365198/445757
+     * See : http://stackoverflow.com/a/20365198/445757.
      *
      * @param string $namespace
+     *
      * @return void
      */
     public function setFormNamespace($namespace)
@@ -164,15 +172,15 @@ class Form {
                 $value = isset($this->data[$name]) ? $this->data[$name] : null;
 
                 // Add the namespace to the name if it's defined
-                $name = ($this->formNamespace != "") ? $this->formNamespace."[".$name."]" : $name;
+                $name = ($this->formNamespace != '') ? $this->formNamespace.'['.$name.']' : $name;
 
                 // Get the element class and make sure it exist
-                $type = (isset($input['form']['type'])) ? $input['form']['type'] : "text";
-                $type = "UserFrosting\\Sprinkle\\FormGenerator\\Element\\" . Str::studly($type);
+                $type = (isset($input['form']['type'])) ? $input['form']['type'] : 'text';
+                $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\'.Str::studly($type);
 
                 // If class doesn't esist, default to Text element
                 if (!class_exists($type)) {
-                    $type = "UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text";
+                    $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text';
                 }
 
                 // Create a new instance

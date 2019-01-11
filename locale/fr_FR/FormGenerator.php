@@ -1,14 +1,23 @@
 <?php
 
+/*
+ * UF Form Generator.
+ *
+ * @link https://github.com/lcharette/UF_FormGenerator
+ *
+ * @copyright Copyright (c) 2017 Louis Charette
+ * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
+ */
+
 return [
 
-    "CONFIRM" => [
-        "@TRANSLATION" => "Confirmer l'action",
+    'CONFIRM' => [
+        '@TRANSLATION' => "Confirmer l'action",
 
-        "MESSAGE" => "Êtes-vous certain de vouloir faire ceci?",
+        'MESSAGE' => 'Êtes-vous certain de vouloir faire ceci?',
 
-        "WARNING" => "Cette action ne peut pas être annulée.",
+        'WARNING' => 'Cette action ne peut pas être annulée.',
 
-        "YES" => "Oui"
-    ]
+        'YES' => 'Oui',
+    ],
 ];
