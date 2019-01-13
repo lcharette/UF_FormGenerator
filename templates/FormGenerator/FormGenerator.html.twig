@@ -12,7 +12,7 @@
         {{ alert.generate(input) }}
     {% else %}
         {% if not input.hidden %}
-        <div class="form-group has-feedback">
+        {% if formLayout == 'horizontal' %}<div class="form-group has-feedback clearfix">{% else %}<div class="form-group has-feedback">{% endif %}
             {% if formLayout == 'horizontal' %}<label for="{{input.id}}" class="col-sm-2 control-label">{% else %}<label for="{{input.id}}">{% endif %}
                 {% if input.label %}{{translate(input.label)}}{% else %}&nbsp;{% endif %}
             </label>
