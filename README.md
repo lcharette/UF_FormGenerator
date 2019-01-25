@@ -1,22 +1,38 @@
 # Form Generator Sprinkle for [UserFrosting 4](https://www.userfrosting.com)
 
-[![Build Status](https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master)](https://travis-ci.org/lcharette/UF_FormGenerator) [![StyleCI](https://github.styleci.io/repos/68563337/shield?branch=master)](https://github.styleci.io/repos/68563337) [![codecov](https://codecov.io/gh/lcharette/UF_FormGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/lcharette/UF_FormGenerator) [![UserFrosting Version](https://img.shields.io/badge/UserFrosting->=%204.1-brightgreen.svg)](https://github.com/userfrosting/UserFrosting) [![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-brightgreen.svg)](https://ko-fi.com/A7052ICP)
+[![Latest Version](https://img.shields.io/github/release/lcharette/UF_FormGenerator.svg)](https://github.com/lcharette/UF_FormGenerator/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+[![UserFrosting Version](https://img.shields.io/badge/UserFrosting->=%204.2-brightgreen.svg)](https://github.com/userfrosting/UserFrosting)
+[![Build Status](https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master)](https://travis-ci.org/lcharette/UF_FormGenerator)
+[![StyleCI](https://github.styleci.io/repos/68563337/shield?branch=master&style=flat)](https://github.styleci.io/repos/68563337)
+[![Codecov](https://codecov.io/gh/lcharette/UF_FormGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/lcharette/UF_FormGenerator)
+[![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue.svg)](https://ko-fi.com/A7052ICP)
 
 This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting/[validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
-> This version only works with UserFrosting 4.1.x !
+> This version requires UserFrosting 4.2 and up. Check out [FormGenerator 2.2 for UF 4.1 support](#versions-and-userfrosting-support).
 
 # Help and Contributing
 
 If you need help using this sprinkle or found any bug, feels free to open an issue or submit a pull request. You can also find me on the [UserFrosting Chat](https://chat.userfrosting.com/) most of the time for direct support.
 
+# Versions and UserFrosting support
+
+FormGenerator version goes up one major version (2.x.x -> 3.x.x) when moving to a new minor or major version (4.1.x -> 4.2.x) of UserFrosting is released. Breaking changes inside FormGenerator itself trigger a new minor version (FG 2.0.x -> 2.1.x) while normal path makes FormGenerator to go up one revision number (2.1.2 -> 2.1.3).
+
+| UserFrosting Version | FormGenerator Version |
+|----------------------|-----------------------|
+|         4.2.x        |         3.x.x         |
+|         4.1.x        |         [2.x.x]       |
+|        < 4.0.x       |       No Support      |
+
 # Installation
-Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^2.0.0"`. Also add `FormGenerator` to the `base` list. For example:
+Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^3.0.0"`. Also add `FormGenerator` to the `base` list. For example:
 
 ```
 {
     "require": {
-        "lcharette/uf_formgenerator": "^2.0.0"
+        "lcharette/uf_formgenerator": "^3.0.0"
     },
     "base": [
         "core",
@@ -163,7 +179,7 @@ $validator = new JqueryValidationAdapter($schema, $this->ci->translator);
 $form = new Form($schema, $project);
 ```
 
-In this example, `$project` can contain the default (or current value) of the fields. A data collection fetched from the database with eloquent can also be passed directly. That second argument can also be omited to create an empty form.
+In this example, `$project` can contain the default (or current value) of the fields. A data collection fetched from the database with eloquent can also be passed directly. That second argument can also be omitted to create an empty form.
 
 Last thing to do is send the fields to Twig. In the list of retuned variables to the template, add the `fields` variable:
 ```
@@ -228,7 +244,7 @@ So at this point you have a controller that displays the modal at a `/path/to/co
 
 First, define a link or a button that will call the modal when clicked. For example :
 ```
-<button class="btn btn-success js-displayForm" data-toggle="modal" data-formUrl="/path/to/controller">Create</button>
+<button class="btn btn-success js-displayForm" data-formUrl="/path/to/controller">Create</button>
 ```
 
 The important part here is the `data-formUrl` attribute. This is the route that will load your form. `js-displayForm` is used here to bind the button to the action.
@@ -252,8 +268,7 @@ Let's look at a delete button / confirmation for our `project` :
   data-confirm-title="Delete project ?"
   data-confirm-message="Are you sure you want to delete this project?"
   data-confirm-button="Yes, delete project"
-  data-post-url="/porject/delete"
-data-toggle="modal"><i class="fa fa-trash-o"></i> Delete</a>
+  data-post-url="/project/delete"><i class="fa fa-trash-o"></i> Delete</a>
 ```
 (Note that content of data attributes can be translation keys)
 
@@ -272,7 +287,7 @@ By default, the `formGenerator` plugin will bind a **confirmation modal** to eve
 
 #### setInputArgument
 
-Form field input attributes can also be added or edited from PHP. This can be usefull when dynamically defining a Select input options. To do this, simply use the `setInputArgument($inputName, $property, $data)` method. For example, to add a list to a `clients` select :
+Form field input attributes can also be added or edited from PHP. This can be useful when dynamically defining a Select input options. To do this, simply use the `setInputArgument($inputName, $property, $data)` method. For example, to add a list to a `clients` select :
 
 ```
 // Get clients from the db model
@@ -317,7 +332,7 @@ The following options are available:
 
 Just pass an object with those
  - `mainAlertElement` (jQuery element). The element on the main page where the main alerts will be displayed. Default to `$('#alerts-page')`.
- - `redirectAfterSuccess` (bool). If set to true, the page will reload when the form submission or confirmation is succesful. Default to `true`.
+ - `redirectAfterSuccess` (bool). If set to true, the page will reload when the form submission or confirmation is successful. Default to `true`.
 
 Example:
 ```
@@ -348,6 +363,9 @@ See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorE
 
 FormGenerator comes with some unit tests. Before submitting a new Pull Request, you need to make sure all tests are a go. With the sprinkle added to your UserFrosting installation, simply execute the `php bakery test` command to run the tests.
 
-# Licence
+# License
 
-By [Louis Charette](https://github.com/lcharette). Copyright (c) 2017, free to use in personal and commercial software as per the MIT license.
+By [Louis Charette](https://github.com/lcharette). Copyright (c) 2019, free to use in personal and commercial software as per the MIT license.
+
+
+[2.x.x]: https://github.com/lcharette/UF_FormGenerator/tree/2.2.10#form-generator-sprinkle-for-userfrosting-4 
