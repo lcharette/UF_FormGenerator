@@ -25,9 +25,9 @@ class Checkbox extends BaseInput
     protected function applyTransformations()
     {
         $this->element = array_merge([
-            'class'  => 'js-icheck',
-            'name'   => $this->name,
-            'id'     => 'field_'.$this->name,
+            'class' => 'js-icheck',
+            'name' => $this->name,
+            'id' => 'field_' . str_replace(['[', ']'], ['_', ''], $this->name),
             'binary' => true,
         ], $this->element);
 

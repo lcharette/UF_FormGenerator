@@ -26,11 +26,11 @@ class Textarea extends BaseInput
     {
         $this->element = array_merge([
             'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'value'        => $this->getValue(),
-            'name'         => $this->name,
-            'rows'         => 3,
-            'id'           => 'field_'.$this->name,
+            'class' => 'form-control',
+            'value' => $this->getValue(),
+            'name' => $this->name,
+            'rows' => 3,
+            'id' => 'field_' . str_replace(['[', ']'], ['_', ''], $this->name),
         ], $this->element);
 
         // Translate placeholder

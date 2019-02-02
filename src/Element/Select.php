@@ -27,8 +27,8 @@ class Select extends BaseInput
         $this->element = array_merge([
             'class' => 'form-control js-select2',
             'value' => $this->getValue(),
-            'name'  => $this->name,
-            'id'    => 'field_'.$this->name,
+            'name' => $this->name,
+            'id' => 'field_' . str_replace(['[', ']'], ['_', ''], $this->name),
         ], $this->element);
 
         // Placeholder is required to be in `data-*` for select 2

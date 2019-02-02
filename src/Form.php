@@ -161,34 +161,57 @@ class Form
     public function generate()
     {
         $form = collect([]);
-
-        // Loop all the the fields in the schema
+// Loop all the the fields in the schema
         foreach ($this->schema->all() as $name => $input) {
-
-            // Skip the one that don't have a `form` definition
-            if (isset($input['form'])) {
-
                 // Get the value from the data
-                $value = isset($this->data[$name]) ? $this->data[$name] : null;
+            $value = isset($this->data[$name]) ? $this->data[$name] : null;
 
-                // Add the namespace to the name if it's defined
-                $name = ($this->formNamespace != '') ? $this->formNamespace.'['.$name.']' : $name;
+            // Add the namespace to the name if it's defined
+            $hasarray = strpos($this->formNamespace, '[');
+            if ($hasarray !== false) {
+                $domain = substr($this->formNamespace, 0, ($hasarray - 1));
+            } else {
+                $domain = $this->formNamespace;
+            }
+            $input['form']['data-source'] = $domain . '.' . $name;
 
+            $name = ($this->formNamespace != '') ? $this->formNamespace . '[' . $name . ']' : $name;
                 // Get the element class and make sure it exist
-                $type = (isset($input['form']['type'])) ? $input['form']['type'] : 'text';
-                $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\'.Str::studly($type);
+                // If the YAML does not have FORM section then use the, so use the UF 
+                // Validation Schama to figure this out
+            if (isset($input['form']['type'])) {
+                $type = $input['form']['type'];
+            } else if (isset($input['validators']['member_of'])) {
+                // figure out if this is a select field if this is not specified
+                $type = $input['form']['type'] = 'select';
+                foreach ($input['validators']['member_of']['values'] as $optvalue) {
+                    $input['form']['options'][$optvalue] = $optvalue;
+                }
+            } else {
+                // default all fields to text
+                $type = 'text';
+            }
+            $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\' . Str::studly($type);
+
+            if (!isset($input['form']['label'])) {
+                if ((isset($input['validators']['required']['label']))) {
+                    // see if label name is spefified in the validators
+                    $input['form']['label'] = str_replace('&', '', $input['validators']['required']['label']);
+                } else {
+                    // Clean up the label values
+                    $input['form']['label'] = ucwords(strtolower(str_replace(['[', '_', ']'], [' ', ''], $name)));
+                }
+            }
 
                 // If class doesn't esist, default to Text element
-                if (!class_exists($type)) {
-                    $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text';
-                }
+            if (!class_exists($type)) {
+                $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text';
+            }
 
                 // Create a new instance
-                $element = new $type($name, $input['form'], $value);
-
+            $element = new $type($name, $input['form'], $value);
                 // Push data to `$form`
-                $form->put($name, $element->parse());
-            }
+            $form->put($name, $element->parse());
         }
 
         return $form->toArray();

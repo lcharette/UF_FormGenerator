@@ -26,8 +26,8 @@ class Hidden extends BaseInput
     {
         $this->element = array_merge([
             'value' => $this->getValue(),
-            'name'  => $this->name,
-            'id'    => 'field_'.$this->name,
+            'name' => $this->name,
+            'id' => 'field_' . str_replace(['[', ']'], ['_', ''], $this->name),
         ], $this->element);
     }
 }
