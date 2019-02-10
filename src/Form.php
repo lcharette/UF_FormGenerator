@@ -203,6 +203,9 @@ class Form
                 }
             }
 
+            if (!isset($input['form']['placeholder'])) {
+                $input['form']['placeholder'] = $input['form']['label'];
+            }
                 // If class doesn't esist, default to Text element
             if (!class_exists($type)) {
                 $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text';
