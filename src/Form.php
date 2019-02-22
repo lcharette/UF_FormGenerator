@@ -169,7 +169,7 @@ class Form
             // Add the namespace to the name if it's defined
             $hasarray = strpos($this->formNamespace, '[');
             if ($hasarray !== false) {
-                $domain = substr($this->formNamespace, 0, ($hasarray - 1));
+                $domain = substr($this->formNamespace, 0, ($hasarray));
             } else {
                 $domain = $this->formNamespace;
             }
