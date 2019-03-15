@@ -167,15 +167,19 @@ class Form
             $value = isset($this->data[$name]) ? $this->data[$name] : null;
 
             // Add the namespace to the name if it's defined
-            $hasarray = strpos($this->formNamespace, '[');
-            if ($hasarray !== false) {
-                $domain = substr($this->formNamespace, 0, ($hasarray));
+            if ($this->formNamespace != '') {
+                $hasarray = strpos($this->formNamespace, '[');
+                if ($hasarray !== false) {
+                    $domain = substr($this->formNamespace, 0, ($hasarray));
+                } else {
+                    $domain = $this->formNamespace;
+                }
+                $input['form']['data-source'] = $domain . '.' . $name;
             } else {
-                $domain = $this->formNamespace;
+                $input['form']['data-source'] = $name;
             }
-            $input['form']['data-source'] = $domain . '.' . $name;
 
-            $name = ($this->formNamespace != '') ? $this->formNamespace . '[' . $name . ']' : $name;
+            $name = ($this->formNamespace != '') ? ($this->formNamespace . '[' . $name . ']') : $name;
                 // Get the element class and make sure it exist
                 // If the YAML does not have FORM section then use the, so use the UF 
                 // Validation Schama to figure this out
