@@ -28,7 +28,7 @@ class FormGeneratorTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->basePath = __DIR__.'/data';
+        $this->basePath = __DIR__ . '/data';
     }
 
     /**
@@ -37,7 +37,7 @@ class FormGeneratorTest extends TestCase
     public function testTextFormElement()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
@@ -52,15 +52,16 @@ class FormGeneratorTest extends TestCase
 
         // Test the parsing
         $expected = [
-            'type'         => 'text',
-            'label'        => 'Project Name',
-            'icon'         => 'fa-flag',
+            'type' => 'text',
+            'label' => 'Project Name',
+            'icon' => 'fa-flag',
             'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'placeholder'  => 'Project Name',
-            'name'         => 'name',
-            'id'           => 'field_name',
-            'value'        => '',
+            'class' => 'form-control',
+            'placeholder' => 'Project Name',
+            'name' => 'name',
+            'id' => 'field_name',
+            'value' => '',
+            'data-source' => 'name',
         ];
 
         // We test the generated result
@@ -75,7 +76,7 @@ class FormGeneratorTest extends TestCase
     public function testTextFormElementWithData()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
@@ -90,15 +91,16 @@ class FormGeneratorTest extends TestCase
 
         // Test the parsing
         $expected = [
-            'type'         => 'text',
-            'label'        => 'Project Name',
-            'icon'         => 'fa-flag',
+            'type' => 'text',
+            'label' => 'Project Name',
+            'icon' => 'fa-flag',
             'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'placeholder'  => 'Project Name',
-            'name'         => 'name',
-            'id'           => 'field_name',
-            'value'        => 'The Bar project',
+            'class' => 'form-control',
+            'placeholder' => 'Project Name',
+            'name' => 'name',
+            'id' => 'field_name',
+            'value' => 'The Bar project',
+            'data-source' => 'name',
         ];
 
         // We test the generated result
@@ -112,7 +114,7 @@ class FormGeneratorTest extends TestCase
     public function testTextFormElementWithEmptyData()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
@@ -127,16 +129,17 @@ class FormGeneratorTest extends TestCase
 
         // Test the parsing
         $expected = [
-            'label'        => 'Project Owner',
+            'label' => 'Project Owner',
             'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'value'        => '', //Shoudn't be a value here ! "" is overwritting "Foo"
-            'name'         => 'owner',
-            'id'           => 'owner',
-            'type'         => 'text',
-            'icon'         => 'fa-user',
-            'placeholder'  => 'Project Owner',
-            'default'      => 'Foo',
+            'class' => 'form-control',
+            'value' => '', //Shoudn't be a value here ! "" is overwritting "Foo"
+            'name' => 'owner',
+            'id' => 'owner',
+            'type' => 'text',
+            'icon' => 'fa-user',
+            'placeholder' => 'Project Owner',
+            'data-source' => 'owner',
+            'default' => 'Foo',
         ];
 
         // We test the generated result
@@ -150,7 +153,7 @@ class FormGeneratorTest extends TestCase
     public function testForm()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form
@@ -166,83 +169,97 @@ class FormGeneratorTest extends TestCase
         // Test one of the form input
         $expected = [
             'number' => [
-                'label'        => 'Project Number',
+                'label' => 'Project Number',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => '',
-                'name'         => 'number',
-                'id'           => 'field_number',
-                'type'         => 'number',
-                'icon'         => 'fa-edit',
-                'placeholder'  => 'Project Number',
+                'class' => 'form-control',
+                'value' => '',
+                'name' => 'number',
+                'id' => 'field_number',
+                'type' => 'number',
+                'icon' => 'fa-edit',
+                'placeholder' => 'Project Number',
+                'data-source' => 'number',
             ],
             'owner' => [
-                'label'        => 'Project Owner',
+                'label' => 'Project Owner',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => 'Foo',
-                'name'         => 'owner',
-                'id'           => 'owner',
-                'type'         => 'text',
-                'icon'         => 'fa-user',
-                'placeholder'  => 'Project Owner',
-                'default'      => 'Foo',
+                'class' => 'form-control',
+                'value' => 'Foo',
+                'name' => 'owner',
+                'id' => 'owner',
+                'type' => 'text',
+                'icon' => 'fa-user',
+                'placeholder' => 'Project Owner',
+                'default' => 'Foo',
+                'data-source' => 'owner'
             ],
             'name' => [
-                'label'        => 'Project Name',
+                'label' => 'Project Name',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => '',
-                'name'         => 'name',
-                'id'           => 'field_name',
-                'type'         => 'text',
-                'icon'         => 'fa-flag',
-                'placeholder'  => 'Project Name',
+                'class' => 'form-control',
+                'value' => '',
+                'name' => 'name',
+                'id' => 'field_name',
+                'type' => 'text',
+                'icon' => 'fa-flag',
+                'placeholder' => 'Project Name',
+                'data-source' => 'name',
             ],
             'description' => [
-                'label'        => 'Project Description',
+                'label' => 'Project Description',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => '',
-                'name'         => 'description',
-                'rows'         => 5,
-                'id'           => 'field_description',
-                'type'         => 'textarea',
-                'icon'         => 'fa-pencil',
-                'placeholder'  => 'Project Description',
+                'class' => 'form-control',
+                'value' => '',
+                'name' => 'description',
+                'rows' => 5,
+                'id' => 'field_description',
+                'type' => 'textarea',
+                'icon' => 'fa-pencil',
+                'placeholder' => 'Project Description',
+                'data-source' => 'description',
             ],
             'status' => [
-                'label'   => 'Project Status',
-                'class'   => 'form-control js-select2',
-                'value'   => '',
-                'name'    => 'status',
-                'id'      => 'field_status',
-                'type'    => 'select',
+                'label' => 'Project Status',
+                'class' => 'form-control js-select2',
+                'value' => '',
+                'name' => 'status',
+                'id' => 'field_status',
+                'type' => 'select',
                 'options' => [
                     0 => 'Closed',
                     1 => 'Open',
                 ],
+                'placeholder' => 'Status',
+                'data-source' => 'status',
             ],
             'active' => [
-                'label'  => 'Active',
-                'class'  => 'js-icheck',
-                'name'   => 'active',
-                'id'     => 'field_active',
-                'type'   => 'checkbox',
+                'label' => 'Active',
+                'class' => 'js-icheck',
+                'name' => 'active',
+                'id' => 'field_active',
+                'type' => 'checkbox',
                 'binary' => true,
+                'placeholder' => 'Active',
+                'data-source' => 'active',
             ],
             'hidden' => [
+                'label' => 'Hidden',
                 'value' => 'Something',
-                'name'  => 'hidden',
-                'id'    => 'field_hidden',
-                'type'  => 'hidden',
+                'name' => 'hidden',
+                'id' => 'field_hidden',
+                'type' => 'hidden',
+                'placeholder' => 'Hidden',
+                'data-source' => 'hidden',
             ],
             'alert' => [
+                'label' => 'Alert',
                 'class' => 'alert-success',
-                'icon'  => 'fa-check',
+                'icon' => 'fa-check',
                 'value' => 'You\'re awesome!',
-                'name'  => 'alert',
-                'type'  => 'alert',
+                'name' => 'alert',
+                'type' => 'alert',
+                'placeholder' => 'Alert',
+                'data-source' => 'alert',
             ],
         ];
 
@@ -256,18 +273,18 @@ class FormGeneratorTest extends TestCase
     public function testFormWithData()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // The data
         $data = [
-            'name'         => 'Bar project',
-            'owner'        => '',
-            'description'  => "The bar project is less awesome, but at least it's open.",
-            'status'       => 1,
+            'name' => 'Bar project',
+            'owner' => '',
+            'description' => "The bar project is less awesome, but at least it's open.",
+            'status' => 1,
             'hiddenString' => 'The Bar secret code is...',
-            'completion'   => 12,
-            'active'       => true,
+            'completion' => 12,
+            'active' => true,
         ];
 
         // Generate the form
@@ -283,84 +300,92 @@ class FormGeneratorTest extends TestCase
         // Test one of the form input
         $expected = [
             'number' => [
-                'label'        => 'Project Number',
+                'label' => 'Project Number',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => '',
-                'name'         => 'number',
-                'id'           => 'field_number',
-                'type'         => 'number',
-                'icon'         => 'fa-edit',
-                'placeholder'  => 'Project Number',
+                'class' => 'form-control',
+                'value' => '',
+                'name' => 'number',
+                'id' => 'field_number',
+                'type' => 'number',
+                'icon' => 'fa-edit',
+                'placeholder' => 'Project Number',
+                'data-source' => 'number',
             ],
             'name' => [
-                'label'        => 'Project Name',
+                'label' => 'Project Name',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => 'Bar project', //Value here !
-                'name'         => 'name',
-                'id'           => 'field_name',
-                'type'         => 'text',
-                'icon'         => 'fa-flag',
-                'placeholder'  => 'Project Name',
+                'class' => 'form-control',
+                'value' => 'Bar project', //Value here !
+                'name' => 'name',
+                'id' => 'field_name',
+                'type' => 'text',
+                'icon' => 'fa-flag',
+                'placeholder' => 'Project Name',
+                'data-source' => 'name',
             ],
             'owner' => [
-                'label'        => 'Project Owner',
+                'label' => 'Project Owner',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => '', //Shoudn't be a value here ! "" is overwritting "Foo"
-                'name'         => 'owner',
-                'id'           => 'owner',
-                'type'         => 'text',
-                'icon'         => 'fa-user',
-                'placeholder'  => 'Project Owner',
-                'default'      => 'Foo',
+                'class' => 'form-control',
+                'value' => '', //Shoudn't be a value here ! "" is overwritting "Foo"
+                'name' => 'owner',
+                'id' => 'owner',
+                'type' => 'text',
+                'icon' => 'fa-user',
+                'placeholder' => 'Project Owner',
+                'default' => 'Foo',
+                'data-source' => 'owner',
             ],
             'description' => [
-                'label'        => 'Project Description',
+                'label' => 'Project Description',
                 'autocomplete' => 'off',
-                'class'        => 'form-control',
-                'value'        => 'The bar project is less awesome, but at least it\'s open.', //Value here !
-                'name'         => 'description',
-                'rows'         => 5,
-                'id'           => 'field_description',
-                'type'         => 'textarea',
-                'icon'         => 'fa-pencil',
-                'placeholder'  => 'Project Description',
+                'class' => 'form-control',
+                'value' => 'The bar project is less awesome, but at least it\'s open.', //Value here !
+                'name' => 'description',
+                'rows' => 5,
+                'id' => 'field_description',
+                'type' => 'textarea',
+                'icon' => 'fa-pencil',
+                'placeholder' => 'Project Description',
+                'data-source' => 'description',
             ],
             'status' => [
-                'label'   => 'Project Status',
-                'class'   => 'form-control js-select2',
-                'value'   => 1, //Value here !
-                'name'    => 'status',
-                'id'      => 'field_status',
-                'type'    => 'select',
+                'label' => 'Project Status',
+                'class' => 'form-control js-select2',
+                'value' => 1, //Value here !
+                'name' => 'status',
+                'id' => 'field_status',
+                'type' => 'select',
                 'options' => [
                     0 => 'Closed',
                     1 => 'Open',
                 ],
+                'data-source' => 'status',
             ],
             'active' => [
-                'label'   => 'Active',
-                'class'   => 'js-icheck',
-                'name'    => 'active',
-                'id'      => 'field_active',
-                'type'    => 'checkbox',
+                'label' => 'Active',
+                'class' => 'js-icheck',
+                'name' => 'active',
+                'id' => 'field_active',
+                'type' => 'checkbox',
                 'checked' => 'checked', //Value here !
-                'binary'  => true,
+                'binary' => true,
+                'data-source' => 'active',
             ],
             'hidden' => [
                 'value' => 'Something',
-                'name'  => 'hidden',
-                'id'    => 'field_hidden',
-                'type'  => 'hidden',
+                'name' => 'hidden',
+                'id' => 'field_hidden',
+                'type' => 'hidden',
+                'data-source' => 'hidden',
             ],
             'alert' => [
                 'class' => 'alert-success',
-                'icon'  => 'fa-check',
+                'icon' => 'fa-check',
                 'value' => 'You\'re awesome!',
-                'name'  => 'alert',
-                'type'  => 'alert',
+                'name' => 'alert',
+                'type' => 'alert',
+                'data-source' => 'alert',
             ],
         ];
 
@@ -375,7 +400,7 @@ class FormGeneratorTest extends TestCase
     public function testUndefinedFormElement()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/bad.json');
+        $loader = new YamlFileLoader($this->basePath . '/bad.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form
@@ -390,12 +415,13 @@ class FormGeneratorTest extends TestCase
 
         // Test one of the form input
         $expected = [
-            'type'         => 'foo',
+            'type' => 'foo',
             'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'name'         => 'myField',
-            'id'           => 'field_myField',
-            'value'        => '',
+            'class' => 'form-control',
+            'name' => 'myField',
+            'id' => 'field_myField',
+            'value' => '',
+            'data-source' => 'myField',
         ];
 
         // We test the generated result
