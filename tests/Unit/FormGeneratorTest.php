@@ -229,7 +229,7 @@ class FormGeneratorTest extends TestCase
                     0 => 'Closed',
                     1 => 'Open',
                 ],
-                'placeholder' => 'Status',
+                'placeholder' => 'Project Status',
                 'data-source' => 'status',
             ],
             'active' => [
@@ -360,6 +360,7 @@ class FormGeneratorTest extends TestCase
                     0 => 'Closed',
                     1 => 'Open',
                 ],
+                'placeholder' => 'Project Status',
                 'data-source' => 'status',
             ],
             'active' => [
