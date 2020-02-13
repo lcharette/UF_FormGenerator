@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaInterface;
+use UserFrosting\Sprinkle\Core\Facades\Debug;
 
 /**
  * Form Class.
@@ -153,6 +154,62 @@ class Form
     }
 
     /**
+     * getFieldName function
+     *
+     * This will check the form array prefix and also the field name to see if it belongs to a sub array
+     * and based on this it returns a proper html name for the form element
+     * e.g. formNamespace='thisform', $name='meta.shirt_size' will return thisform[meta][shirt_size]
+     * @param [string] $name
+     * @return fiendname
+     */
+
+    public function getFieldName($name)
+    {
+        $suffix = $prefix = '';
+        if (($this->formNamespace != '')) {
+            $prefix = $this->formNamespace . "[";
+            $suffix = "]";
+        }
+        if (strpos($name, '.') !== false) {
+            $name = str_replace('.', '][', $name);
+            $suffix =  "]";
+        }
+        $fiendname = $prefix . $name . $suffix;
+        return $fiendname;
+        //        $name = ($this->formNamespace != '') ? ($this->formNamespace . '[' . $name . ']') : $name;
+    }
+
+    /**
+     * getFieldValue function
+     *
+     * Will traverse thru the data array and return the field value, if the field name consists of a subarray element
+     * then it will fetch the subarray for
+     * e.g. $name='meta.shirt_size' will return $data['meta']['shirt_size']
+     * or it will just return $data[$name]
+     * null if no value exists
+     * @param [type] $name
+     * @param [type] $data
+     * @return value
+     */
+    public function getFieldValue($name, $data)
+    {
+        if (strpos($name, '.') !== false) {
+            $fldarr = explode('.', $name);
+            Debug::debug("Line 197 the fldarr is ", $fldarr);
+            $thisdata = $data;
+            foreach ($fldarr as $field) {
+                $thisdata = isset($thisdata[$field]) ? $thisdata[$field] : null;
+                if ($thisdata == null) {
+                    return null;
+                }
+            }
+            $value = $thisdata;
+        } else {
+            $value = isset($data[$name]) ? $data[$name] : null;
+        }
+        return $value;
+    }
+    /**
      * Generate an array contining all nececerry value to generate a form
      * with Twig.
      *
@@ -161,10 +218,11 @@ class Form
     public function generate()
     {
         $form = collect([]);
-// Loop all the the fields in the schema
+        // Loop all the the fields in the schema
         foreach ($this->schema->all() as $name => $input) {
-                // Get the value from the data
-            $value = isset($this->data[$name]) ? $this->data[$name] : null;
+            // Get the value from the data
+            $value = $this->getFieldValue($name, $this->data);
+            //$value = isset($this->data[$name]) ? $this->data[$name] : null;
 
             // Add the namespace to the name if it's defined
             if ($this->formNamespace != '') {
@@ -178,11 +236,11 @@ class Form
             } else {
                 $input['form']['data-source'] = $name;
             }
-
-            $name = ($this->formNamespace != '') ? ($this->formNamespace . '[' . $name . ']') : $name;
-                // Get the element class and make sure it exist
-                // If the YAML does not have FORM section then use the, so use the UF 
-                // Validation Schama to figure this out
+            $name = $this->getFieldName($name);
+            //$name = ($this->formNamespace != '') ? ($this->formNamespace . '[' . $name . ']') : $name;
+            // Get the element class and make sure it exist
+            // If the YAML does not have FORM section then use the, so use the UF 
+            // Validation Schama to figure this out
             if (isset($input['form']['type'])) {
                 $type = $input['form']['type'];
             } else if (isset($input['validators']['member_of'])) {
@@ -210,14 +268,14 @@ class Form
             if (!isset($input['form']['placeholder'])) {
                 $input['form']['placeholder'] = $input['form']['label'];
             }
-                // If class doesn't esist, default to Text element
+            // If class doesn't esist, default to Text element
             if (!class_exists($type)) {
                 $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text';
             }
 
-                // Create a new instance
+            // Create a new instance
             $element = new $type($name, $input['form'], $value);
-                // Push data to `$form`
+            // Push data to `$form`
             $form->put($name, $element->parse());
         }
 
