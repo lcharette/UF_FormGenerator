@@ -195,7 +195,7 @@ class Form
     {
         if (strpos($name, '.') !== false) {
             $fldarr = explode('.', $name);
-            Debug::debug("Line 197 the fldarr is ", $fldarr);
+            //Debug::debug("Line 197 the fldarr is ", $fldarr);
             $thisdata = $data;
             foreach ($fldarr as $field) {
                 $thisdata = isset($thisdata[$field]) ? $thisdata[$field] : null;
