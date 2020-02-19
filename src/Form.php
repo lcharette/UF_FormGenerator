@@ -221,8 +221,8 @@ class Form
         // Loop all the the fields in the schema
         foreach ($this->schema->all() as $name => $input) {
             // Get the value from the data
-            $value = $this->getFieldValue($name, $this->data);
-            //$value = isset($this->data[$name]) ? $this->data[$name] : null;
+            //$value = $this->getFieldValue($name, $this->data);
+            $value = isset($this->data[$name]) ? $this->data[$name] : null;
 
             // Add the namespace to the name if it's defined
             if ($this->formNamespace != '') {
@@ -236,8 +236,8 @@ class Form
             } else {
                 $input['form']['data-source'] = $name;
             }
-            $name = $this->getFieldName($name);
-            //$name = ($this->formNamespace != '') ? ($this->formNamespace . '[' . $name . ']') : $name;
+            //$name = $this->getFieldName($name);
+            $name = ($this->formNamespace != '') ? ($this->formNamespace . '[' . $name . ']') : $name;
             // Get the element class and make sure it exist
             // If the YAML does not have FORM section then use the, so use the UF 
             // Validation Schama to figure this out
