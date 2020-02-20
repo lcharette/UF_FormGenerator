@@ -11,6 +11,24 @@ php:
   - 7.2
   - 7.3
 
+env:
+  matrix:
+    - DB=mysql UF_BRANCH=4.2.*
+    - DB=sqlite UF_BRANCH=4.2.*
+    - DB=pgsql UF_BRANCH=4.2.*
+    - DB=mysql UF_BRANCH=4.3.*
+    - DB=sqlite UF_BRANCH=4.3.*
+    - DB=pgsql UF_BRANCH=4.3.*
+    - DB=mysql UF_BRANCH=dev-develop
+    - DB=sqlite UF_BRANCH=dev-develop
+    - DB=pgsql UF_BRANCH=dev-develop
+
+matrix:
+  allow_failures:
+    - DB=mysql UF_BRANCH=dev-develop
+    - DB=sqlite UF_BRANCH=dev-develop
+    - DB=pgsql UF_BRANCH=dev-develop
+
 cache:
   directories:
     - $HOME/.composer/cache
@@ -18,7 +36,7 @@ cache:
 before_install:
   # clone UserFrosting
   - cd ../
-  - git clone https://github.com/userfrosting/UserFrosting.git
+  - composer create-project userfrosting/userfrosting UserFrosting $UF_BRANCH --no-install
   - cd UserFrosting
   # move and add sprinkle
   - mv ../UF_FormGenerator app/sprinkles/FormGenerator/
