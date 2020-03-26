@@ -19,6 +19,9 @@ env:
     - DB=mysql UF_BRANCH=4.3.*
     - DB=sqlite UF_BRANCH=4.3.*
     - DB=pgsql UF_BRANCH=4.3.*
+    - DB=mysql UF_BRANCH=4.4.*
+    - DB=sqlite UF_BRANCH=4.4.*
+    - DB=pgsql UF_BRANCH=4.4.*
     - DB=mysql UF_BRANCH=dev-develop
     - DB=sqlite UF_BRANCH=dev-develop
     - DB=pgsql UF_BRANCH=dev-develop

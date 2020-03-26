@@ -25,7 +25,7 @@ class FormGeneratorTest extends TestCase
 {
     public $basePath;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->basePath = __DIR__.'/data';
@@ -147,7 +147,7 @@ class FormGeneratorTest extends TestCase
      * Test the Form Class.
      * Run the test with no current values (empty form).
      */
-    public function testForm()
+    public function testForm(): void
     {
         // Get Schema
         $loader = new YamlFileLoader($this->basePath.'/good.json');
@@ -161,7 +161,7 @@ class FormGeneratorTest extends TestCase
 
         // Test the form generation
         $generatedForm = $form->generate();
-        $this->assertInternalType('array', $generatedForm);
+        $this->assertIsArray($generatedForm);
 
         // Test one of the form input
         $expected = [
@@ -278,7 +278,7 @@ class FormGeneratorTest extends TestCase
 
         // Test the form generation
         $generatedForm = $form->generate();
-        $this->assertInternalType('array', $generatedForm);
+        $this->assertIsArray($generatedForm);
 
         // Test one of the form input
         $expected = [
@@ -386,7 +386,7 @@ class FormGeneratorTest extends TestCase
 
         // Test the form generation
         $generatedForm = $form->generate();
-        $this->assertInternalType('array', $generatedForm);
+        $this->assertIsArray($generatedForm);
 
         // Test one of the form input
         $expected = [
