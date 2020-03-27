@@ -13,9 +13,6 @@ php:
 
 env:
   matrix:
-    - DB=mysql UF_BRANCH=4.2.*
-    - DB=sqlite UF_BRANCH=4.2.*
-    - DB=pgsql UF_BRANCH=4.2.*
     - DB=mysql UF_BRANCH=4.3.*
     - DB=sqlite UF_BRANCH=4.3.*
     - DB=pgsql UF_BRANCH=4.3.*
