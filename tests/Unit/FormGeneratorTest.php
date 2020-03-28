@@ -1,18 +1,18 @@
 <?php
 
 /*
- * UF Form Generator.
+ * UserFrosting Form Generator
  *
- * @link https://github.com/lcharette/UF_FormGenerator
- *
- * @copyright Copyright (c) 2017 Louis Charette
+ * @link      https://github.com/lcharette/UF_FormGenerator
+ * @copyright Copyright (c) 2020 Louis Charette
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 
-namespace UserFrosting\Tests\Unit;
+namespace UserFrosting\Sprinkle\FormGenerator\Tests\Unit;
 
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
 use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
+use UserFrosting\Sprinkle\FormGenerator\Element;
 use UserFrosting\Sprinkle\FormGenerator\Form;
 use UserFrosting\Support\Repository\Loader\YamlFileLoader;
 use UserFrosting\Tests\TestCase;
@@ -23,26 +23,27 @@ use UserFrosting\Tests\TestCase;
  */
 class FormGeneratorTest extends TestCase
 {
+    /** @var string */
     public $basePath;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->basePath = __DIR__.'/data';
+        $this->basePath = __DIR__ . '/data';
     }
 
     /**
      * Test the base `Test` element class works on it's own.
      */
-    public function testTextFormElement()
+    public function testTextFormElement(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
         $inputSchema = $schema['name']['form'];
-        $textInput = new \UserFrosting\Sprinkle\FormGenerator\Element\Text('name', $inputSchema);
+        $textInput = new Element\Text('name', $inputSchema);
 
         // Test instanceof $textInput
         $this->assertInstanceof(InputInterface::class, $textInput);
@@ -72,15 +73,15 @@ class FormGeneratorTest extends TestCase
      * value is passed to the constructor. Should return the same as the
      * previous test, but with the `value` setup instead of empty.
      */
-    public function testTextFormElementWithData()
+    public function testTextFormElementWithData(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
         $inputSchema = $schema['name']['form'];
-        $textInput = new \UserFrosting\Sprinkle\FormGenerator\Element\Text('name', $inputSchema, 'The Bar project');
+        $textInput = new Element\Text('name', $inputSchema, 'The Bar project');
 
         // Test instanceof $textInput
         $this->assertInstanceof(InputInterface::class, $textInput);
@@ -109,15 +110,15 @@ class FormGeneratorTest extends TestCase
      * This test is the same as the one before, but we test the `owener` field with some data
      * This make sure the `default` schema field will work correctly when empty data is passed.
      */
-    public function testTextFormElementWithEmptyData()
+    public function testTextFormElementWithEmptyData(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
         $inputSchema = $schema['owner']['form'];
-        $textInput = new \UserFrosting\Sprinkle\FormGenerator\Element\Text('owner', $inputSchema, '');
+        $textInput = new Element\Text('owner', $inputSchema, '');
 
         // Test instanceof $textInput
         $this->assertInstanceof(InputInterface::class, $textInput);
@@ -150,7 +151,7 @@ class FormGeneratorTest extends TestCase
     public function testForm(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form
@@ -253,10 +254,10 @@ class FormGeneratorTest extends TestCase
     /**
      * Test the Form Clas with values to make sure filled form works correctly.
      */
-    public function testFormWithData()
+    public function testFormWithData(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // The data
@@ -375,7 +376,7 @@ class FormGeneratorTest extends TestCase
     public function testUndefinedFormElement()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/bad.json');
+        $loader = new YamlFileLoader($this->basePath . '/bad.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form

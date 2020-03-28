@@ -1,11 +1,10 @@
 <?php
 
 /*
- * UF Form Generator.
+ * UserFrosting Form Generator
  *
- * @link https://github.com/lcharette/UF_FormGenerator
- *
- * @copyright Copyright (c) 2017 Louis Charette
+ * @link      https://github.com/lcharette/UF_FormGenerator
+ * @copyright Copyright (c) 2020 Louis Charette
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 
@@ -14,11 +13,15 @@ namespace UserFrosting\Sprinkle\FormGenerator\Element;
 /**
  * InputInterface.
  *
- * Interface for Form elements classes
+ * Common Interface for Form elements
  */
 interface InputInterface
 {
-    public function __construct($name, $element, $value = null);
-
-    public function parse();
+    /**
+     * Return the parsed input attributes.
+     * This is passed to the Twig template to generate the actual HTML elements
+     *
+     * @return array<string,string>
+     */
+    public function parse(): array;
 }
