@@ -11,8 +11,8 @@
 namespace UserFrosting\Sprinkle\FormGenerator\Tests\Unit;
 
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
-use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
 use UserFrosting\Sprinkle\FormGenerator\Element;
+use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
 use UserFrosting\Sprinkle\FormGenerator\Form;
 use UserFrosting\Support\Repository\Loader\YamlFileLoader;
 use UserFrosting\Tests\TestCase;
@@ -29,7 +29,7 @@ class FormGeneratorTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->basePath = __DIR__ . '/data';
+        $this->basePath = __DIR__.'/data';
     }
 
     /**
@@ -38,7 +38,7 @@ class FormGeneratorTest extends TestCase
     public function testTextFormElement(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $loader = new YamlFileLoader($this->basePath.'/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
@@ -76,7 +76,7 @@ class FormGeneratorTest extends TestCase
     public function testTextFormElementWithData(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $loader = new YamlFileLoader($this->basePath.'/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
@@ -113,7 +113,7 @@ class FormGeneratorTest extends TestCase
     public function testTextFormElementWithEmptyData(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $loader = new YamlFileLoader($this->basePath.'/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get TextInput from the `name` element of the schema
@@ -151,7 +151,7 @@ class FormGeneratorTest extends TestCase
     public function testForm(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $loader = new YamlFileLoader($this->basePath.'/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form
@@ -257,7 +257,7 @@ class FormGeneratorTest extends TestCase
     public function testFormWithData(): void
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $loader = new YamlFileLoader($this->basePath.'/good.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // The data
@@ -376,7 +376,7 @@ class FormGeneratorTest extends TestCase
     public function testUndefinedFormElement()
     {
         // Get Schema
-        $loader = new YamlFileLoader($this->basePath . '/bad.json');
+        $loader = new YamlFileLoader($this->basePath.'/bad.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form

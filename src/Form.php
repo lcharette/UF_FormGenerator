@@ -40,9 +40,9 @@ class Form
     protected $formNamespace = '';
 
     /**
-     * Class constructor
+     * Class constructor.
      *
-     * @param RequestSchemaRepository                    $schema
+     * @param RequestSchemaRepository                          $schema
      * @param array<string>|Collection<mixed>|Model|Repository $data   (default: [])
      */
     public function __construct(RequestSchemaRepository $schema, $data = [])
@@ -97,7 +97,7 @@ class Form
      *
      * @param string $inputName The input name where the argument will be added
      * @param string $property  The argument name. Example "data-color"
-     * @param string $value      The value of the argument
+     * @param string $value     The value of the argument
      */
     public function setInputArgument(string $inputName, string $property, string $value): void
     {
@@ -115,9 +115,9 @@ class Form
      * Function used to set options of a select element. Shortcut for using
      * `setInputArgument` and `setValue`.
      *
-     * @param string $inputName The select name to add options to
-     * @param array<string,string>  $data      An array of `value => label` options
-     * @param string $selected  The selected key
+     * @param string               $inputName The select name to add options to
+     * @param array<string,string> $data      An array of `value => label` options
+     * @param string               $selected  The selected key
      */
     public function setOptions(string $inputName, $data = [], ?string $selected = null): void
     {
@@ -163,11 +163,11 @@ class Form
                 $value = isset($this->data[$name]) ? $this->data[$name] : null;
 
                 // Add the namespace to the name if it's defined
-                $name = ($this->formNamespace != '') ? $this->formNamespace . '[' . $name . ']' : $name;
+                $name = ($this->formNamespace != '') ? $this->formNamespace.'['.$name.']' : $name;
 
                 // Get the element class and make sure it exist
                 $type = (isset($input['form']['type'])) ? $input['form']['type'] : 'text';
-                $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\' . Str::studly($type);
+                $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\'.Str::studly($type);
 
                 // If class doesn't esist, default to Text element
                 if (!class_exists($type)) {

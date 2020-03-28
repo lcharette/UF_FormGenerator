@@ -90,7 +90,7 @@ abstract class Input implements InputInterface
 
     /**
      * Add defaut attributes to the current input element.
-     * Also transform attributes values passed from the schema
+     * Also transform attributes values passed from the schema.
      */
     abstract protected function applyTransformations(): void;
 }

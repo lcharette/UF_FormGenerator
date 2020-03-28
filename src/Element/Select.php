@@ -25,7 +25,7 @@ class Select extends Input
             'class' => 'form-control js-select2',
             'value' => $this->getValue(),
             'name'  => $this->name,
-            'id'    => 'field_' . $this->name,
+            'id'    => 'field_'.$this->name,
         ], $this->element);
 
         // Placeholder is required to be in `data-*` for select 2

@@ -19,7 +19,7 @@ interface InputInterface
 {
     /**
      * Return the parsed input attributes.
-     * This is passed to the Twig template to generate the actual HTML elements
+     * This is passed to the Twig template to generate the actual HTML elements.
      *
      * @return array<string,string>
      */

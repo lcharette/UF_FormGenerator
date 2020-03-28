@@ -27,7 +27,7 @@ class Textarea extends Input
             'value'        => $this->getValue(),
             'name'         => $this->name,
             'rows'         => '3',
-            'id'           => 'field_' . $this->name,
+            'id'           => 'field_'.$this->name,
         ], $this->element);
 
         // Translate placeholder

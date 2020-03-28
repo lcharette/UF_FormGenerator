@@ -26,7 +26,7 @@ class Text extends Input
             'class'        => 'form-control',
             'value'        => $this->getValue(),
             'name'         => $this->name,
-            'id'           => 'field_' . $this->name,
+            'id'           => 'field_'.$this->name,
         ], $this->element);
 
         // Translate placeholder
