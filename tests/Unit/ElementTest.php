@@ -36,7 +36,7 @@ class ElementTest extends TestCase
     public function testElement(string $elementName, string $class, $value, array $expected): void
     {
         // Get Schema
-        $loader = new YamlFileLoader(__DIR__ . '/data/good.json');
+        $loader = new YamlFileLoader(__DIR__ . '/data/elements.json');
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get InputInterface from the `$elementName` in the schema
@@ -301,25 +301,25 @@ class ElementTest extends TestCase
 
             // HIDDEN - With null value (No default)
             [
-                'hidden2',
+                'secret',
                 Element\Hidden::class,
                 null,
                 [
                     'value'        => '',
-                    'name'         => 'hidden2',
-                    'id'           => 'field_hidden2',
+                    'name'         => 'secret',
+                    'id'           => 'field_secret',
                     'type'         => 'hidden',
                 ],
             ],
             // HIDDEN - With string value (No default)
             [
-                'hidden2',
+                'secret',
                 Element\Hidden::class,
                 'Foo',
                 [
                     'value'        => 'Foo',
-                    'name'         => 'hidden2',
-                    'id'           => 'field_hidden2',
+                    'name'         => 'secret',
+                    'id'           => 'field_secret',
                     'type'         => 'hidden',
                 ],
             ],

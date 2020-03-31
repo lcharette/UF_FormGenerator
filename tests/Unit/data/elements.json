@@ -1,12 +1,4 @@
 {
-    "number" : {
-        "form" : {
-            "type" : "number",
-            "label" : "Project Number",
-            "icon" : "fa-edit",
-            "placeholder" : "Project Number"
-        }
-    },
     "name" : {
         "form" : {
             "type" : "text",
@@ -44,16 +36,49 @@
             }
         }
     },
+    "color" : {
+        "form" : {
+            "type" : "select",
+            "label" : "Color",
+            "placeholder" : "Select color",
+            "default" : "blue",
+            "options" : {
+                "red" : "Rouge",
+                "blue" : "Bleu",
+                "white" : "Blanc"
+            }
+        }
+    },
     "active" : {
         "form" : {
             "type" : "checkbox",
             "label" : "Active"
         }
     },
+    "open" : {
+        "form" : {
+            "type" : "checkbox",
+            "label" : "Open ?",
+            "binary": false,
+            "default": "yes"
+        }
+    },
+    "pretty" : {
+        "form" : {
+            "type" : "checkbox",
+            "label" : "Pretty",
+            "binary": false
+        }
+    },
     "hidden" : {
         "form" : {
             "type" : "hidden",
-            "value" : "Something"
+            "default" : "Something"
+        }
+    },
+    "secret" : {
+        "form" : {
+            "type" : "hidden"
         }
     },
     "alert" : {
@@ -61,7 +86,7 @@
             "type" : "alert",
             "class" : "alert-success",
             "icon" : "fa-check",
-            "value" : "You're awesome!"
+            "default" : "You're awesome!"
         }
     }
 }
