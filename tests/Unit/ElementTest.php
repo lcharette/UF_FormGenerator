@@ -41,10 +41,16 @@ class ElementTest extends TestCase
 
         // Get InputInterface from the `$elementName` in the schema
         $inputSchema = $schema[$elementName]['form'];
+
+        /** @var InputInterface */
         $input = new $class($elementName, $inputSchema, $value);
 
         // Test instanceof $input
         $this->assertInstanceof(InputInterface::class, $input);
+
+        // Test getters
+        $this->assertSame($elementName, $input->getName());
+        $this->assertSame($inputSchema, $input->getElement());
 
         // Parse the input
         $text = $input->parse();

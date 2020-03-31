@@ -44,9 +44,7 @@ abstract class Input implements InputInterface
      */
     public function __construct(string $name, array $element, $value = '')
     {
-        $this->name = $name;
-        $this->element = $element;
-        $this->value = $value;
+        $this->setName($name)->setElement($element)->setValue($value);
     }
 
     /**
@@ -60,22 +58,8 @@ abstract class Input implements InputInterface
     }
 
     /**
-     * Translate the value of passed argument using the Translator Facade.
-     *
-     * @param string $argument
-     */
-    public function translateArgValue(string $argument): void
-    {
-        if (isset($this->element[$argument])) {
-            $this->element[$argument] = Translator::translate($this->element[$argument]);
-        }
-    }
-
-    /**
-     * Return the value of the current input element.
+     * {@inheritdoc}
      * If not value is set in `$this->value`, return the default value (from the schema data), if any.
-     *
-     * @return string The input current value
      */
     public function getValue(): string
     {
@@ -85,6 +69,64 @@ abstract class Input implements InputInterface
             return (string) $this->element['default'];
         } else {
             return '';
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getElement(): array
+    {
+        return $this->element;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setElement(array $element)
+    {
+        $this->element = $element;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Translate the value of passed argument using the Translator Facade.
+     *
+     * @param string $argument
+     */
+    protected function translateArgValue(string $argument): void
+    {
+        if (isset($this->element[$argument])) {
+            $this->element[$argument] = Translator::translate($this->element[$argument]);
         }
     }
 
