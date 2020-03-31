@@ -31,7 +31,7 @@ abstract class Input implements InputInterface
     public $element;
 
     /**
-     * @var string|null The input value.
+     * @var string|int|null The input value.
      */
     public $value;
 
@@ -40,9 +40,9 @@ abstract class Input implements InputInterface
      *
      * @param string               $name
      * @param array<string,string> $element
-     * @param string|null          $value   (default: null)
+     * @param string|int|null      $value   (default: '')
      */
-    public function __construct(string $name, array $element, ?string $value = null)
+    public function __construct(string $name, array $element, $value = '')
     {
         $this->name = $name;
         $this->element = $element;
@@ -79,10 +79,10 @@ abstract class Input implements InputInterface
      */
     public function getValue(): string
     {
-        if (isset($this->value) && $this->value !== null) {
-            return $this->value;
+        if (isset($this->value) && !is_null($this->value)) {
+            return (string) $this->value;
         } elseif (isset($this->element['default'])) {
-            return $this->element['default'];
+            return (string) $this->element['default'];
         } else {
             return '';
         }

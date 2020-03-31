@@ -32,5 +32,10 @@ class Checkbox extends Input
         if ($this->element['binary'] !== false && $this->getValue() == 1) {
             $this->element['checked'] = 'checked';
         }
+
+        // We add the value if non-binary
+        if ($this->element['binary'] === false) {
+            $this->element['value'] = $this->getValue();
+        }
     }
 }

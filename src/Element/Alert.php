@@ -24,7 +24,7 @@ class Alert extends Input
         $this->element = array_merge([
             'class' => 'alert-danger',
             'icon'  => 'fa-ban',
-            'value' => (string) $this->value,
+            'value' => $this->getValue(),
             'name'  => $this->name,
         ], $this->element);
     }

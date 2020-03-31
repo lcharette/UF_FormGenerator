@@ -12,7 +12,6 @@ namespace UserFrosting\Sprinkle\FormGenerator\Tests\Unit;
 
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
 use UserFrosting\Sprinkle\FormGenerator\Element;
-use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
 use UserFrosting\Sprinkle\FormGenerator\Form;
 use UserFrosting\Support\Repository\Loader\YamlFileLoader;
 use UserFrosting\Tests\TestCase;
@@ -30,118 +29,6 @@ class FormGeneratorTest extends TestCase
     {
         parent::setUp();
         $this->basePath = __DIR__.'/data';
-    }
-
-    /**
-     * Test the base `Test` element class works on it's own.
-     */
-    public function testTextFormElement(): void
-    {
-        // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
-        $schema = new RequestSchemaRepository($loader->load());
-
-        // Get TextInput from the `name` element of the schema
-        $inputSchema = $schema['name']['form'];
-        $textInput = new Element\Text('name', $inputSchema);
-
-        // Test instanceof $textInput
-        $this->assertInstanceof(InputInterface::class, $textInput);
-
-        // Parse the input
-        $text = $textInput->parse();
-
-        // Test the parsing
-        $expected = [
-            'type'         => 'text',
-            'label'        => 'Project Name',
-            'icon'         => 'fa-flag',
-            'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'placeholder'  => 'Project Name',
-            'name'         => 'name',
-            'id'           => 'field_name',
-            'value'        => '',
-        ];
-
-        // We test the generated result
-        $this->assertEquals($expected, $text);
-    }
-
-    /**
-     * This test make sure the `Text` element works correctly when a current
-     * value is passed to the constructor. Should return the same as the
-     * previous test, but with the `value` setup instead of empty.
-     */
-    public function testTextFormElementWithData(): void
-    {
-        // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
-        $schema = new RequestSchemaRepository($loader->load());
-
-        // Get TextInput from the `name` element of the schema
-        $inputSchema = $schema['name']['form'];
-        $textInput = new Element\Text('name', $inputSchema, 'The Bar project');
-
-        // Test instanceof $textInput
-        $this->assertInstanceof(InputInterface::class, $textInput);
-
-        // Parse the input
-        $text = $textInput->parse();
-
-        // Test the parsing
-        $expected = [
-            'type'         => 'text',
-            'label'        => 'Project Name',
-            'icon'         => 'fa-flag',
-            'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'placeholder'  => 'Project Name',
-            'name'         => 'name',
-            'id'           => 'field_name',
-            'value'        => 'The Bar project',
-        ];
-
-        // We test the generated result
-        $this->assertEquals($expected, $text);
-    }
-
-    /**
-     * This test is the same as the one before, but we test the `owener` field with some data
-     * This make sure the `default` schema field will work correctly when empty data is passed.
-     */
-    public function testTextFormElementWithEmptyData(): void
-    {
-        // Get Schema
-        $loader = new YamlFileLoader($this->basePath.'/good.json');
-        $schema = new RequestSchemaRepository($loader->load());
-
-        // Get TextInput from the `name` element of the schema
-        $inputSchema = $schema['owner']['form'];
-        $textInput = new Element\Text('owner', $inputSchema, '');
-
-        // Test instanceof $textInput
-        $this->assertInstanceof(InputInterface::class, $textInput);
-
-        // Parse the input
-        $text = $textInput->parse();
-
-        // Test the parsing
-        $expected = [
-            'label'        => 'Project Owner',
-            'autocomplete' => 'off',
-            'class'        => 'form-control',
-            'value'        => '', //Shoudn't be a value here ! "" is overwritting "Foo"
-            'name'         => 'owner',
-            'id'           => 'owner',
-            'type'         => 'text',
-            'icon'         => 'fa-user',
-            'placeholder'  => 'Project Owner',
-            'default'      => 'Foo',
-        ];
-
-        // We test the generated result
-        $this->assertEquals($expected, $text);
     }
 
     /**
