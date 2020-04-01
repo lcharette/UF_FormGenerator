@@ -58,14 +58,14 @@ interface InputInterface
     public function setElement(array $element);
 
     /**
-     * Get the name of the input (eg. text, select, textarea, etc.)
+     * Get the name of the input (eg. text, select, textarea, etc.).
      *
      * @return string
      */
     public function getName(): string;
 
     /**
-     * Set the name of the input (eg. text, select, textarea, etc.)
+     * Set the name of the input (eg. text, select, textarea, etc.).
      *
      * @param string $name The name of the input (eg. text, select, textarea, etc.)
      *

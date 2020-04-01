@@ -24,7 +24,7 @@ class Hidden extends Input
         $this->element = array_merge([
             'value' => $this->getValue(),
             'name'  => $this->name,
-            'id'    => 'field_'.$this->name,
+            'id'    => 'field_' . $this->name,
         ], $this->element);
     }
 }

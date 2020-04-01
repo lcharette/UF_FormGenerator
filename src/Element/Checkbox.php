@@ -24,7 +24,7 @@ class Checkbox extends Input
         $this->element = array_merge([
             'class'  => 'js-icheck',
             'name'   => $this->name,
-            'id'     => 'field_'.$this->name,
+            'id'     => 'field_' . $this->name,
             'binary' => '1',
         ], $this->element);
 
