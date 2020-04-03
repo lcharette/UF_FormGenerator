@@ -201,6 +201,7 @@ class Form
      * Gets the defined value for a specific field name.
      *
      * @param string $name
+     *
      * @return string|null
      */
     protected function getValueForName(string $name)
@@ -216,6 +217,7 @@ class Form
      * Get the name of the field, wrapped by the global form namespace.
      *
      * @param string $name
+     *
      * @return string
      */
     protected function getNamespacedName(string $name): string
@@ -228,9 +230,10 @@ class Form
     }
 
     /**
-     * Gets the element class fully qualified name from it's type
+     * Gets the element class fully qualified name from it's type.
      *
      * @param string $type
+     *
      * @return string
      */
     protected function getElementClass(string $type): string
