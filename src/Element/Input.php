@@ -39,10 +39,10 @@ abstract class Input implements InputInterface
      * Constructor.
      *
      * @param string               $name
-     * @param array<string,string> $element
+     * @param array<string,string> $element (default: [])
      * @param string|int|null      $value   (default: '')
      */
-    public function __construct(string $name, array $element, $value = '')
+    public function __construct(string $name, array $element = [], $value = '')
     {
         $this->setName($name)->setElement($element)->setValue($value);
     }

@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
+use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
+use UserFrosting\Sprinkle\FormGenerator\Element\Text;
 
 /**
  * Form Class.
@@ -156,32 +158,92 @@ class Form
         // Loop all the the fields in the schema
         foreach ($this->schema->all() as $name => $input) {
 
-            // Skip the one that don't have a `form` definition
-            if (isset($input['form'])) {
-
-                // Get the value from the data
-                $value = isset($this->data[$name]) ? $this->data[$name] : null;
-
-                // Add the namespace to the name if it's defined
-                $name = ($this->formNamespace != '') ? $this->formNamespace.'['.$name.']' : $name;
-
-                // Get the element class and make sure it exist
-                $type = (isset($input['form']['type'])) ? $input['form']['type'] : 'text';
-                $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\'.Str::studly($type);
-
-                // If class doesn't esist, default to Text element
-                if (!class_exists($type)) {
-                    $type = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\Text';
-                }
-
-                // Create a new instance
-                $element = new $type($name, $input['form'], $value);
-
-                // Push data to `$form`
-                $form->put($name, $element->parse());
+            // Skip if it doesn't have a `form` definition
+            if (!isset($input['form'])) {
+                continue;
             }
+
+            // Alias the schema input
+            $element = $input['form'];
+
+            // Get the value from the data
+            $value = $this->getValueForName($name);
+
+            // Add the namespace to the name if it's defined
+            $name = $this->getNamespacedName($name);
+
+            // If element doesn't have a type, inject default (text)
+            if (!isset($element['type'])) {
+                $element['type'] = 'text';
+            }
+
+            // Get the class FQN
+            $elementClass = $this->getElementClass($element['type']);
+
+            // Create the actual class
+            $class = new $elementClass($name, $element, $value);
+
+            // Make sure we have an instance of InputInterface.
+            // An error will be thrown otherwise
+            if (!$class instanceof InputInterface) {
+                throw new \Exception('Element class needs to implement InputInterface');
+            }
+
+            // Put parsed data from the InputInterface to `$form`
+            // Collection put is used here, because of the namespace, which will put it at the right place
+            $form->put($name, $class->parse());
         }
 
         return $form->toArray();
+    }
+
+    /**
+     * Gets the defined value for a specific field name.
+     *
+     * @param string $name
+     * @return string|null
+     */
+    protected function getValueForName(string $name)
+    {
+        if (isset($this->data[$name])) {
+            return $this->data[$name];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the name of the field, wrapped by the global form namespace.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function getNamespacedName(string $name): string
+    {
+        if ($this->formNamespace !== '') {
+            return $this->formNamespace . '[' . $name . ']';
+        }
+
+        return $name;
+    }
+
+    /**
+     * Gets the element class fully qualified name from it's type
+     *
+     * @param string $type
+     * @return string
+     */
+    protected function getElementClass(string $type): string
+    {
+        // Get the element class and make sure it exist
+        // @todo : Allow for custom classes, or use a `switch` and/or config file to avoid hard coding this class
+        $typeClass = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\' . Str::studly($type);
+
+        // If class doesn't esist, default to Text element
+        if (!class_exists($typeClass)) {
+            return Text::class;
+        }
+
+        return $typeClass;
     }
 }
