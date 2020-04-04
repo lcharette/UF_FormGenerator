@@ -14,9 +14,11 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
 use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
 use UserFrosting\Sprinkle\FormGenerator\Element\Text;
+use UserFrosting\Sprinkle\FormGenerator\Exception\InvalidClassException;
 
 /**
  * Form Class.
@@ -67,7 +69,7 @@ class Form
         } elseif (is_array($data)) {
             $this->data = $data;
         } else {
-            throw new \InvalidArgumentException('Data must be an array, a Collection, a Model or a Repository');
+            throw new InvalidArgumentException('Data must be an array, a Collection, a Model or a Repository');
         }
     }
 
@@ -186,7 +188,7 @@ class Form
             // Make sure we have an instance of InputInterface.
             // An error will be thrown otherwise
             if (!$class instanceof InputInterface) {
-                throw new \Exception('Element class needs to implement InputInterface');
+                throw new InvalidClassException('Element class needs to implement InputInterface');
             }
 
             // Put parsed data from the InputInterface to `$form`
