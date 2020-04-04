@@ -211,8 +211,6 @@ class Form
         if (isset($this->data[$name])) {
             return $this->data[$name];
         }
-
-        return null;
     }
 
     /**

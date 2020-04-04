@@ -34,8 +34,8 @@ class FormTest extends TestCase
      * Test the Form Class.
      *
      * @param string $file
-     * @param array $data
-     * @param array $expected
+     * @param array  $data
+     * @param array  $expected
      * @dataProvider formProvider
      */
     public function testForm(string $file, array $data, array $expected): void
@@ -80,7 +80,7 @@ class FormTest extends TestCase
                         'icon'         => 'fa-flag',
                         'placeholder'  => 'Project Name',
                     ],
-                ]
+                ],
             ],
             // WITH DATA
             [
@@ -100,7 +100,7 @@ class FormTest extends TestCase
                         'icon'         => 'fa-flag',
                         'placeholder'  => 'Project Name',
                     ],
-                ]
+                ],
             ],
             // WITH BAD DATA
             [
@@ -123,7 +123,7 @@ class FormTest extends TestCase
                         'id'           => 'field_myOtherField',
                         'type'         => 'text', // Will be added by the FORM class
                     ],
-                ]
+                ],
             ],
         ];
     }
