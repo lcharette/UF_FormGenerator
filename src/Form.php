@@ -13,18 +13,24 @@ namespace UserFrosting\Sprinkle\FormGenerator;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
+use UserFrosting\Sprinkle\FormGenerator\Element\Alert;
+use UserFrosting\Sprinkle\FormGenerator\Element\Checkbox;
+use UserFrosting\Sprinkle\FormGenerator\Element\Hidden;
 use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
+use UserFrosting\Sprinkle\FormGenerator\Element\Select;
 use UserFrosting\Sprinkle\FormGenerator\Element\Text;
+use UserFrosting\Sprinkle\FormGenerator\Element\Textarea;
+use UserFrosting\Sprinkle\FormGenerator\Exception\ClassNotFoundException;
+use UserFrosting\Sprinkle\FormGenerator\Exception\InputNotFoundException;
 use UserFrosting\Sprinkle\FormGenerator\Exception\InvalidClassException;
 
 /**
  * Form Class.
  *
- * The FormGenerator class, which is used to return the `form` part from a Fortress
- * schema for html form generator in Twig.
+ * The FormGenerator class, which is used to process the `form` part from a Fortress
+ * schema into an html form element for Twig.
  */
 class Form
 {
@@ -34,14 +40,24 @@ class Form
     protected $schema;
 
     /**
-     * @var array<string,string> The form values
+     * @var array<string,string|int> The form values
      */
     protected $data = [];
 
     /**
-     * @var string Use this to wrap form fields in top-level array
+     * @var string Used to wrap form fields in top-level array
      */
     protected $formNamespace = '';
+
+    /**
+     * @var array<string,string> List of input type classes registered
+     */
+    protected $types = [];
+
+    /**
+     * @var string Default input type for element without one.
+     */
+    protected $defaultType = 'text';
 
     /**
      * Class constructor.
@@ -53,14 +69,19 @@ class Form
     {
         $this->setSchema($schema);
         $this->setData($data);
+
+        // Register default types
+        $this->registerDefaultType();
     }
 
     /**
      * Set the form current values.
      *
      * @param array<string>|Collection<mixed>|Model|Repository $data The form values
+     *
+     * @return self
      */
-    public function setData($data): void
+    public function setData($data)
     {
         if ($data instanceof Collection || $data instanceof Model) {
             $this->data = $data->toArray();
@@ -71,39 +92,101 @@ class Form
         } else {
             throw new InvalidArgumentException('Data must be an array, a Collection, a Model or a Repository');
         }
+
+        return $this;
     }
 
     /**
      * Set the schema for this validator.
      *
      * @param RequestSchemaRepository $schema A RequestSchemaRepository object, containing the form definition.
+     *
+     * @return self
      */
-    public function setSchema(RequestSchemaRepository $schema): void
+    public function setSchema(RequestSchemaRepository $schema)
     {
         $this->schema = $schema;
+
+        return $this;
     }
 
     /**
-     * Use to define the value of a form input when `setData` is already set.
+     * Get all registered type classes.
      *
-     * @param string $inputName
-     * @param string $value
+     * @return array<string,string>
      */
-    public function setValue(string $inputName, string $value): void
+    public function getTypes(): array
+    {
+        return $this->types;
+    }
+
+    /**
+     * Get the class for a specific name.
+     * @throws InputNotFoundException if type name not defined
+     *
+     * @return string The type name to return
+     */
+    public function getType(string $name): string
+    {
+        if (!isset($this->types[$name])) {
+            throw new InputNotFoundException("Input type $name not found");
+        }
+
+        return $this->types[$name];
+    }
+
+    /**
+     * Register a custom input type class.
+     * Will overwrite any previously defined clas with the same name.
+     *
+     * @param string $name  The type name (eg. select, text, phone, mytext, etc.)
+     * @param string $class The class uses
+     */
+    public function registerType(string $name, string $class): void
+    {
+        if (!class_exists($class)) {
+            throw new ClassNotFoundException("Class $class not found.");
+        }
+
+        $this->types[$name] = $class;
+    }
+
+    /**
+     * Remove input type from registered list
+     *
+     * @param string $name
+     */
+    public function removeType(string $name): void
+    {
+        unset($this->types[$name]);
+    }
+
+    /**
+     * Define the value of a specific form input.
+     *
+     * @param string     $inputName The input name
+     * @param string|int $value     Form value
+     *
+     * @return self
+     */
+    public function setValue(string $inputName, $value)
     {
         $this->data[$inputName] = $value;
+
+        return $this;
     }
 
     /**
-     * Function used to overwrite the input argument from a schema file
+     * Function used to overwrite the input argument from a schema file.
      * Can also be used to overwrite an argument hardcoded in the Twig file.
-     * Use `setCustomFormData` to set any other tag.
      *
      * @param string $inputName The input name where the argument will be added
      * @param string $property  The argument name. Example "data-color"
      * @param string $value     The value of the argument
+     *
+     * @return self
      */
-    public function setInputArgument(string $inputName, string $property, string $value): void
+    public function setInputArgument(string $inputName, string $property, string $value)
     {
         if ($this->schema->has($inputName)) {
             // Get the element and force set the property
@@ -113,6 +196,8 @@ class Form
             // Push back the modifyed element in the schema
             $this->schema->set($inputName, $element);
         }
+
+        return $this;
     }
 
     /**
@@ -122,8 +207,10 @@ class Form
      * @param string               $inputName The select name to add options to
      * @param array<string,string> $data      An array of `value => label` options
      * @param string               $selected  The selected key
+     *
+     * @return self
      */
-    public function setOptions(string $inputName, $data = [], ?string $selected = null): void
+    public function setOptions(string $inputName, $data = [], ?string $selected = null)
     {
         // Set opdations
         $this->setInputArgument($inputName, 'options', $data);
@@ -132,6 +219,8 @@ class Form
         if (!is_null($selected)) {
             $this->setValue($inputName, $selected);
         }
+
+        return $this;
     }
 
     /**
@@ -141,10 +230,38 @@ class Form
      * See : http://stackoverflow.com/a/20365198/445757.
      *
      * @param string $namespace
+     *
+     * @return self
      */
-    public function setFormNamespace(string $namespace): void
+    public function setFormNamespace(string $namespace)
     {
         $this->formNamespace = $namespace;
+
+        return $this;
+    }
+
+    /**
+     * Get default input type for element without one.
+     *
+     * @return string
+     */
+    public function getDefaultType(): string
+    {
+        return $this->defaultType;
+    }
+
+    /**
+     * Set default input type for element without one.
+     *
+     * @param string $defaultType Default type name (eg. select, text, phone, mytext, etc.)
+     *
+     * @return self
+     */
+    public function setDefaultType(string $defaultType)
+    {
+        $this->defaultType = $defaultType;
+
+        return $this;
     }
 
     /**
@@ -176,11 +293,16 @@ class Form
 
             // If element doesn't have a type, inject default (text)
             if (!isset($element['type'])) {
-                $element['type'] = 'text';
+                $element['type'] = $this->defaultType;
             }
 
-            // Get the class FQN
-            $elementClass = $this->getElementClass($element['type']);
+            // Get the class FQN for the given type.
+            // Fallback to default if not found
+            try {
+                $elementClass = $this->getType($element['type']);
+            } catch (InputNotFoundException $e) {
+                $elementClass = $this->getType($this->getDefaultType());
+            }
 
             // Create the actual class
             $class = new $elementClass($name, $element, $value);
@@ -188,7 +310,7 @@ class Form
             // Make sure we have an instance of InputInterface.
             // An error will be thrown otherwise
             if (!$class instanceof InputInterface) {
-                throw new InvalidClassException('Element class needs to implement InputInterface');
+                throw new InvalidClassException('Input class needs to implement InputInterface');
             }
 
             // Put parsed data from the InputInterface to `$form`
@@ -200,7 +322,7 @@ class Form
     }
 
     /**
-     * Gets the defined value for a specific field name.
+     * Gets the defined value for the specified field name.
      *
      * @param string $name
      *
@@ -230,23 +352,15 @@ class Form
     }
 
     /**
-     * Gets the element class fully qualified name from it's type.
-     *
-     * @param string $type
-     *
-     * @return string
+     * Register the default built-in types
      */
-    protected function getElementClass(string $type): string
+    protected function registerDefaultType(): void
     {
-        // Get the element class and make sure it exist
-        // @todo : Allow for custom classes, or use a `switch` and/or config file to avoid hard coding this class
-        $typeClass = 'UserFrosting\\Sprinkle\\FormGenerator\\Element\\' . Str::studly($type);
-
-        // If class doesn't esist, default to Text element
-        if (!class_exists($typeClass)) {
-            return Text::class;
-        }
-
-        return $typeClass;
+        $this->registerType('alert', Alert::class);
+        $this->registerType('checkbox', Checkbox::class);
+        $this->registerType('hidden', Hidden::class);
+        $this->registerType('select', Select::class);
+        $this->registerType('text', Text::class);
+        $this->registerType('textarea', Textarea::class);
     }
 }
