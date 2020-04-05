@@ -211,7 +211,7 @@ class FormTest extends TestCase
     /**
      * @depends testFormWithCustomType
      */
-    public function testFormWithRemoveType(): void
+    public function testFormRemoveType(): void
     {
         // Get Schema & form
         $loader = new YamlFileLoader($this->basePath . '/good.json');
@@ -232,6 +232,215 @@ class FormTest extends TestCase
         // Make sure it unregistered properly
         $this->expectException(InputNotFoundException::class);
         $form->getType('select');
+    }
+
+    /**
+     * @depends testForm
+     */
+    public function testFormWithNamespace(): void
+    {
+        // Get Schema & form
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $schema = new RequestSchemaRepository($loader->load());
+        $form = new Form($schema);
+
+        // Set form namespace
+        $form->setFormNamespace('foo');
+
+        // Test the form generation
+        $this->assertSame([
+            'foo[name]' => [
+                'autocomplete' => 'off',
+                'class'        => 'form-control',
+                'value'        => '',
+                'name'         => 'foo[name]',
+                'id'           => 'field_foo[name]',
+                'type'         => 'text',
+                'label'        => 'Project Name',
+                'icon'         => 'fa-flag',
+                'placeholder'  => 'Project Name',
+            ],
+        ], $form->generate());
+    }
+
+    /**
+     * @depends testForm
+     */
+    public function testFormForSetValue(): void
+    {
+        // Get Schema & form
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $schema = new RequestSchemaRepository($loader->load());
+        $form = new Form($schema, [
+            'name' => 'The Foo', // Will be overwritten by setValue
+        ]);
+
+        // Set form namespace
+        $form->setValue('name', 'The Bar');
+
+        // Test the form generation
+        $this->assertSame([
+            'name' => [
+                'autocomplete' => 'off',
+                'class'        => 'form-control',
+                'value'        => 'The Bar',
+                'name'         => 'name',
+                'id'           => 'field_name',
+                'type'         => 'text',
+                'label'        => 'Project Name',
+                'icon'         => 'fa-flag',
+                'placeholder'  => 'Project Name',
+            ],
+        ], $form->generate());
+    }
+
+    /**
+     * @depends testForm
+     */
+    public function testFormForSetInputArgument(): void
+    {
+        // Get Schema & form
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $schema = new RequestSchemaRepository($loader->load());
+        $form = new Form($schema);
+
+        // Set form namespace
+        $form->setInputArgument('name', 'data-foo', 'Bar')
+             ->setInputArgument('name', 'bar', 123);
+
+        // Test the form generation
+        $this->assertSame([
+            'name' => [
+                'autocomplete' => 'off',
+                'class'        => 'form-control',
+                'value'        => '',
+                'name'         => 'name',
+                'id'           => 'field_name',
+                'type'         => 'text',
+                'label'        => 'Project Name',
+                'icon'         => 'fa-flag',
+                'placeholder'  => 'Project Name',
+                'data-foo'     => 'Bar',
+                'bar'          => 123,
+            ],
+        ], $form->generate());
+    }
+
+    /**
+     * @depends testForm
+     */
+    public function testFormWithSelect(): void
+    {
+        // Get Schema & form
+        $loader = new YamlFileLoader($this->basePath . '/select.json');
+        $schema = new RequestSchemaRepository($loader->load());
+        $form = new Form($schema);
+
+        // Test the form generation
+        $this->assertSame([
+            'status' => [
+                'class'        => 'form-control js-select2',
+                'value'        => '',
+                'name'         => 'status',
+                'id'           => 'field_status',
+                'type'         => 'select',
+                'label'        => 'Status',
+                'options'      => [
+                    '0' => 'Closed',
+                    '1' => 'Open',
+                ],
+            ],
+            'color' => [
+                'class'             => 'form-control js-select2',
+                'value'             => '',
+                'name'              => 'color',
+                'id'                => 'field_color',
+                'type'              => 'select',
+                'label'             => 'Color',
+                'data-placeholder'  => 'Select color',
+            ],
+        ], $form->generate());
+    }
+
+    /**
+     * @depends testFormWithSelect
+     * @depends testFormForSetValue
+     */
+    public function testFormForSetOptions(): void
+    {
+        // Get Schema & form
+        $loader = new YamlFileLoader($this->basePath . '/select.json');
+        $schema = new RequestSchemaRepository($loader->load());
+        $form = new Form($schema);
+
+        // Make sure status won't change value
+        $form->setValue('status', '1');
+
+        // Set form namespace
+        $form->setOptions('status', [
+            'closed' => 'Fermé',
+            'open'   => 'Ouvert',
+        ])->setOptions('color', [
+            'red'   => 'Rouge',
+            'blue'  => 'Bleu',
+            'black' => 'Noir',
+            'white' => 'Blanc',
+        ], 'black');
+
+        // Test the form generation
+        $this->assertSame([
+            'status' => [
+                'class'        => 'form-control js-select2',
+                'value'        => '1',
+                'name'         => 'status',
+                'id'           => 'field_status',
+                'type'         => 'select',
+                'label'        => 'Status',
+                'options'      => [
+                    'closed' => 'Fermé',
+                    'open'   => 'Ouvert',
+                ],
+            ],
+            'color' => [
+                'class'        => 'form-control js-select2',
+                'value'        => 'black',
+                'name'         => 'color',
+                'id'           => 'field_color',
+                'type'         => 'select',
+                'label'        => 'Color',
+                'options'      => [
+                    'red'   => 'Rouge',
+                    'blue'  => 'Bleu',
+                    'black' => 'Noir',
+                    'white' => 'Blanc',
+                ],
+                'data-placeholder'  => 'Select color',
+            ],
+        ], $form->generate());
+    }
+
+    /**
+     * @depends testForm
+     */
+    public function testFormWithNewDefaultType(): void
+    {
+        // Get Schema & form
+        $loader = new YamlFileLoader($this->basePath . '/bad.json');
+        $schema = new RequestSchemaRepository($loader->load());
+        $form = new Form($schema);
+
+        // Set form namespace
+        $form->setDefaultType('select');
+        $this->assertSame('select', $form->getDefaultType());
+
+        // Test the form generation
+        $this->assertSame([
+            'class'        => 'form-control js-select2',
+            'value'        => 'Bar',
+            'name'         => 'myOtherField',
+            'id'           => 'field_myOtherField',
+            'type'         => 'select', // Added by default type
+        ], $form->generate()['myOtherField']);
     }
 }
 

@@ -182,11 +182,11 @@ class Form
      *
      * @param string $inputName The input name where the argument will be added
      * @param string $property  The argument name. Example "data-color"
-     * @param string $value     The value of the argument
+     * @param mixed  $value     The value of the argument
      *
      * @return self
      */
-    public function setInputArgument(string $inputName, string $property, string $value)
+    public function setInputArgument(string $inputName, string $property, $value)
     {
         if ($this->schema->has($inputName)) {
             // Get the element and force set the property
@@ -210,7 +210,7 @@ class Form
      *
      * @return self
      */
-    public function setOptions(string $inputName, $data = [], ?string $selected = null)
+    public function setOptions(string $inputName, array $data = [], ?string $selected = null)
     {
         // Set opdations
         $this->setInputArgument($inputName, 'options', $data);
