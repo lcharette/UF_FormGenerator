@@ -10,6 +10,8 @@
 
 namespace UserFrosting\Sprinkle\FormGenerator\Tests\Unit;
 
+use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
 use UserFrosting\Sprinkle\FormGenerator\Element\Input;
 use UserFrosting\Sprinkle\FormGenerator\Element\Select;
@@ -39,11 +41,11 @@ class FormTest extends TestCase
      * Test the Form Class.
      *
      * @param string $file
-     * @param array  $data
+     * @param mixed  $data
      * @param array  $expected
      * @dataProvider formProvider
      */
-    public function testForm(string $file, array $data, array $expected): void
+    public function testForm(string $file, $data, array $expected): void
     {
         // Get Schema
         $loader = new YamlFileLoader($this->basePath . $file);
@@ -68,6 +70,9 @@ class FormTest extends TestCase
      */
     public function formProvider(): array
     {
+        $stub = $this->createMock(Model::class);
+        $stub->method('toArray')->willReturn(['name' => 'Bar project']);
+
         return [
             // WITH NO DATA
             [
@@ -93,6 +98,64 @@ class FormTest extends TestCase
                 [
                     'name' => 'Bar project',
                 ],
+                [
+                    'name' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => 'Bar project', //Value's here !
+                        'name'         => 'name',
+                        'id'           => 'field_name',
+                        'type'         => 'text',
+                        'label'        => 'Project Name',
+                        'icon'         => 'fa-flag',
+                        'placeholder'  => 'Project Name',
+                    ],
+                ],
+            ],
+            // WITH DATA AS COLLECTION
+            [
+                '/good.json',
+                collect([
+                    'name' => 'Bar project',
+                ]),
+                [
+                    'name' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => 'Bar project', //Value's here !
+                        'name'         => 'name',
+                        'id'           => 'field_name',
+                        'type'         => 'text',
+                        'label'        => 'Project Name',
+                        'icon'         => 'fa-flag',
+                        'placeholder'  => 'Project Name',
+                    ],
+                ],
+            ],
+            // WITH DATA AS MODEL
+            [
+                '/good.json',
+                $stub,
+                [
+                    'name' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => 'Bar project', //Value's here !
+                        'name'         => 'name',
+                        'id'           => 'field_name',
+                        'type'         => 'text',
+                        'label'        => 'Project Name',
+                        'icon'         => 'fa-flag',
+                        'placeholder'  => 'Project Name',
+                    ],
+                ],
+            ],
+            // WITH DATA AS REPOSITORY
+            [
+                '/good.json',
+                new \Illuminate\Config\Repository([
+                    'name' => 'Bar project',
+                ]),
                 [
                     'name' => [
                         'autocomplete' => 'off',
@@ -441,6 +504,21 @@ class FormTest extends TestCase
             'id'           => 'field_myOtherField',
             'type'         => 'select', // Added by default type
         ], $form->generate()['myOtherField']);
+    }
+
+    /**
+     * @depends testForm
+     */
+    public function testFormForInvalidArgumentException(): void
+    {
+        // Get Schema & form
+        $loader = new YamlFileLoader($this->basePath . '/good.json');
+        $schema = new RequestSchemaRepository($loader->load());
+        $form = new Form($schema);
+
+        // Set expectations
+        $this->expectException(InvalidArgumentException::class);
+        $form->setData('foo');
     }
 }
 
