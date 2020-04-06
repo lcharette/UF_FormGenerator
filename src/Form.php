@@ -122,6 +122,7 @@ class Form
 
     /**
      * Get the class for a specific name.
+     *
      * @throws InputNotFoundException if type name not defined
      *
      * @return string The type name to return
@@ -152,7 +153,7 @@ class Form
     }
 
     /**
-     * Remove input type from registered list
+     * Remove input type from registered list.
      *
      * @param string $name
      */
@@ -352,7 +353,7 @@ class Form
     }
 
     /**
-     * Register the default built-in types
+     * Register the default built-in types.
      */
     protected function registerDefaultType(): void
     {
