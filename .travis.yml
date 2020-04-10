@@ -2,32 +2,21 @@ sudo: false
 dist: xenial
 language: php
 
-services:
-  - mysql
-  - postgresql
-
 php:
   - 7.1
   - 7.2
   - 7.3
+  - 7.4
 
 env:
   matrix:
-    - DB=mysql UF_BRANCH=4.2.*
-    - DB=sqlite UF_BRANCH=4.2.*
-    - DB=pgsql UF_BRANCH=4.2.*
-    - DB=mysql UF_BRANCH=4.3.*
-    - DB=sqlite UF_BRANCH=4.3.*
-    - DB=pgsql UF_BRANCH=4.3.*
-    - DB=mysql UF_BRANCH=dev-develop
-    - DB=sqlite UF_BRANCH=dev-develop
-    - DB=pgsql UF_BRANCH=dev-develop
+    - UF_BRANCH=4.3.*
+    - UF_BRANCH=4.4.*
+    - UF_BRANCH=dev-develop
 
 matrix:
   allow_failures:
-    - DB=mysql UF_BRANCH=dev-develop
-    - DB=sqlite UF_BRANCH=dev-develop
-    - DB=pgsql UF_BRANCH=dev-develop
+    - UF_BRANCH=dev-develop
 
 cache:
   directories:

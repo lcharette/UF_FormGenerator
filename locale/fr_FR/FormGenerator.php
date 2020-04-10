@@ -1,11 +1,10 @@
 <?php
 
 /*
- * UF Form Generator.
+ * UserFrosting Form Generator
  *
- * @link https://github.com/lcharette/UF_FormGenerator
- *
- * @copyright Copyright (c) 2017 Louis Charette
+ * @link      https://github.com/lcharette/UF_FormGenerator
+ * @copyright Copyright (c) 2020 Louis Charette
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 

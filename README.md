@@ -1,16 +1,27 @@
 # Form Generator Sprinkle for [UserFrosting 4](https://www.userfrosting.com)
 
-[![Latest Version](https://img.shields.io/github/release/lcharette/UF_FormGenerator.svg)](https://github.com/lcharette/UF_FormGenerator/releases)
+[![Donate][kofi-badge]][kofi]
+[![Latest Version][releases-badge]][releases]
+[![UserFrosting Version][uf-version]][uf]
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![UserFrosting Version](https://img.shields.io/badge/UserFrosting->=%204.2-brightgreen.svg)](https://github.com/userfrosting/UserFrosting)
-[![Build Status](https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master)](https://travis-ci.org/lcharette/UF_FormGenerator)
-[![StyleCI](https://github.styleci.io/repos/68563337/shield?branch=master&style=flat)](https://github.styleci.io/repos/68563337)
-[![Codecov](https://codecov.io/gh/lcharette/UF_FormGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/lcharette/UF_FormGenerator)
-[![Donate](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue.svg)](https://ko-fi.com/A7052ICP)
+[![Travis][travis-badge]][travis]
+[![Codecov][codecov-badge]][codecov]
+[![StyleCI][styleci-badge]][styleci]
 
-This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting/[validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
+[kofi]: https://ko-fi.com/A7052ICP
+[kofi-badge]: https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue.svg
+[releases]: https://github.com/lcharette/UF_FormGenerator/releases
+[releases-badge]: https://img.shields.io/github/release/lcharette/UF_FormGenerator.svg
+[uf-version]: https://img.shields.io/badge/UserFrosting->=%204.3-brightgreen.svg
+[uf]: https://github.com/userfrosting/UserFrosting
+[travis]: https://travis-ci.org/lcharette/UF_FormGenerator
+[travis-badge]: https://travis-ci.org/lcharette/UF_FormGenerator.svg?branch=master
+[codecov]: https://codecov.io/gh/lcharette/UF_FormGenerator
+[codecov-badge]: https://codecov.io/gh/lcharette/UF_FormGenerator/branch/master/graph/badge.svg
+[styleci]: https://styleci.io/repos/68563337
+[styleci-badge]: https://styleci.io/repos/68563337/shield?branch=master&style=flat
 
-> This version requires UserFrosting 4.2 and up. Check out [FormGenerator 2.2 for UF 4.1 support](#versions-and-userfrosting-support).
+This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting [validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
 # Help and Contributing
 
@@ -18,21 +29,24 @@ If you need help using this sprinkle or found any bug, feels free to open an iss
 
 # Versions and UserFrosting support
 
-FormGenerator version goes up one major version (2.x.x -> 3.x.x) when moving to a new minor or major version (4.1.x -> 4.2.x) of UserFrosting is released. Breaking changes inside FormGenerator itself trigger a new minor version (FG 2.0.x -> 2.1.x) while normal path makes FormGenerator to go up one revision number (2.1.2 -> 2.1.3).
-
 | UserFrosting Version | FormGenerator Version |
-|----------------------|-----------------------|
-|         4.2.x        |         3.x.x         |
-|         4.1.x        |         [2.x.x]       |
-|        < 4.0.x       |       No Support      |
+| :------------------: | :-------------------: |
+|        4.4.x         |         4.x.x         |
+|        4.3.x         |    [3.0.x] & 4.0.x    |
+|        4.2.x         |        [3.0.x]        |
+|        4.1.x         |        [2.0.x]        |
+|        4.0.x         |      No Support       |
+
+[3.0.x]: https://github.com/lcharette/UF_FormGenerator/tree/3.0#form-generator-sprinkle-for-userfrosting-4
+[2.0.x]: https://github.com/lcharette/UF_FormGenerator/tree/2.2#form-generator-sprinkle-for-userfrosting-4
 
 # Installation
-Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^3.0.0"`. Also add `FormGenerator` to the `base` list. For example:
+Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^4.0.0"`. Also add `FormGenerator` to the `base` list. For example:
 
-```
+```json
 {
     "require": {
-        "lcharette/uf_formgenerator": "^3.0.0"
+        "lcharette/uf_formgenerator": "^4.0.0"
     },
     "base": [
         "core",
@@ -45,6 +59,10 @@ Edit UserFrosting `app/sprinkles.json` file and add the following to the `requir
 
 Run `composer update` then `php bakery bake` to install the sprinkle.
 
+# Working example
+
+See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorExample) repo for an example of the FormGenerator full code.
+
 # Features and usage
 Before starting with _FormGenerator_, you should read the main UserFrosting guide to familiarize yourself with _validation schemas_: (https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
@@ -54,7 +72,7 @@ This sprinkle uses the `schemas` used by UserFrosting to validate form data to b
 
 For example, here's a simple `schema` used to validate a form used to create a `project`. The form will contain a `name`, `description` and `status` fields.
 
-```
+```json
 {
     "name" : {
         "validators" : {
@@ -88,7 +106,7 @@ For example, here's a simple `schema` used to validate a form used to create a `
 
 At this point, with typical UserFrosting setup, you would be going into your controller and Twig files to manually create your HTML form. This can be easy if you have a two or three fields, but can be a pain with a dozen fields and more. This is where FormGenerator steps in with the use of a new `form` attribute. Let's add it to our `project` form :
 
-```
+```json
 {
     "name" : {
         "validators" : {
@@ -142,7 +160,7 @@ At this point, with typical UserFrosting setup, you would be going into your con
 
 Let's look closer at the `name` field :
 
-```
+```json
 "form" : {
     "type" : "text",
     "label" : "PROJECT.NAME",
@@ -170,7 +188,7 @@ First thing to do is add FormGenerator's `Form` class to your "use" list :
 `use UserFrosting\Sprinkle\FormGenerator\Form;`
 
 Next, where you load the schema and setup the `validator`, you simply add the new Form creation:
-```
+```php
 // Load validator rules
 $schema = new RequestSchema("schema://project.json");
 $validator = new JqueryValidationAdapter($schema, $this->ci->translator);
@@ -182,7 +200,7 @@ $form = new Form($schema, $project);
 In this example, `$project` can contain the default (or current value) of the fields. A data collection fetched from the database with eloquent can also be passed directly. That second argument can also be omitted to create an empty form.
 
 Last thing to do is send the fields to Twig. In the list of retuned variables to the template, add the `fields` variable:
-```
+```php
 $this->ci->view->render($response, "pages/myPage.html.twig", [
     "fields" => $form->generate(),
     "validators" => $validator->rules('json', true)
@@ -194,7 +212,7 @@ $this->ci->view->render($response, "pages/myPage.html.twig", [
 
 Now it's time to display the form in `myPage.html.twig` !
 
-```
+```html
 <form name="MyForm" method="post" action="/Path/to/Controller/Handling/Form">
     {% include "forms/csrf.html.twig" %}
     <div id="form-alerts"></div>
@@ -213,21 +231,21 @@ That's it! No need to list all the field manually. The ones defined in the `fiel
 
 ## Modal form
 What if you want to show a form in a modal window? Well, FormGenerator makes it even easier! It's basically three steps:
-1. Setup your form schema (described above)
+1. Setup your form schema (as described above)
 2. Setup the form in your controller
 3. Call the modal from your template
 
 ### Setup the form in your controller
 With your schema in hand, it's time to create a controller and route to load your modal. The controller code will be like any basic UserFrosting modal, plus the `$form` part above and one changes in the `render` part. For example :
 
-```
+```php
 $this->ci->view->render($response, "FormGenerator/modal.html.twig", [
-    "box_id" => $get['box_id'],
-    "box_title" => "PROJECT.CREATE",
+    "box_id"        => $get['box_id'],
+    "box_title"     => "PROJECT.CREATE",
     "submit_button" => "CREATE",
-    "form_action" => '/project/create',
-    "fields" => $form->generate(),
-    "validators" => $validator->rules('json', true)
+    "form_action"   => '/project/create',
+    "fields"        => $form->generate(),
+    "validators"    => $validator->rules('json', true)
 ]);
 ```
 
@@ -243,7 +261,7 @@ As you can see, instead of rendering your own Twig template, you simply have to 
 So at this point you have a controller that displays the modal at a `/path/to/controller` route. Time to show that modal. Again, two steps:
 
 First, define a link or a button that will call the modal when clicked. For example :
-```
+```html
 <button class="btn btn-success js-displayForm" data-formUrl="/path/to/controller">Create</button>
 ```
 
@@ -263,7 +281,7 @@ By default, the `formGenerator` plugin will bind a **form modal** to every eleme
 One side features of FormGenerator is the ability to add a confirmation modal to your pages with simple HTML5 attributes. The process is similar to adding a modal form, without the need to create any controller or route.
 
 Let's look at a delete button / confirmation for our `project` :
-```
+```html
 <a href="#" class="btn btn-danger js-displayConfirm"
   data-confirm-title="Delete project ?"
   data-confirm-message="Are you sure you want to delete this project?"
@@ -289,7 +307,7 @@ By default, the `formGenerator` plugin will bind a **confirmation modal** to eve
 
 Form field input attributes can also be added or edited from PHP. This can be useful when dynamically defining a Select input options. To do this, simply use the `setInputArgument($inputName, $property, $data)` method. For example, to add a list to a `clients` select :
 
-```
+```php
 // Get clients from the db model
 $clients = Clients::all();
 
@@ -301,7 +319,7 @@ $form->setInputArgument('clients', 'options', $clients);
 
 If you want to set the form values once the form instance is created, you can use the `setData($data)` method:
 
-```
+```php
 $form = new Form($schema);
 $form->setData($clients, $project);
 ```
@@ -310,7 +328,7 @@ $form->setData($clients, $project);
 
 Similar to the `setData` method, you can set a specific input value using the `setValue($inputName, $value)` method :
 
-```
+```php
 $currentClient = ...
 
 $form = new Form($schema, $project);
@@ -322,6 +340,42 @@ $form->setValue('clients', $currentClient);
 When dealing with multiple form on the same page or a dynamic number of input (you can use the new `Loader` system in 4.1 to build dynamic schemas!), it can be useful to wrap form elements in an array using the `setFormNamespace($namespace)` method. This can also your the input names [to contains dot syntaxt](http://stackoverflow.com/a/20365198/445757).
 
 For example, `$form->setFormNamespace("data");` will transform all the input names from `<input name="foo" [...] />` to `<input name="data[foo]" [...] />`.
+
+#### registerType
+
+If you want to overwrite or add a new element type,
+
+
+First, you need to create the element itself. This class needs to extends the `UserFrosting\Sprinkle\FormGenerator\Element\Input` class. In there you can define the default attributes, and do other transformation. For example, to define a new `Date` element type :
+
+```php
+<?php
+
+namespace UserFrosting\Sprinkle\MySprinkle\Element;
+
+use UserFrosting\Sprinkle\FormGenerator\Element\Input;
+
+class Date extends Input
+{
+    protected function applyTransformations(): void
+    {
+        $this->element = array_merge([
+            'class' => 'myDateElement',
+            'value' => $this->getValue(),
+            'name'  => $this->name,
+            'id'    => 'field_' . $this->name,
+            'date-foo' => //...
+        ], $this->element);
+    }
+}
+```
+
+Next, you need to register your `Date` element type. If the `date` type is already registered, it will be overwritten by your custom class.
+
+```php
+$form = new Form($schema, $project);
+$form->registerType('date', UserFrosting\Sprinkle\MySprinkle\Element\Date::class);
+```
 
 ### Javascript Plugin
 
@@ -335,7 +389,7 @@ Just pass an object with those
  - `redirectAfterSuccess` (bool). If set to true, the page will reload when the form submission or confirmation is successful. Default to `true`.
 
 Example:
-```
+```js
 $(".project-edit-button").formGenerator({redirectAfterSuccess: false});
 ```
 
@@ -349,23 +403,16 @@ You can listen for some events returned by FormGenerator. Those events can be us
 - `error.formGenerator`
 
 Example:
-```
+```js
 $(".project-edit-button").on("formSuccess.formGenerator", function () {
     // Refresh data
 });
 ```
 
-# Working example
-
-See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorExample) repo for an example of the FormGenerator full code.
-
 # Running tests
 
-FormGenerator comes with some unit tests. Before submitting a new Pull Request, you need to make sure all tests are a go. With the sprinkle added to your UserFrosting installation, simply execute the `php bakery test` command to run the tests.
+FormGenerator comes with some unit tests. Before submitting a new Pull Request, you need to make sure all tests are a go. With the sprinkle added to your UserFrosting installation, simply execute the `php bakery test FormGenerator` command to run the tests.
 
 # License
 
-By [Louis Charette](https://github.com/lcharette). Copyright (c) 2019, free to use in personal and commercial software as per the MIT license.
-
-
-[2.x.x]: https://github.com/lcharette/UF_FormGenerator/tree/2.2.10#form-generator-sprinkle-for-userfrosting-4 
+By [Louis Charette](https://bbqsoftwares.com). Copyright (c) 2020, free to use in personal and commercial software as per the MIT license.

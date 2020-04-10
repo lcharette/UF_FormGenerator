@@ -8,6 +8,14 @@
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 
-global $app;
+namespace UserFrosting\Sprinkle\FormGenerator\Exception;
 
-$app->get('/forms/confirm', 'UserFrosting\Sprinkle\FormGenerator\Controller\FormGeneratorController:confirm');
+use LogicException;
+
+/**
+ * ClassNotFoundException.
+ */
+class ClassNotFoundException extends LogicException
+{
+    //
+}

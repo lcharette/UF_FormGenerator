@@ -1,13 +1,14 @@
 {
-    "number" : {
-        "form" : {
-            "type" : "number",
-            "label" : "Project Number",
-            "icon" : "fa-edit",
-            "placeholder" : "Project Number"
-        }
-    },
     "name" : {
+        "validators" : {
+            "length" : {
+                "min" : 1,
+                "max" : 100
+            },
+            "required" : {
+                "message" : "Name required"
+            }
+        },
         "form" : {
             "type" : "text",
             "label" : "Project Name",
@@ -15,53 +16,15 @@
             "placeholder" : "Project Name"
         }
     },
-    "owner" : {
-        "form" : {
-            "type" : "text",
-            "label" : "Project Owner",
-            "icon" : "fa-user",
-            "id" : "owner",
-            "placeholder" : "Project Owner",
-            "default" : "Foo"
-        }
-    },
     "description" : {
-        "form" : {
-            "type" : "textarea",
-            "label" : "Project Description",
-            "icon" : "fa-pencil",
-            "placeholder" : "Project Description",
-            "rows" : 5
-        }
-    },
-    "status" : {
-        "form" : {
-            "type" : "select",
-            "label" : "Project Status",
-            "options" : {
-                "0" : "Closed",
-                "1" : "Open"
+        "validators" : {
+            "length" : {
+                "min" : 1,
+                "max" : 100
+            },
+            "required" : {
+                "message" : "Name required"
             }
-        }
-    },
-    "active" : {
-        "form" : {
-            "type" : "checkbox",
-            "label" : "Active"
-        }
-    },
-    "hidden" : {
-        "form" : {
-            "type" : "hidden",
-            "value" : "Something"
-        }
-    },
-    "alert" : {
-        "form" : {
-            "type" : "alert",
-            "class" : "alert-success",
-            "icon" : "fa-check",
-            "value" : "You're awesome!"
         }
     }
 }

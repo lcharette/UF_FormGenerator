@@ -8,15 +8,20 @@
     "authors" : [
         {
             "name": "Louis Charette",
-            "homepage": "https://github.com/lcharette"
+            "homepage": "https://bbqsoftwares.com"
         }
     ],
     "require": {
-        "php": ">=5.6"
+        "php": ">=7.1"
     },
     "autoload": {
         "psr-4": {
             "UserFrosting\\Sprinkle\\FormGenerator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UserFrosting\\Sprinkle\\FormGenerator\\Tests\\": "tests/"
         }
     },
     "extra": {
