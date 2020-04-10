@@ -58,8 +58,10 @@ abstract class Input implements InputInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the value of the current input element.
      * If not value is set in `$this->value`, return the default value (from the schema data), if any.
+     *
+     * @return string The input current value
      */
     public function getValue(): string
     {
@@ -73,7 +75,11 @@ abstract class Input implements InputInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Set the input value.
+     *
+     * @param string|int|null $value The input value.
+     *
+     * @return self
      */
     public function setValue($value)
     {
@@ -83,7 +89,9 @@ abstract class Input implements InputInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the input schema data.
+     *
+     * @return array<string,string>
      */
     public function getElement(): array
     {
@@ -91,7 +99,11 @@ abstract class Input implements InputInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Set the input schema data.
+     *
+     * @param array<string,string> $element The input schema data.
+     *
+     * @return self
      */
     public function setElement(array $element)
     {
@@ -101,7 +113,9 @@ abstract class Input implements InputInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the name of the input (eg. text, select, textarea, etc.).
+     *
+     * @return string
      */
     public function getName(): string
     {
@@ -109,7 +123,11 @@ abstract class Input implements InputInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Set the name of the input (eg. text, select, textarea, etc.).
+     *
+     * @param string $name The name of the input (eg. text, select, textarea, etc.)
+     *
+     * @return self
      */
     public function setName(string $name)
     {
