@@ -1,6 +1,6 @@
 # Change Log
 
-## [3.1.0]
+## [4.0.0]
 - Form nows register element class, instead of using hardcoded string.
 - Form has new `registerType` method to register new custom elements. `getType(string $name)` and `getTypes()` can be used to get the class for a type (eg. 'text', 'select', etc.) abd a list of types. `removeType` will unregister a type.
 - Form still fallback to `Text` type if type is not found, but this can now be changed with `getDefaultType` and `setDefaultType`.
@@ -111,7 +111,7 @@ The custom `RequestSchema` have been removed. Instead of building the form direc
 ### Security
 -->
 
-[3.1.0]: https://github.com/lcharette/UF_FormGenerator/compare/3.0.0...3.1.0
+[4.0.0]: https://github.com/lcharette/UF_FormGenerator/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/lcharette/UF_FormGenerator/compare/2.2.10...3.0.0
 [2.2.10]: https://github.com/lcharette/UF_FormGenerator/compare/2.2.9...2.2.10
 [2.2.9]: https://github.com/lcharette/UF_FormGenerator/compare/2.2.8...2.2.9
