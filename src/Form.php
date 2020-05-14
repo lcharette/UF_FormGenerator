@@ -12,6 +12,7 @@ namespace UserFrosting\Sprinkle\FormGenerator;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
@@ -329,11 +330,9 @@ class Form
      *
      * @return string|null
      */
-    protected function getValueForName(string $name)
+    protected function getValueForName(string $name): ?string
     {
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
-        }
+        return Arr::get($this->data, $name);
     }
 
     /**

@@ -1,4 +1,3 @@
-sudo: false
 dist: xenial
 language: php
 
@@ -9,14 +8,15 @@ php:
   - 7.4
 
 env:
-  matrix:
+  jobs:
     - UF_BRANCH=4.3.*
     - UF_BRANCH=4.4.*
     - UF_BRANCH=dev-develop
 
-matrix:
+jobs:
+  fast_finish: true
   allow_failures:
-    - UF_BRANCH=dev-develop
+    - env: UF_BRANCH=dev-develop
 
 cache:
   directories:

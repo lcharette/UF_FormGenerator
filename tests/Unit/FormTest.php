@@ -170,6 +170,28 @@ class FormTest extends TestCase
                     ],
                 ],
             ],
+            // With Nested data
+            [
+                '/nested.json',
+                new \Illuminate\Config\Repository([
+                    'site' => [
+                        'name' => 'Bar project',
+                    ],
+                ]),
+                [
+                    'site.name' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => 'Bar project', //Value's here !
+                        'name'         => 'site.name',
+                        'id'           => 'field_site.name',
+                        'type'         => 'text',
+                        'label'        => 'Project Name',
+                        'icon'         => 'fa-flag',
+                        'placeholder'  => 'Project Name',
+                    ],
+                ],
+            ],
             // WITH BAD DATA
             [
                 '/bad.json',
