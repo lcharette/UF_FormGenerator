@@ -1,5 +1,8 @@
 # Change Log
 
+## [4.0.1]
+- Fixed issue where the value of an element whose name is using dot notation woudn't be found in the corresponding multidimensional array.
+
 ## [4.0.0]
 - Form nows register element class, instead of using hardcoded string.
 - Form has new `registerType` method to register new custom elements. `getType(string $name)` and `getTypes()` can be used to get the class for a type (eg. 'text', 'select', etc.) abd a list of types. `removeType` will unregister a type.
@@ -111,6 +114,7 @@ The custom `RequestSchema` have been removed. Instead of building the form direc
 ### Security
 -->
 
+[4.0.1]: https://github.com/lcharette/UF_FormGenerator/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/lcharette/UF_FormGenerator/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/lcharette/UF_FormGenerator/compare/2.2.10...3.0.0
 [2.2.10]: https://github.com/lcharette/UF_FormGenerator/compare/2.2.9...2.2.10
