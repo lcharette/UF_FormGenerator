@@ -21,7 +21,7 @@
 [styleci]: https://styleci.io/repos/68563337
 [styleci-badge]: https://styleci.io/repos/68563337/shield?branch=master&style=flat
 
-This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting [validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
+This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate [HTML forms](https://www.scaler.com/topics/html/html-forms/), modals and confirm modal bases on UserFrosting [validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
 # Help and Contributing
 
