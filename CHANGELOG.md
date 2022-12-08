@@ -1,5 +1,8 @@
 # Change Log
 
+## [5.0.0](https://github.com/lcharette/UF_FormGenerator/compare/4.0.1...5.0.0)
+- Added support for UserFrosting 5
+
 ## [4.0.1]
 - Fixed issue where the value of an element whose name is using dot notation woudn't be found in the corresponding multidimensional array.
 

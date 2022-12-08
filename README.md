@@ -12,14 +12,14 @@
 [kofi-badge]: https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue.svg
 [releases]: https://github.com/lcharette/UF_FormGenerator/releases
 [releases-badge]: https://img.shields.io/github/release/lcharette/UF_FormGenerator.svg
-[uf-version]: https://img.shields.io/badge/UserFrosting->=%204.3-brightgreen.svg
+[uf-version]: https://img.shields.io/badge/UserFrosting->=%205.0-brightgreen.svg
 [uf]: https://github.com/userfrosting/UserFrosting
 [build]: https://github.com/lcharette/UF_FormGenerator/actions?query=workflow%3ABuild
-[build-badge]: https://github.com/lcharette/UF_FormGenerator/workflows/Build/badge.svg?branch=master
+[build-badge]: https://github.com/lcharette/UF_FormGenerator/workflows/Build/badge.svg?branch=5.0
 [codecov]: https://codecov.io/gh/lcharette/UF_FormGenerator
-[codecov-badge]: https://codecov.io/gh/lcharette/UF_FormGenerator/branch/master/graph/badge.svg
+[codecov-badge]: https://codecov.io/gh/lcharette/UF_FormGenerator/branch/5.0/graph/badge.svg
 [styleci]: https://styleci.io/repos/68563337
-[styleci-badge]: https://styleci.io/repos/68563337/shield?branch=master&style=flat
+[styleci-badge]: https://styleci.io/repos/68563337/shield?branch=5.0&style=flat
 
 This Sprinkle provides helper classes, Twig template and JavaScript plugins to generate HTML forms, modals and confirm modal bases on UserFrosting [validation schemas](https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
 
@@ -31,6 +31,7 @@ If you need help using this sprinkle or found any bug, feels free to open an iss
 
 | UserFrosting Version | FormGenerator Version |
 | :------------------: | :-------------------: |
+|        5.0.x         |         5.0.x         |
 |        4.4.x         |         4.x.x         |
 |        4.3.x         |    [3.0.x] & 4.0.x    |
 |        4.2.x         |        [3.0.x]        |
@@ -41,23 +42,9 @@ If you need help using this sprinkle or found any bug, feels free to open an iss
 [2.0.x]: https://github.com/lcharette/UF_FormGenerator/tree/2.2#form-generator-sprinkle-for-userfrosting-4
 
 # Installation
-Edit UserFrosting `app/sprinkles.json` file and add the following to the `require` list : `"lcharette/uf_formgenerator": "^4.0.0"`. Also add `FormGenerator` to the `base` list. For example:
+Install FormGenerator through Composer `composer require lcharette/uf_formgenerator "^5.0"` and add `UserFrosting\Sprinkle\FormGenerator\FormGenerator` to your Sprinkle Recipe. Run `php bakery bake` to finish installation of the sprinkle.
 
-```json
-{
-    "require": {
-        "lcharette/uf_formgenerator": "^4.0.0"
-    },
-    "base": [
-        "core",
-        "account",
-        "admin",
-        "FormGenerator"
-    ]
-}
-```
-
-Run `composer update` then `php bakery bake` to install the sprinkle.
+// TODO : Add Frontend part
 
 # Working example
 
@@ -191,7 +178,7 @@ Next, where you load the schema and setup the `validator`, you simply add the ne
 ```php
 // Load validator rules
 $schema = new RequestSchema("schema://project.json");
-$validator = new JqueryValidationAdapter($schema, $this->ci->translator);
+$validator = new JqueryValidationAdapter($schema, $this->translator);
 
 // Create the form
 $form = new Form($schema, $project);
@@ -199,9 +186,9 @@ $form = new Form($schema, $project);
 
 In this example, `$project` can contain the default (or current value) of the fields. A data collection fetched from the database with eloquent can also be passed directly. That second argument can also be omitted to create an empty form.
 
-Last thing to do is send the fields to Twig. In the list of retuned variables to the template, add the `fields` variable:
+Last thing to do is send the fields to Twig. In the list of returned variables to the template, add the `fields` variable:
 ```php
-$this->ci->view->render($response, "pages/myPage.html.twig", [
+$view->render($response, "pages/myPage.html.twig", [
     "fields" => $form->generate(),
     "validators" => $validator->rules('json', true)
 ]);
@@ -239,7 +226,7 @@ What if you want to show a form in a modal window? Well, FormGenerator makes it 
 With your schema in hand, it's time to create a controller and route to load your modal. The controller code will be like any basic UserFrosting modal, plus the `$form` part above and one changes in the `render` part. For example :
 
 ```php
-$this->ci->view->render($response, "FormGenerator/modal.html.twig", [
+$view->render($response, "FormGenerator/modal.html.twig", [
     "box_id"        => $get['box_id'],
     "box_title"     => "PROJECT.CREATE",
     "submit_button" => "CREATE",
@@ -290,7 +277,7 @@ Let's look at a delete button / confirmation for our `project` :
 ```
 (Note that content of data attributes can be translation keys)
 
-If not aready done, make sure the FormGenerator assets are included in your template.
+If not already done, make sure the FormGenerator assets are included in your template.
 ```
 {% block scripts_page %}
     {{ assets.js('js/FormGenerator') | raw }}
