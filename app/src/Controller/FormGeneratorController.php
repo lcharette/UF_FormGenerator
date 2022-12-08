@@ -17,7 +17,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
 /**
- * Controller class for /forms/confirm/* URLs.  Handles rendering the confirm dialog
+ * Controller class for /forms/confirm/* URLs.  Handles rendering the confirm dialog.
  */
 class FormGeneratorController
 {

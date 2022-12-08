@@ -35,6 +35,7 @@ class FormGenerator implements SprinkleRecipe
 
     /**
      * {@inheritdoc}
+     *
      * @codeCoverageIgnore
      */
     public function getBakeryCommands(): array
