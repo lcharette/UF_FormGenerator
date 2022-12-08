@@ -105,8 +105,7 @@ $rules = [
 $finder = PhpCsFixer\Finder::create()
     ->in([
         __DIR__ . '/app/src',
-        __DIR__ . '/app/tests',
-        __DIR__ . '/public'
+        __DIR__ . '/app/tests'
     ]);
 
 $config = new PhpCsFixer\Config();

@@ -8,13 +8,13 @@
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 
-namespace UserFrosting\Sprinkle\FormGenerator\Tests\Unit;
+namespace UserFrosting\Sprinkle\FormGenerator\Tests;
 
+use PHPUnit\Framework\TestCase;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
 use UserFrosting\Sprinkle\FormGenerator\Element;
 use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
 use UserFrosting\Support\Repository\Loader\YamlFileLoader;
-use UserFrosting\Tests\TestCase;
 
 /**
  * ElementTest

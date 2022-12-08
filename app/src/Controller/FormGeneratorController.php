@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * UserFrosting Form Generator
  *
@@ -12,14 +14,12 @@ namespace UserFrosting\Sprinkle\FormGenerator\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use UserFrosting\Sprinkle\Core\Controller\SimpleController;
+use Slim\Views\Twig;
 
 /**
- * FormGeneratorController Class.
- *
  * Controller class for /forms/confirm/* URLs.  Handles rendering the confirm dialog
  */
-class FormGeneratorController extends SimpleController
+class FormGeneratorController
 {
     /**
      * Display the confirmation dialog.
@@ -27,10 +27,10 @@ class FormGeneratorController extends SimpleController
      *
      * @param Request  $request
      * @param Response $response
-     * @param string[] $args
+     * @param Twig     $view
      */
-    public function confirm(Request $request, Response $response, array $args): void
+    public function __invoke(Request $request, Response $response, Twig $view): Response
     {
-        $this->ci->view->render($response, 'FormGenerator/confirm.html.twig', $request->getQueryParams());
+        return $view->render($response, 'FormGenerator/confirm.html.twig', $request->getQueryParams());
     }
 }

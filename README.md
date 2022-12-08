@@ -1,4 +1,4 @@
-# Form Generator Sprinkle for [UserFrosting 4](https://www.userfrosting.com)
+# Form Generator Sprinkle for [UserFrosting 5](https://www.userfrosting.com)
 
 [![Donate][kofi-badge]][kofi]
 [![Latest Version][releases-badge]][releases]

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * UserFrosting Form Generator
  *
@@ -10,7 +12,7 @@
 
 namespace UserFrosting\Sprinkle\FormGenerator\Element;
 
-use UserFrosting\Sprinkle\Core\Facades\Translator;
+use UserFrosting\I18n\Translator;
 
 /**
  * Input class.
@@ -144,12 +146,15 @@ abstract class Input implements InputInterface
     protected function translateArgValue(string $argument): void
     {
         if (isset($this->element[$argument])) {
-            $this->element[$argument] = Translator::translate($this->element[$argument]);
+            // $this->element[$argument] = Translator::translate($this->element[$argument]);
+            // Translator->translate($this->element[$argument]);
+            // TODO
+            $this->element[$argument] = $this->element[$argument];
         }
     }
 
     /**
-     * Add defaut attributes to the current input element.
+     * Add default attributes to the current input element.
      * Also transform attributes values passed from the schema.
      */
     abstract protected function applyTransformations(): void;

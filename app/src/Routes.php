@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * UserFrosting Form Generator
  *
@@ -18,6 +20,6 @@ class Routes implements RouteDefinitionInterface
 {
     public function register(App $app): void
     {
-        $app->get('/forms/confirm', [FormGeneratorController::class, 'confirm']);
+        $app->get('/forms/confirm', FormGeneratorController::class);
     }
 }

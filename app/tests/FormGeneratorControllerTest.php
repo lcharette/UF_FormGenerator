@@ -8,11 +8,10 @@
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 
-namespace UserFrosting\Sprinkle\FormGenerator\Tests\Unit;
+namespace UserFrosting\Sprinkle\FormGenerator\Tests;
 
-use UserFrosting\Sprinkle\Core\Tests\withController;
-use UserFrosting\Sprinkle\FormGenerator\Controller\FormGeneratorController;
-use UserFrosting\Tests\TestCase;
+use UserFrosting\Sprinkle\FormGenerator\FormGenerator;
+use UserFrosting\Testing\TestCase;
 
 /**
  * FormGeneratorControllerTest
@@ -20,33 +19,16 @@ use UserFrosting\Tests\TestCase;
  */
 class FormGeneratorControllerTest extends TestCase
 {
-    use withController;
+    protected string $mainSprinkle = FormGenerator::class;
 
-    /**
-     * @return FormGeneratorController
-     */
-    public function testConstructor(): FormGeneratorController
+    public function testConfirm(): void
     {
-        $controller = new FormGeneratorController($this->ci);
-        $this->assertInstanceOf(FormGeneratorController::class, $controller);
+        // Create request with method and url and fetch response
+        $request = $this->createRequest('GET', '/forms/confirm');
+        $response = $this->handleRequest($request);
 
-        return $controller;
-    }
-
-    /**
-     * @depends testConstructor
-     * @param FormGeneratorController $controller
-     */
-    public function testConfirm(FormGeneratorController $controller): void
-    {
-        $request = $this->getRequest();
-        $result = $this->getResponse();
-        $args = [];
-        $controller->confirm($request, $result, $args);
-
-        // Perform asertions
-        $body = (string) $result->getBody();
-        $this->assertSame($result->getStatusCode(), 200);
-        $this->assertNotSame('', $body);
+        // Asserts
+        $this->assertNotSame('', (string) $response->getBody());
+        $this->assertResponseStatus(200, $response);
     }
 }

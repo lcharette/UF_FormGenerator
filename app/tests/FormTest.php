@@ -8,10 +8,11 @@
  * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 
-namespace UserFrosting\Sprinkle\FormGenerator\Tests\Unit;
+namespace UserFrosting\Sprinkle\FormGenerator\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
 use UserFrosting\Sprinkle\FormGenerator\Element\Input;
 use UserFrosting\Sprinkle\FormGenerator\Element\Select;
@@ -20,7 +21,6 @@ use UserFrosting\Sprinkle\FormGenerator\Exception\InputNotFoundException;
 use UserFrosting\Sprinkle\FormGenerator\Exception\InvalidClassException;
 use UserFrosting\Sprinkle\FormGenerator\Form;
 use UserFrosting\Support\Repository\Loader\YamlFileLoader;
-use UserFrosting\Tests\TestCase;
 
 /**
  * FormGeneratorTest
@@ -34,6 +34,7 @@ class FormTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->basePath = __DIR__ . '/data';
     }
 
