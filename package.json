@@ -1,6 +1,13 @@
 {
-  "private": true,
-  "dependencies": {
-      "bootstrap-3-typeahead": "~4.0.2"
-  }
+    "dependencies": { 
+    },
+    "devDependencies": {
+        "@symfony/webpack-encore": "^1.7.0",
+    },
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    }
 }

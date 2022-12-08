@@ -1,7 +1,7 @@
 {
     "name": "lcharette/uf_formgenerator",
     "type": "userfrosting-sprinkle",
-    "description": "Form generator for UserFrosting V4",
+    "description": "Form generator for UserFrosting V5",
     "keywords": ["Form", "generator", "userfrosting"],
     "homepage": "https://github.com/lcharette/UF_FormGenerator",
     "license" : "MIT",
@@ -12,19 +12,30 @@
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": "^8.0",
+        "userfrosting/framework": "^5.0.0@alpha",
+        "userfrosting/sprinkle-core": "^5.0.0@alpha"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-mockery": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.2",
+        "league/factory-muffin": "^3.0",
+        "league/factory-muffin-faker": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "UserFrosting\\Sprinkle\\FormGenerator\\": "src/"
+            "UserFrosting\\Sprinkle\\FormGenerator\\": "app/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "UserFrosting\\Sprinkle\\FormGenerator\\Tests\\": "tests/"
+            "UserFrosting\\Sprinkle\\FormGenerator\\Tests\\": "app/tests/"
         }
-    },
-    "extra": {
-        "installer-name": "FormGenerator"
     }
 }

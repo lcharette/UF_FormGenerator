@@ -9,22 +9,139 @@ on:
   - cron: "0 0 * * 5"
 
 jobs:
-  PHPUnit:
+  PHPUnit-Memory:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php_versions: ['8.0', '8.1']
+
+    runs-on: ubuntu-latest
+    name: PHPUnit - PHP ${{ matrix.php_versions }} - Memory SQLite
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_versions }}
+          extensions: mbstring, dom, fileinfo, gd, memcached, redis, pdo_sqlite
+          coverage: xdebug
+          tools: pecl, composer
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      
+      - name: Setup Redis-server
+        uses: supercharge/redis-github-action@1.1.0
+        with:
+          redis-version: 6
+      
+      - name: Setup Memcached
+        uses: niden/actions-memcached@v7
+            
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Execute tests
+        run: | 
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+          vendor/bin/phpunit
+      
+      - name: Upload coverage to Codecov
+        if: github.event_name != 'schedule'
+        uses: codecov/codecov-action@v2
+        with:
+          file: ./_meta/coverage.xml
+          fail_ci_if_error: true
+
+  PHPUnit-MySQL:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php_versions: ['8.0', '8.1']
+
+    runs-on: ubuntu-latest
+    name: PHPUnit - PHP ${{ matrix.php_versions }} - MySQL
+
+    env:
+      DB_TEST_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_USER: userfrosting
+      DB_PASSWORD: password
+      DB_NAME: userfrosting
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup PHP, with composer and extensions
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php_versions }}
+        extensions: mbstring, dom, fileinfo, gd, memcached, redis, pdo_sqlite
+        coverage: xdebug
+        tools: pecl, composer
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    
+    - name: Setup Redis-server
+      uses: supercharge/redis-github-action@1.1.0
+      with:
+        redis-version: 6
+    
+    - name: Setup Memcached
+      uses: niden/actions-memcached@v7
+    
+    - name: Shutdown Ubuntu MySQL (SUDO)
+      run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
+
+    - name: Set up MySQL 8
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql version: '8'
+        mysql database: 'userfrosting'
+        mysql user: 'userfrosting'
+        mysql password: 'password'
+
+    - name: Wait for MySQL
+      run: |
+        while ! mysqladmin ping --host=127.0.0.1 --password=password --silent; do
+          sleep 1
+        done
+    
+    - name: Install Dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Execute tests
+      run: | 
+        echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+        vendor/bin/phpunit
+    
+    - name: Upload coverage to Codecov
+      if: github.event_name != 'schedule'
+      uses: codecov/codecov-action@v2
+      with:
+        file: ./_meta/coverage.xml
+        fail_ci_if_error: true
+
+  PHPUnit-SQLite:
 
       strategy:
         fail-fast: false
         matrix:
-          php_versions: ['7.1', '7.2', '7.3', '7.4']
-          uf_versions: ['4.3.*', '4.4.*']
+          php_versions: ['8.0', '8.1']
 
       runs-on: ubuntu-latest
-      name: PHPUnit - PHP ${{ matrix.php_versions }} - UF ${{ matrix.uf_versions }}
+      name: PHPUnit - PHP ${{ matrix.php_versions }} - SQLite
 
-      # env:
-      #   TEST_DB: default
-      #   UF_MODE: debug
-      #   DB_DRIVER: sqlite
-      #   DB_NAME: database/database.sqlite
+      env:
+        DB_TEST_CONNECTION: sqlite
+        DB_NAME: database.sqlite
 
       steps:
       - uses: actions/checkout@v2
@@ -33,47 +150,179 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php_versions }}
-          extensions: mbstring, dom, fileinfo, gd, memcached, redis
+          extensions: mbstring, dom, fileinfo, gd, memcached, redis, pdo_sqlite
           coverage: xdebug
-          tools: pecl, composer:v1
+          tools: pecl, composer
 
       - uses: actions/setup-node@v2
         with:
-          node-version: 10
-
-      - name: Clone UserFrosting
-        run: | 
-          cd ../
-          composer create-project userfrosting/userfrosting UserFrosting ${{ matrix.uf_versions }} --no-install
-          mv ./UF_FormGenerator ./UserFrosting/app/sprinkles/FormGenerator/
-          mv ./UserFrosting ./UF_FormGenerator
-
-      - name: Setup Sprinkles 
-        run: echo "{\"base\":[\"core\",\"account\",\"admin\",\"FormGenerator\"]}" > ./app/sprinkles.json
-
+          node-version: 14
+      
+      - name: Setup Redis-server
+        uses: supercharge/redis-github-action@1.1.0
+        with:
+          redis-version: 6
+      
+      - name: Setup Memcached
+        uses: niden/actions-memcached@v7
+            
       - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress
       
-      # - name: Create SQLite Database
-      #   run: |
-      #     mkdir -p database
-      #     touch ${{ DB_NAME }}
-      
-      # - name: Bakery Debug
-      #   run: php bakery debug
-
-      # - name: Migrate DB
-      #   run: php bakery migrate
-
-      - name: Build Assets
-        run: php bakery build-assets
+      - name: Create SQLite Database
+        run: touch database.sqlite
 
       - name: Execute tests
-        run: app/vendor/bin/phpunit -c app/sprinkles/FormGenerator/phpunit.xml --coverage-clover=app/sprinkles/FormGenerator/coverage.xml
+        run: | 
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+          vendor/bin/phpunit
       
       - name: Upload coverage to Codecov
         if: github.event_name != 'schedule'
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
-          root_dir: ./app/sprinkles/FormGenerator/
+          file: ./_meta/coverage.xml
           fail_ci_if_error: true
+  
+  PHPUnit-Postgre:
+
+      strategy:
+        fail-fast: false
+        matrix:
+          php_versions: ['8.0', '8.1']
+
+      runs-on: ubuntu-latest
+      name: PHPUnit - PHP ${{ matrix.php_versions }} - PostgreSQL
+
+      env:
+        DB_TEST_CONNECTION: pgsql
+        DB_USER: userfrosting
+        DB_PASSWORD: password
+        DB_NAME: userfrosting
+
+      steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_versions }}
+          extensions: mbstring, dom, fileinfo, gd, memcached, redis, pdo_sqlite, pdo_pgsql
+          coverage: xdebug
+          tools: pecl, composer
+      
+      - name: Setup PostgreSQL
+        uses: harmon758/postgresql-action@v1
+        with:
+          postgresql db: 'userfrosting'
+          postgresql user: 'userfrosting'
+          postgresql password: 'password'
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      
+      - name: Setup Redis-server
+        uses: supercharge/redis-github-action@1.1.0
+        with:
+          redis-version: 6
+      
+      - name: Setup Memcached
+        uses: niden/actions-memcached@v7
+      
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Execute tests
+        run: | 
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+          vendor/bin/phpunit
+      
+      - name: Upload coverage to Codecov
+        if: github.event_name != 'schedule'
+        uses: codecov/codecov-action@v2
+        with:
+          file: ./_meta/coverage.xml
+          fail_ci_if_error: true
+
+  PHPUnit-Windows:
+
+    strategy:
+      fail-fast: false
+      matrix:
+          php_versions: ['8.0', '8.1']
+
+    runs-on: windows-latest
+    name: PHPUnit - PHP ${{ matrix.php_versions }} - Windows
+
+    env:
+      DB_TEST_CONNECTION: sqlite
+      DB_NAME: database.sqlite
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup PHP, with composer and extensions
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php_versions }}
+        extensions: mbstring, dom, fileinfo, gd, pdo, sqlite, pdo_sqlite
+        coverage: xdebug
+        tools: pecl, composer
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    
+    - name: Install Dependencies
+      run: composer install --prefer-dist --no-progress
+    
+    - name: Create SQLite Database
+      run: touch database.sqlite
+
+    - name: Execute tests
+      run: | 
+        echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+        vendor/bin/phpunit
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        file: ./_meta/coverage.xml
+        fail_ci_if_error: true
+
+  # Asset-Build:
+
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       php_versions: ['8.0', '8.1']
+  #       node_versions: ['12.17.0', '14', '15'] 
+  #       os: [ubuntu-latest, windows-latest]
+
+  #   runs-on: ${{ matrix.os }}
+  #   name: Assets Build - PHP ${{ matrix.php_versions }} - Node ${{ matrix.node_versions }} - ${{ matrix.os }}
+
+  #   steps:
+  #   - uses: actions/checkout@v2
+    
+  #   - name: Setup PHP, with composer and extensions
+  #     uses: shivammathur/setup-php@v2
+  #     with:
+  #       php-version: ${{ matrix.php_versions }}
+  #       extensions: mbstring, dom, fileinfo, gd
+  #       coverage: xdebug
+  #       tools: pecl, composer
+
+  #   - uses: actions/setup-node@v2
+  #     with:
+  #       node-version: ${{ matrix.node_versions }}
+    
+  #   - name: Copy .env
+  #     run: php -r "copy('app/sprinkles.example.json', 'app/sprinkles.json');"
+    
+  #   - name: Install Dependencies
+  #     run: composer install --prefer-dist --no-progress
+    
+  #   - name: Execute build
+  #     run: php bakery build-assets

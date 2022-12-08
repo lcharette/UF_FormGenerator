@@ -278,7 +278,6 @@ class Form
 
         // Loop all the the fields in the schema
         foreach ($this->schema->all() as $name => $input) {
-
             // Skip if it doesn't have a `form` definition
             if (!isset($input['form'])) {
                 continue;
