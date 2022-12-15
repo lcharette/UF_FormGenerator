@@ -1,0 +1,39 @@
+{
+    "string" : {
+        "form" : {
+            "type" : "text"
+        }
+    },
+    "null" : {
+        "form" : {
+            "type" : "text"
+        }
+    },
+    "int" : {
+        "form" : {
+            "type" : "number"
+        }
+    },
+    "checkboxTrue" : {
+        "form" : {
+            "type" : "checkbox"
+        }
+    },
+    "checkboxFalse" : {
+        "form" : {
+            "type" : "checkbox"
+        }
+    },
+    "true" : {
+        "form" : {
+            "type" : "checkbox",
+            "binary": false
+        }
+    },
+    "false" : {
+        "form" : {
+            "type" : "checkbox",
+            "binary": false
+        }
+    }
+}

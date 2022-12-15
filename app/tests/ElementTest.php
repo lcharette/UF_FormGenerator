@@ -126,7 +126,25 @@ class ElementTest extends TestCase
                 [
                     'autocomplete' => 'off',
                     'class'        => 'form-control',
-                    'value'        => '', //Shoudn't be a value here ! "" is overwritting "Foo"
+                    'value'        => '', //Shouldn't be a value here ! "" is overwriting "Foo"
+                    'name'         => 'owner',
+                    'id'           => 'owner',
+                    'type'         => 'text',
+                    'label'        => 'Project Owner',
+                    'icon'         => 'fa-user',
+                    'placeholder'  => 'Project Owner',
+                    'default'      => 'Foo',
+                ],
+            ],
+            // TEXT - With default value
+            [
+                'owner',
+                Element\Text::class,
+                null,
+                [
+                    'autocomplete' => 'off',
+                    'class'        => 'form-control',
+                    'value'        => 'Foo', //Foo is used as default value
                     'name'         => 'owner',
                     'id'           => 'owner',
                     'type'         => 'text',

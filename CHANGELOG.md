@@ -2,9 +2,10 @@
 
 ## [5.0.0](https://github.com/lcharette/UF_FormGenerator/compare/4.0.1...5.0.0)
 - Added support for UserFrosting 5
+- Data passed to forms can be mixed type, not only string. Data will still be casted to string. 
 
 ## [4.0.1]
-- Fixed issue where the value of an element whose name is using dot notation woudn't be found in the corresponding multidimensional array.
+- Fixed issue where the value of an element whose name is using dot notation wouldn't be found in the corresponding multidimensional array.
 
 ## [4.0.0]
 - Form nows register element class, instead of using hardcoded string.

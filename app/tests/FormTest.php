@@ -113,6 +113,112 @@ class FormTest extends TestCase
                     ],
                 ],
             ],
+            // WITH NO DATA AND DEFAULT
+            [
+                '/default.json',
+                [
+                    'default' => null,
+                ],
+                [
+                    'default' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => 'Foobar', // Default value is here !
+                        'name'         => 'default',
+                        'id'           => 'field_default',
+                        'type'         => 'text',
+                        'default'      => 'Foobar',
+                    ],
+                ],
+            ],
+            // WITH DATA AND DEFAULT
+            [
+                '/default.json',
+                [
+                    'default' => '',
+                ],
+                [
+                    'default' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => '', // No default, as we have empty value
+                        'name'         => 'default',
+                        'id'           => 'field_default',
+                        'type'         => 'text',
+                        'default'      => 'Foobar',
+                    ],
+                ],
+            ],
+            // WITH DATA OF ANY TYPE
+            [
+                '/types.json',
+                [
+                    'string'         => 'Foo',
+                    'null'           => null,
+                    'int'            => 123,
+                    'checkboxTrue'   => true,
+                    'checkboxFalse'  => false,
+                    'true'           => true,
+                    'false'          => false,
+                ],
+                [
+                    'string' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => 'Foo', //Value's here !
+                        'name'         => 'string',
+                        'id'           => 'field_string',
+                        'type'         => 'text',
+                    ],
+                    'null' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => '', //Value's here !
+                        'name'         => 'null',
+                        'id'           => 'field_null',
+                        'type'         => 'text',
+                    ],
+                    'int' => [
+                        'autocomplete' => 'off',
+                        'class'        => 'form-control',
+                        'value'        => '123', //Value's here !
+                        'name'         => 'int',
+                        'id'           => 'field_int',
+                        'type'         => 'number',
+                    ],
+                    'checkboxTrue' => [
+                        'class'        => 'js-icheck',
+                        'name'         => 'checkboxTrue',
+                        'id'           => 'field_checkboxTrue',
+                        'binary'       => '1',
+                        'type'         => 'checkbox',
+                        'checked'      => 'checked',
+                    ],
+                    'checkboxFalse' => [
+                        'class'        => 'js-icheck',
+                        'name'         => 'checkboxFalse',
+                        'id'           => 'field_checkboxFalse',
+                        'binary'       => '1',
+                        'type'         => 'checkbox',
+                    ],
+                    'true' => [
+                        'class'        => 'js-icheck',
+                        'name'         => 'true',
+                        'id'           => 'field_true',
+                        'binary'       => false,
+                        'type'         => 'checkbox',
+                        'value'        => '1', //Value's here !
+                    ],
+                    'false' => [
+                        'class'        => 'js-icheck',
+                        'name'         => 'false',
+                        'id'           => 'field_false',
+                        'binary'       => false,
+                        'type'         => 'checkbox',
+                        'value'        => '', //Value's here !
+                    ],
+                ],
+            ],
             // WITH DATA AS COLLECTION
             [
                 '/good.json',

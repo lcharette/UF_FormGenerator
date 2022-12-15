@@ -1,0 +1,8 @@
+{
+    "default" : {
+        "form" : {
+            "type" : "text",
+            "default" : "Foobar"
+        }
+    }
+}

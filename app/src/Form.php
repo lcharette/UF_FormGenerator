@@ -216,7 +216,7 @@ class Form
      */
     public function setOptions(string $inputName, array $data = [], ?string $selected = null)
     {
-        // Set opdations
+        // Set options
         $this->setInputArgument($inputName, 'options', $data);
 
         // Set the value
@@ -329,9 +329,9 @@ class Form
      *
      * @param string $name
      *
-     * @return string|null
+     * @return mixed
      */
-    protected function getValueForName(string $name): ?string
+    protected function getValueForName(string $name): mixed
     {
         return Arr::get($this->data, $name);
     }
