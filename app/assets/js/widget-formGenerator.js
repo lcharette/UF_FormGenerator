@@ -34,7 +34,7 @@
         // Detect changes to element attributes
         this.$elements.attrchange({ callback: function (event) { this.elements = event.target; }.bind(this) });
 
-        // Initialise ufAlerts
+        // Initialize ufAlerts
         if (!this.settings.mainAlertElement.data('ufAlerts')) {
             this.settings.mainAlertElement.ufAlerts();
         }
@@ -237,7 +237,7 @@
             // Refresh page or close modal
             if (this.settings.redirectAfterSuccess) {
 
-                // Redirect if result contains intrusctions to
+                // Redirect if result contains instructions to
                 if (data.redirect) {
                     window.location.replace(data.redirect);
                 } else {
@@ -264,16 +264,16 @@
             }
         },
         /**
-         * Faillure callback for ajax requests to be displayed in a modal form
+         * Failure callback for ajax requests to be displayed in a modal form
          */
-        _displayFormFaillure: function(box_id, button) {
+        _displayFormFailure: function(box_id, button) {
             $(button).trigger("error." + this._name);
             $("#"+box_id+" #form-alerts").show();
         },
         /**
-         * Faillure callback for ajax requests to be displayed in a confirmation form
+         * Failure callback for ajax requests to be displayed in a confirmation form
          */
-        _displayConfirmationFaillure: function(box_id, button) {
+        _displayConfirmationFailure: function(box_id, button) {
             $(button).trigger("error." + this._name);
 
             // Setup ufAlerts
@@ -333,7 +333,7 @@
             $.error( 'Method ' +  methodOrOptions + ' is invalid.' );
         }
 
-        // Only initalise if not previously done.
+        // Only initialize if not previously done.
         if (!instance) {
             $(this).data(pluginName, new Plugin(this, options));
             instance = $(this).data(pluginName);

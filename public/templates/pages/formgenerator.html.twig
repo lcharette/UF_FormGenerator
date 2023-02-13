@@ -1,0 +1,66 @@
+{% extends "pages/abstract/default.html.twig" %}
+
+{% block page_title %}Projects list{% endblock %}
+{% block page_description %}{% endblock %}
+
+{% block body_matter %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr role="row">
+                                <th>Project name</th>
+                                <th>Project status</th>
+                                <th>{{translate('ACTIONS')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for project in projects %}
+                            <tr role="row">
+                                <td>
+                                    <strong>{{project.name}}</strong>
+                                    <p>{{project.description|nl2br}}</p>
+                                </td>
+                                <td nowrap="nowrap">
+                                    {% if project.status == "1" %}
+                                        <i>Available</i>
+                                    {% else %}
+                                        <i>Disabled</i>
+                                    {% endif %}
+                                </td>
+                                <td nowrap="nowrap">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            {{translate('ACTIONS')}}
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li>
+                                                <a href="#" class="js-displayForm" data-toggle="modal" data-formUrl="/{{project.id}}/edit"><i class="fa fa-edit"></i> Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="js-displayConfirm" data-confirm-title="Delete project" data-confirm-message="Are your sure you want to delete the project {{project.name}}" data-confirm-button="Yes, delete project" data-post-url="/{{project.id}}" data-post-method="DELETE" data-toggle="modal"><i class="fa fa-trash-alt"></i> Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <button class="btn btn-success js-displayForm" data-toggle="modal" data-formUrl="/new"><i class="fa fa-plus-square"></i> Create project</button>
+                    </div>
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+{% endblock %}
+
+{% block scripts_page %}
+    <!-- Include page-specific JS -->
+    {{ encore_entry_script_tags('widget.formGenerator') }}
+{% endblock %}

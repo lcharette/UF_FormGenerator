@@ -1,0 +1,95 @@
+{
+    "name" : {
+        "validators" : {
+            "length" : {
+                "max" : 100,
+                "message" : "VALIDATE.MAX_LENGTH"
+            },
+            "required" : {
+                "label" : "Project name",
+                "message" : "VALIDATE.REQUIRED"
+            }
+        },
+        "form" : {
+            "type" : "text",
+            "label" : "Project name",
+            "icon" : "fa-flag",
+            "placeholder" : "Project name"
+        }
+    },
+    "owner" : {
+        "form" : {
+            "type" : "text",
+            "label" : "Project Owner",
+            "icon" : "fa-user",
+            "id" : "owner",
+            "placeholder" : "Project Owner",
+            "default" : "Foo"
+        }
+    },
+    "description" : {
+        "form" : {
+            "type" : "textarea",
+            "label" : "Project description",
+            "icon" : "fa-pencil-alt",
+            "placeholder" : "Project description",
+            "rows" : 5
+        }
+    },
+    "status" : {
+        "validators" : {
+            "member_of" : {
+                "values" : [
+                    "0", "1"
+                ]
+            }
+        },
+        "form" : {
+            "type" : "select",
+            "label" : "Status",
+            "options" : {
+                "0" : "Disabled",
+                "1" : "Available"
+            }
+        }
+    },
+    "active" : {
+        "form" : {
+            "type" : "checkbox",
+            "label" : "Active"
+        }
+    },
+    "completion" : {
+        "validators" : {
+            "range" : {
+                "min" : 0,
+                "max" : 100,
+                "message" : "VALIDATE.RANGE"
+            },
+            "required" : {
+                "label" : "Project completion",
+                "message" : "VALIDATE.REQUIRED"
+            }
+        },
+        "form" : {
+            "type" : "number",
+            "icon" : "fa-percent",
+            "default" : 10,
+            "label" : "Project completion"
+        }
+    },
+    "hiddenString" : {
+        "form" : {
+            "type" : "hidden",
+            "default" : "Something's hidden"
+        }
+    },
+    "alert" : {
+        "form" : {
+            "type" : "alert",
+            "class" : "alert-success",
+            "icon" : "fa-rocket",
+            "value" : "Form Generator is awesome!"
+        }
+    }
+}

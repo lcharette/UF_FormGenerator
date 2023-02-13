@@ -1,5 +1,4 @@
 # Ignores text editor metadata
-*.komodoproject
 .editorconfig
 .vscode
 
@@ -11,6 +10,7 @@ _meta/
 
 # Ignore personal config files (dev)
 app/.env
+public/.env
 
 # Ignore lock files
 composer.lock
@@ -21,6 +21,11 @@ app/database/*
 app/logs/*
 app/sessions/*
 app/storage/*
+public/cache/*
+public/database/*
+public/logs/*
+public/sessions/*
+public/storage/*
 
 # Unignore log, cache, sessions and storage .gitkeeps
 !app/cache/.gitkeep
@@ -28,6 +33,11 @@ app/storage/*
 !app/logs/.gitkeep
 !app/sessions/.gitkeep
 !app/storage/.gitkeep
+!public/cache/.gitkeep
+!public/database/.gitkeep
+!public/logs/.gitkeep
+!public/sessions/.gitkeep
+!public/storage/.gitkeep
 
 # Ignore Composer vendor
 vendor/

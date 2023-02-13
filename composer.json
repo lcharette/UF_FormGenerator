@@ -26,8 +26,11 @@
         "phpunit/phpunit": "^9.5",
         "mockery/mockery": "^1.2",
         "league/factory-muffin": "^3.0",
-        "league/factory-muffin-faker": "^2.0"
+        "league/factory-muffin-faker": "^2.0",
+        "userfrosting/theme-adminlte": "^5.0"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "UserFrosting\\Sprinkle\\FormGenerator\\": "app/src/"
@@ -35,7 +38,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "UserFrosting\\Sprinkle\\FormGenerator\\Tests\\": "app/tests/"
+            "UserFrosting\\Sprinkle\\FormGenerator\\Tests\\": "app/tests/",
+            "UserFrosting\\Sprinkle\\FormGeneratorExample\\": "public/src/",
+            "UserFrosting\\Sprinkle\\FormGeneratorExample\\Tests\\": "public/tests/"
         }
     }
 }
