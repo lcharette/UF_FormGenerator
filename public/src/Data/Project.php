@@ -15,8 +15,8 @@ use Illuminate\Support\Collection;
 /**
  * Project Class.
  *
- * Simulate a model wich would return a list of projects
- * for demo purpose. This can be substituded in FormGeneratorExampleController
+ * Simulate a model which would return a list of projects
+ * for demo purpose. This can be substituted in FormGeneratorExampleController
  * by a real Eloquent Model
  */
 class Project
@@ -47,12 +47,13 @@ class Project
     }
 
     /**
-     * @param string $id
+     * @param int $id
      *
      * @return array<string,string>|null
      */
-    public static function find(string $id): ?array
+    public static function find(int $id): ?array
     {
+        // @phpstan-ignore-next-line
         return self::all()->where('id', $id)->first();
     }
 }

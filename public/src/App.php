@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * UserFrosting Form Generator
  *
@@ -34,6 +36,7 @@ class App implements SprinkleRecipe
 
     /**
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
     public function getBakeryCommands(): array
     {

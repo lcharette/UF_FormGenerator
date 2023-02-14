@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * UserFrosting Form Generator
  *
@@ -20,9 +22,9 @@ use UserFrosting\Fortress\RequestDataTransformer;
 use UserFrosting\Fortress\RequestSchema;
 use UserFrosting\Fortress\ServerSideValidator;
 use UserFrosting\I18n\Translator;
+use UserFrosting\Sprinkle\Core\Exceptions\ValidationException;
 use UserFrosting\Sprinkle\FormGenerator\Form;
 use UserFrosting\Sprinkle\FormGeneratorExample\Data\Project;
-use UserFrosting\Support\Exception\NotFoundException;
 
 /**
  * FormGeneratorExampleController Class.
@@ -74,7 +76,7 @@ class Controller
         Translator $translator,
         Twig $view,
     ): Response {
-        $get = (array) $request->getQueryParams();
+        $get = $request->getQueryParams();
 
         // Load validator rules
         $schema = new RequestSchema('schema://forms/formgenerator.json');
@@ -122,10 +124,11 @@ class Controller
 
         // Validate, and halt on validation errors.
         $validator = new ServerSideValidator($schema, $translator);
-        if (!$validator->validate($data)) {
-            $ms->addValidationErrors($validator);
+        if ($validator->validate($data) === false && is_array($validator->errors())) {
+            $e = new ValidationException();
+            $e->addErrors($validator->errors());
 
-            return $response->withStatus(400);
+            throw $e;
         }
 
         // Create the item.
@@ -167,15 +170,15 @@ class Controller
         Translator $translator,
         Twig $view,
     ): Response {
-        $get = (array) $request->getQueryParams();
+        $get = $request->getQueryParams();
 
         // Get the project to edit.
         // This can be replace by a database Model. We hardcode it here in the helper class for demo purposes.
         $project = Project::find($project_id);
 
         // Make sure a project was found.
-        if (!$project) {
-            throw new NotFoundException('Project not found');
+        if ($project === null) {
+            throw new ProjectNotFoundException();
         }
 
         // Load validator rules
@@ -190,7 +193,7 @@ class Controller
             'box_id'        => $get['box_id'] ?? 'formgenerator-edit-form',
             'box_title'     => 'Edit project',
             'submit_button' => 'Edit',
-            'form_action'   => $router->urlFor('FG.update', ['project_id' => $project_id]),
+            'form_action'   => $router->urlFor('FG.update', ['project_id' => (string) $project_id]),
             'form_method'   => 'PUT', //Send form using PUT instead of "POST"
             'fields'        => $form->generate(),
             'validators'    => $validator->rules('json', true),
@@ -216,8 +219,9 @@ class Controller
         Translator $translator,
     ): Response {
         // Get the target object & make sure a project was found.
-        if (!$project = Project::find($project_id)) {
-            throw new NotFoundException('Project not found');
+        $project = Project::find($project_id);
+        if ($project === null) {
+            throw new ProjectNotFoundException();
         }
 
         // Request POST data
@@ -232,10 +236,11 @@ class Controller
 
         // Validate, and halt on validation errors.
         $validator = new ServerSideValidator($schema, $translator);
-        if (!$validator->validate($data)) {
-            $ms->addValidationErrors($validator);
+        if ($validator->validate($data) === false && is_array($validator->errors())) {
+            $e = new ValidationException();
+            $e->addErrors($validator->errors());
 
-            return $response->withStatus(400);
+            throw $e;
         }
 
         // Update the project
@@ -267,8 +272,9 @@ class Controller
         AlertStream $ms,
     ): Response {
         // Get the target object & make sure a project was found.
-        if (!$project = Project::find($project_id)) {
-            throw new NotFoundException('Project not found');
+        $project = Project::find($project_id);
+        if ($project === null) {
+            throw new ProjectNotFoundException();
         }
 
         // Delete the project
