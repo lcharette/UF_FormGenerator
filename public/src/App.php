@@ -36,6 +36,7 @@ class App implements SprinkleRecipe
 
     /**
      * {@inheritdoc}
+     *
      * @codeCoverageIgnore
      */
     public function getBakeryCommands(): array

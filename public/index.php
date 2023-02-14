@@ -1,11 +1,11 @@
 <?php
 
 /*
- * UF Config Manager Sprinkle
+ * UserFrosting Form Generator
  *
- * @link      https://github.com/lcharette/UF_ConfigManager
+ * @link      https://github.com/lcharette/UF_FormGenerator
  * @copyright Copyright (c) 2020 Louis Charette
- * @license   https://github.com/lcharette/UF_ConfigManager/blob/master/LICENSE (MIT License)
+ * @license   https://github.com/lcharette/UF_FormGenerator/blob/master/LICENSE (MIT License)
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
