@@ -45,9 +45,31 @@ If you need help using this sprinkle or found any bug, feels free to open an iss
 [2.0.x]: https://github.com/lcharette/UF_FormGenerator/tree/2.2#form-generator-sprinkle-for-userfrosting-4
 
 # Installation
-Install FormGenerator through Composer `composer require lcharette/uf_formgenerator "^5.0"` and add `UserFrosting\Sprinkle\FormGenerator\FormGenerator` to your Sprinkle Recipe. Run `php bakery bake` to finish installation of the sprinkle.
+1. Install FormGenerator through Composer:
+    ```
+    composer require lcharette/uf_formgenerator "^5.0"
+    ```
 
-// TODO : Add Frontend part
+2. Add `UserFrosting\Sprinkle\FormGenerator\FormGenerator` to your Sprinkle Recipe. 
+
+3. To use the frontend helper, first install the npm dependency:
+    ```
+    npm install https://github.com/lcharette/UF_FormGenerator#5.0
+    ```
+
+4. Then add this entry to your `webpack.config.js` : 
+    ```js
+    .addEntry('widget.formGenerator', './node_modules/formgenerator/app/assets/js/widget-formGenerator.js')
+    ```
+
+5. Each template file where you want to use the frontend helper, add this line to `{% block scripts_page %}`:
+    ```
+    {{ encore_entry_script_tags('widget.formGenerator') }}
+    ```
+
+6. Run `php bakery bake` to finish installation of the sprinkle.
+
+Alternatively, you can add `./node_modules/formgenerator/app/assets/js/widget-formGenerator.js` globally in your app main js file.
 
 # Working example
 
