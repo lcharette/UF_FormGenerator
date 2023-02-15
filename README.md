@@ -5,7 +5,7 @@
 [![UserFrosting Version][uf-version]][uf]
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Build][build-badge]][build]
-[![PHPStan][PHPStan-badge]][build]
+[![PHPStan][PHPStan-badge]][PHPStan]
 [![Codecov][codecov-badge]][codecov]
 [![StyleCI][styleci-badge]][styleci]
 

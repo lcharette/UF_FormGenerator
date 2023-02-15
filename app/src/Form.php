@@ -90,7 +90,7 @@ class Form
             $this->data = $data->toArray();
         } elseif ($data instanceof Repository) {
             $this->data = $data->all();
-        } elseif (is_array($data)) {
+        } elseif (is_array($data)) { // @phpstan-ignore-line $data could be collection, model or repository
             $this->data = $data;
         } else {
             throw new InvalidArgumentException('Data must be an array, a Collection, a Model or a Repository');
@@ -195,7 +195,7 @@ class Form
         if ($this->schema->has($inputName)) {
             // Get the element and force set the property
             $element = $this->schema->get($inputName);
-            $element['form'][$property] = $value;
+            $element['form'][$property] = $value; // @phpstan-ignore-line
 
             // Push back the modifyed element in the schema
             $this->schema->set($inputName, $element);

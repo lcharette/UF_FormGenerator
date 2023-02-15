@@ -23,7 +23,7 @@ interface InputInterface
      * Return the parsed input attributes.
      * This is passed to the Twig template to generate the actual HTML elements.
      *
-     * @return array<string,string>
+     * @return array<string,string|int|bool>
      */
     public function parse(): array;
 }

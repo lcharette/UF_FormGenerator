@@ -28,7 +28,7 @@ abstract class Input implements InputInterface
     public $name;
 
     /**
-     * @var array<string,string> The input schema data.
+     * @var array<string,string|int|bool> The input schema data.
      */
     public $element;
 
@@ -93,7 +93,7 @@ abstract class Input implements InputInterface
     /**
      * Get the input schema data.
      *
-     * @return array<string,string>
+     * @return array<string,string|int|bool>
      */
     public function getElement(): array
     {

@@ -13,6 +13,7 @@ namespace UserFrosting\Sprinkle\FormGenerator\Tests;
 use PHPUnit\Framework\TestCase;
 use UserFrosting\Fortress\RequestSchema\RequestSchemaRepository;
 use UserFrosting\Sprinkle\FormGenerator\Element;
+use UserFrosting\Sprinkle\FormGenerator\Element\Input;
 use UserFrosting\Sprinkle\FormGenerator\Element\InputInterface;
 use UserFrosting\Support\Repository\Loader\YamlFileLoader;
 
@@ -40,13 +41,14 @@ class ElementTest extends TestCase
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get InputInterface from the `$elementName` in the schema
-        $inputSchema = $schema[$elementName]['form'];
+        $inputSchema = $schema[$elementName]['form']; // @phpstan-ignore-line
 
         /** @var InputInterface */
         $input = new $class($elementName, $inputSchema, $value);
 
-        // Test instanceof $input
-        $this->assertInstanceof(InputInterface::class, $input);
+        // Test instanceof $input implement InputInterface
+        $this->assertInstanceof(InputInterface::class, $input); // @phpstan-ignore-line
+        $this->assertInstanceof(Input::class, $input); // @phpstan-ignore-line
 
         // Test getters
         $this->assertSame($elementName, $input->getName());
@@ -62,7 +64,7 @@ class ElementTest extends TestCase
     /**
      * Data provider for testElement.
      *
-     * @return array<string|null|array>
+     * @return mixed[]
      */
     public function elementsProvider(): array
     {

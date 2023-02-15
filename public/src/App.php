@@ -80,7 +80,7 @@ class App implements SprinkleRecipe
     /**
      * Returns a list of all Middlewares classes.
      *
-     * @return \Psr\Http\Server\MiddlewareInterface[]
+     * @return string[]
      */
     public function getMiddlewares(): array
     {

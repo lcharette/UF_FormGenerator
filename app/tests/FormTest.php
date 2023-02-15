@@ -41,9 +41,9 @@ class FormTest extends TestCase
     /**
      * Test the Form Class.
      *
-     * @param string $file
-     * @param mixed  $data
-     * @param array  $expected
+     * @param string  $file
+     * @param mixed[] $data
+     * @param mixed[] $expected
      * @dataProvider formProvider
      */
     public function testForm(string $file, $data, array $expected): void
@@ -53,14 +53,14 @@ class FormTest extends TestCase
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form
-        $form = new Form($schema, $data);
+        $form = new Form($schema, $data); // @phpstan-ignore-line
 
         // Test to make sure the class creation is fine
-        $this->assertInstanceof(Form::class, $form);
+        $this->assertInstanceOf(Form::class, $form); // @phpstan-ignore-line
 
         // Test the form generation
         $generatedForm = $form->generate();
-        $this->assertIsArray($generatedForm);
+        $this->assertIsArray($generatedForm); // @phpstan-ignore-line
 
         // We test the generated result
         $this->assertSame($expected, $generatedForm);
@@ -68,6 +68,8 @@ class FormTest extends TestCase
 
     /**
      * Data provider for tests
+     *
+     * @return mixed[]
      */
     public function formProvider(): array
     {
@@ -352,6 +354,7 @@ class FormTest extends TestCase
 
         // Test the form generation
         $generatedForm = $form->generate();
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'name' => [
                 'autocomplete' => 'off',
@@ -440,6 +443,7 @@ class FormTest extends TestCase
         $form->setFormNamespace('foo');
 
         // Test the form generation
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'foo[name]' => [
                 'autocomplete' => 'off',
@@ -471,6 +475,7 @@ class FormTest extends TestCase
         $form->setValue('name', 'The Bar');
 
         // Test the form generation
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'name' => [
                 'autocomplete' => 'off',
@@ -501,6 +506,7 @@ class FormTest extends TestCase
              ->setInputArgument('name', 'bar', 123);
 
         // Test the form generation
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'name' => [
                 'autocomplete' => 'off',
@@ -529,6 +535,7 @@ class FormTest extends TestCase
         $form = new Form($schema);
 
         // Test the form generation
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'status' => [
                 'class'        => 'form-control js-select2',
@@ -580,6 +587,7 @@ class FormTest extends TestCase
         ], 'black');
 
         // Test the form generation
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'status' => [
                 'class'        => 'form-control js-select2',
@@ -626,6 +634,7 @@ class FormTest extends TestCase
         $this->assertSame('select', $form->getDefaultType());
 
         // Test the form generation
+        // @phpstan-ignore-next-line
         $this->assertSame([
             'class'        => 'form-control js-select2',
             'value'        => 'Bar',
@@ -647,7 +656,7 @@ class FormTest extends TestCase
 
         // Set expectations
         $this->expectException(InvalidArgumentException::class);
-        $form->setData('foo');
+        $form->setData('foo'); // @phpstan-ignore-line
     }
 }
 

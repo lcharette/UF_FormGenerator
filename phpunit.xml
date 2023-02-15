@@ -31,7 +31,4 @@
   <php>
     <env name="UF_MODE" value="testing"/>
   </php>
-  <listeners>
-    <listener class="\Mockery\Adapter\Phpunit\TestListener"></listener>
-  </listeners>
 </phpunit>

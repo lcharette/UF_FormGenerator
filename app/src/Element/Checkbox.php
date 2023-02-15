@@ -31,11 +31,13 @@ class Checkbox extends Input
         ], $this->element);
 
         // We add the check status instead of the value
+        // @phpstan-ingore-next-line - $this->element['binary'] could be a bool because of merge
         if ($this->element['binary'] !== false && $this->getValue() == 1) {
             $this->element['checked'] = 'checked';
         }
 
         // We add the value if non-binary
+        // @phpstan-ingore-next-line - $this->element['binary'] could be a bool because of merge
         if ($this->element['binary'] === false) {
             $this->element['value'] = $this->getValue();
         }
