@@ -85,7 +85,6 @@ class Controller
         // Generate the form
         $form = new Form($schema);
 
-        // Using custom form here to add the javascript we need fo Typeahead.
         return $view->render($response, 'FormGenerator/modal.html.twig', [
             'box_id'        => $get['box_id'] ?? 'formgenerator-create-form',
             'box_title'     => 'Create project',
