@@ -5,6 +5,7 @@
 [![UserFrosting Version][uf-version]][uf]
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Build][build-badge]][build]
+[![PHPStan][PHPStan-badge]][build]
 [![Codecov][codecov-badge]][codecov]
 [![StyleCI][styleci-badge]][styleci]
 
@@ -16,6 +17,8 @@
 [uf]: https://github.com/userfrosting/UserFrosting
 [build]: https://github.com/lcharette/UF_FormGenerator/actions?query=workflow%3ABuild
 [build-badge]: https://github.com/lcharette/UF_FormGenerator/workflows/Build/badge.svg?branch=5.0
+[PHPStan]: https://github.com/lcharette/UF_FormGenerator/actions?query=workflow%3APHPStan
+[PHPStan-badge]: https://github.com/lcharette/UF_FormGenerator/workflows/PHPStan/badge.svg?branch=5.0
 [codecov]: https://codecov.io/gh/lcharette/UF_FormGenerator
 [codecov-badge]: https://codecov.io/gh/lcharette/UF_FormGenerator/branch/5.0/graph/badge.svg
 [styleci]: https://styleci.io/repos/68563337
