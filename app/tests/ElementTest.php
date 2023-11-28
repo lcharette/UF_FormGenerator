@@ -41,7 +41,7 @@ class ElementTest extends TestCase
         $schema = new RequestSchemaRepository($loader->load());
 
         // Get InputInterface from the `$elementName` in the schema
-        $inputSchema = $schema[$elementName]['form']; // @phpstan-ignore-line
+        $inputSchema = $schema[$elementName]['form'];
 
         /** @var InputInterface */
         $input = new $class($elementName, $inputSchema, $value);

@@ -67,7 +67,7 @@ abstract class Input implements InputInterface
      */
     public function getValue(): string
     {
-        if (isset($this->value) && !is_null($this->value)) {
+        if (isset($this->value) && $this->value !== null) {
             return (string) $this->value;
         } elseif (isset($this->element['default'])) {
             return (string) $this->element['default'];

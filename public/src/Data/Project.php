@@ -53,7 +53,6 @@ class Project
      */
     public static function find(int $id): ?array
     {
-        // @phpstan-ignore-next-line
         return self::all()->where('id', $id)->first();
     }
 }

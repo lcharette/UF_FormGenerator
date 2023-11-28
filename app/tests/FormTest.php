@@ -53,7 +53,7 @@ class FormTest extends TestCase
         $schema = new RequestSchemaRepository($loader->load());
 
         // Generate the form
-        $form = new Form($schema, $data); // @phpstan-ignore-line
+        $form = new Form($schema, $data);
 
         // Test to make sure the class creation is fine
         $this->assertInstanceOf(Form::class, $form); // @phpstan-ignore-line
