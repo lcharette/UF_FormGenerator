@@ -13,7 +13,7 @@
         "form" : {
             "type" : "text",
             "label" : "Project name",
-            "icon" : "fa-flag",
+            "icon" : "fas fa-flag",
             "placeholder" : "Project name"
         }
     },
@@ -21,7 +21,7 @@
         "form" : {
             "type" : "text",
             "label" : "Project Owner",
-            "icon" : "fa-user",
+            "icon" : "fas fa-user",
             "id" : "owner",
             "placeholder" : "Project Owner",
             "default" : "Foo"
@@ -31,7 +31,7 @@
         "form" : {
             "type" : "textarea",
             "label" : "Project description",
-            "icon" : "fa-pencil-alt",
+            "icon" : "fas fa-pencil-alt",
             "placeholder" : "Project description",
             "rows" : 5
         }
@@ -73,7 +73,7 @@
         },
         "form" : {
             "type" : "number",
-            "icon" : "fa-percent",
+            "icon" : "fas fa-percent",
             "default" : 10,
             "label" : "Project completion"
         }
@@ -88,7 +88,7 @@
         "form" : {
             "type" : "alert",
             "class" : "alert-success",
-            "icon" : "fa-rocket",
+            "icon" : "fas fa-rocket",
             "value" : "Form Generator is awesome!"
         }
     }
