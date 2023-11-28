@@ -16,9 +16,9 @@
 [uf-version]: https://img.shields.io/badge/UserFrosting->=%205.0-brightgreen.svg
 [uf]: https://github.com/userfrosting/UserFrosting
 [build]: https://github.com/lcharette/UF_FormGenerator/actions?query=workflow%3ABuild
-[build-badge]: https://github.com/lcharette/UF_FormGenerator/actions/workflows/Build.yml/badge.svg?branch=5.0
+[build-badge]: https://img.shields.io/github/actions/workflow/status/lcharette/UF_FormGenerator/Build.yml?branch=5.0&logo=github
 [PHPStan]: https://github.com/lcharette/UF_FormGenerator/actions?query=workflow%3APHPStan
-[PHPStan-badge]: https://github.com/lcharette/UF_FormGenerator/actions/workflows/PHPStan.yml/badge.svg?branch=5.0
+[PHPStan-badge]: https://img.shields.io/github/actions/workflow/status/lcharette/UF_FormGenerator/PHPStan.yml?branch=5.0&label=PHPStan
 [codecov]: https://codecov.io/gh/lcharette/UF_FormGenerator
 [codecov-badge]: https://codecov.io/gh/lcharette/UF_FormGenerator/branch/5.0/graph/badge.svg
 [styleci]: https://styleci.io/repos/68563337
