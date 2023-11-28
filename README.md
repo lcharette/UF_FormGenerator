@@ -45,6 +45,8 @@ If you need help using this sprinkle or found any bug, feels free to open an iss
 [2.0.x]: https://github.com/lcharette/UF_FormGenerator/tree/2.2#form-generator-sprinkle-for-userfrosting-4
 
 # Installation
+To install FormGenerator in your sprinkle : 
+
 1. Install FormGenerator through Composer:
     ```
     composer require lcharette/uf_formgenerator "^5.0"
@@ -73,7 +75,17 @@ Alternatively, you can add `@lcharette/formgenerator/app/assets/js/widget-formGe
 
 # Working example
 
-See the [UF_FormGeneratorExample](https://github.com/lcharette/UF_FormGeneratorExample) repo for an example of the FormGenerator full code.
+The `public/` directory serves as an example of FormGenerator. You can clone this repository and install as any UserFrosting 5 sprinkle :
+1. `composer install`
+2. `php bakery bake`
+3. `php -S localhost:8080 -t public`
+
+This demo is not linked to any database tables, so changes are not actually saved ;)
+
+![Screenshot 1](/.github/screenshots/UF_FormGeneratorExample1.png?raw=true)
+![Screenshot 2](/.github/screenshots/UF_FormGeneratorExample2.png?raw=true)
+![Screenshot 3](/.github/screenshots/UF_FormGeneratorExample3.png?raw=true)
+![Screenshot 4](/.github/screenshots/UF_FormGeneratorExample4.png?raw=true)
 
 # Features and usage
 Before starting with _FormGenerator_, you should read the main UserFrosting guide to familiarize yourself with _validation schemas_: (https://learn.userfrosting.com/routes-and-controllers/client-input/validation).
