@@ -1,15 +1,29 @@
 {
-    "name": "formgenerator",
-    "license": "MIT",
+    "name": "@lcharette/formgenerator",
     "version": "5.0.0",
     "description": "Form Generator Sprinkle for UserFrosting 5",
+    "funding": "https://ko-fi.com/lcharette",
+    "license": "MIT",
+    "author": "Louis Charette (https://bbqsoftwares.com/)",
+    "keywords": [
+        "UserFrosting",
+        "Sprinkle",
+        "form"
+    ],
+    "homepage": "https://github.com/lcharette/UF_FormGenerator#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lcharette/UF_FormGenerator.git"
+    },
+    "bugs": {
+        "url": "https://github.com/lcharette/UF_FormGenerator/issues"
+    },
     "dependencies": {
-        "theme-adminlte": "github:userfrosting/theme-adminlte"
+        "@userfrosting/theme-adminlte": "^5.0"
     },
     "devDependencies": {
-        "@symfony/webpack-encore": "^1.7.0",
-        "sass": "^1.58.1",
-        "sass-loader": "^10.0",
+        "@symfony/webpack-encore": "^4.4.0",
+        "sass": "^1.51.0",
         "webpack-notifier": "^1.14.1"
     },
     "scripts": {

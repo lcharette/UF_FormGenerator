@@ -10,7 +10,7 @@
 [![StyleCI][styleci-badge]][styleci]
 
 [kofi]: https://ko-fi.com/A7052ICP
-[kofi-badge]: https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue.svg
+[kofi-badge]: https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-blue?logo=ko-fi&logoColor=white
 [releases]: https://github.com/lcharette/UF_FormGenerator/releases
 [releases-badge]: https://img.shields.io/github/release/lcharette/UF_FormGenerator.svg
 [uf-version]: https://img.shields.io/badge/UserFrosting->=%205.0-brightgreen.svg
@@ -50,16 +50,16 @@ If you need help using this sprinkle or found any bug, feels free to open an iss
     composer require lcharette/uf_formgenerator "^5.0"
     ```
 
-2. Add `UserFrosting\Sprinkle\FormGenerator\FormGenerator` to your Sprinkle Recipe. 
+2. Add `UserFrosting\Sprinkle\FormGenerator\FormGenerator` to your Sprinkle Recipe sprinkle method. 
 
 3. To use the frontend helper, first install the npm dependency:
     ```
-    npm install https://github.com/lcharette/UF_FormGenerator#5.0
+    npm install --save @lcharette/formgenerator
     ```
 
-4. Then add this entry to your `webpack.config.js` : 
+4. Then add this entry to your `webpack.config.js`, in the `sprinkles` list : 
     ```js
-    .addEntry('widget.formGenerator', './node_modules/formgenerator/app/assets/js/widget-formGenerator.js')
+    FormGenerator: require('@lcharette/formgenerator/webpack.entries'),
     ```
 
 5. Each template file where you want to use the frontend helper, add this line to `{% block scripts_page %}`:
@@ -69,7 +69,7 @@ If you need help using this sprinkle or found any bug, feels free to open an iss
 
 6. Run `php bakery bake` to finish installation of the sprinkle.
 
-Alternatively, you can add `./node_modules/formgenerator/app/assets/js/widget-formGenerator.js` globally in your app main js file.
+Alternatively, you can add `@lcharette/formgenerator/app/assets/js/widget-formGenerator.js` globally in your app main js file.
 
 # Working example
 

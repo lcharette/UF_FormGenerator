@@ -6,11 +6,25 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.UF_MODE || 'dev');
 }
 
+// List dependent sprinkles and local entries files
+const sprinkles = {
+    AdminLTE: require('@userfrosting/theme-adminlte/webpack.entries'),
+    FormGenerator: require('./webpack.entries'),
+    APP: {
+        'app': './public/app.js',
+    }
+}
+
+// Merge dependent Sprinkles entries with local entries
+let entries = {}
+Object.values(sprinkles).forEach(sprinkle => {
+    entries = Object.assign(entries, sprinkle);
+});
+
 Encore
     .setOutputPath('public/assets')
     .setPublicPath('/assets/')
-    .addEntry('app', './public/app.js')
-    .addEntry('widget.formGenerator', './app/assets/js/widget-formGenerator.js')
+    .addEntries(entries)
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
